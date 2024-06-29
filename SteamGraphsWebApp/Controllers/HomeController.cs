@@ -15,7 +15,16 @@ namespace SteamGraphsWebApp.Controllers
 
         public IActionResult Index()
         {
-            return View();
+
+            return View(new SteamItemViewModel());
+        }
+
+        // POST: Home
+        [HttpPost]
+        public IActionResult Index(SteamItemViewModel model)
+        {
+            // Just pass the same model back to the view
+            return View(model);
         }
 
         public IActionResult Privacy()
