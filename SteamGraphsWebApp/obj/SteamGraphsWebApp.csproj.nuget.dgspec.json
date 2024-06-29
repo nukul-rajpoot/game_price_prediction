@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Nukul\\Desktop\\Code\\SteamGraphsWebApp\\SteamGraphsWebApp.csproj": {}
+    "C:\\Users\\Nukul\\Desktop\\Code\\game_price_prediction\\SteamGraphsWebApp\\SteamGraphsWebApp.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Nukul\\Desktop\\Code\\SteamGraphsWebApp\\SteamGraphsWebApp.csproj": {
+    "C:\\Users\\Nukul\\Desktop\\Code\\game_price_prediction\\SteamGraphsWebApp\\SteamGraphsWebApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Nukul\\Desktop\\Code\\SteamGraphsWebApp\\SteamGraphsWebApp.csproj",
+        "projectUniqueName": "C:\\Users\\Nukul\\Desktop\\Code\\game_price_prediction\\SteamGraphsWebApp\\SteamGraphsWebApp.csproj",
         "projectName": "SteamGraphsWebApp",
-        "projectPath": "C:\\Users\\Nukul\\Desktop\\Code\\SteamGraphsWebApp\\SteamGraphsWebApp.csproj",
+        "projectPath": "C:\\Users\\Nukul\\Desktop\\Code\\game_price_prediction\\SteamGraphsWebApp\\SteamGraphsWebApp.csproj",
         "packagesPath": "C:\\Users\\Nukul\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Nukul\\Desktop\\Code\\SteamGraphsWebApp\\obj\\",
+        "outputPath": "C:\\Users\\Nukul\\Desktop\\Code\\game_price_prediction\\SteamGraphsWebApp\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Nukul\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -22,6 +22,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -34,11 +35,22 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
+          "dependencies": {
+            "pythonnet": {
+              "target": "Package",
+              "version": "[3.0.3, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -58,7 +70,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.302/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
