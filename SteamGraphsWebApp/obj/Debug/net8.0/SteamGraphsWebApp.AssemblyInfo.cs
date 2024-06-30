@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SteamGraphsWebApp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d2f7af9f20633036e72934c1952682d6246614fd")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cef08816817640337298d58ee61cea4181b02271")]
 [assembly: System.Reflection.AssemblyProductAttribute("SteamGraphsWebApp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SteamGraphsWebApp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
