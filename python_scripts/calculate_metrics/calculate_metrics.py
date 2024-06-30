@@ -17,8 +17,12 @@ True
 >>> char_frequency('hello world', 'l')
 3
 """
-def calculate_sma(df):
-    # Calculate the rolling mean of the price
-    df['smoothened_price'] = df['price_usd'].rolling(window=2).mean()
+
+def calculate_sma(df, window):
+    # rolling = used to change period for average. (this case -> 2 days)
+    df['smoothened_price'] = df['price_usd'].rolling(window=window).mean()
     return df
 
+def calculate_ema(df, span):
+    df['smoothened_price'] = df['price_usd'].ewm(span=span).mean()
+    return df
