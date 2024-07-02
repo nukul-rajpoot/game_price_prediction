@@ -23,6 +23,19 @@ import re
 import requests
 import pandas as pd
 
+
+def fetch_daily_cookie():
+    dailyCookie = "76561199704981720%7C%7CeyAidHlwIjogIkpXVCIsICJhbGciOiAiRWREU0EiIH0.eyAiaXNzIjogInI6MEVGQV8yNDlCQUM3RV9GOUNBOSIsICJzdWIiOiAiNzY1NjExOTk3MDQ5ODE3MjAiLCAiYXVkIjogWyAid2ViOmNvbW11bml0eSIgXSwgImV4cCI6IDE3MjAwMzEwNzEsICJuYmYiOiAxNzExMzA0MDgyLCAiaWF0IjogMTcxOTk0NDA4MiwgImp0aSI6ICIwRjJEXzI0QTRFNzZBXzVCRTI3IiwgIm9hdCI6IDE3MTg5OTc2MjQsICJydF9leHAiOiAxNzM3NTA1ODQ4LCAicGVyIjogMCwgImlwX3N1YmplY3QiOiAiODQuNjQuMTAxLjIyNiIsICJpcF9jb25maXJtZXIiOiAiNzguODYuMzIuMTc0IiB9.Rbia1VzTvYJ595bJfynaCRa06P22qklYWwwtfqo9X6QYdRGf0URu3Zltiruv24Hiyy2qUGPvyJrazx8psnxVCg"
+    return dailyCookie
+
+def fetch_items():
+    items = ["Glove Case Key", "Officer Jacques Beltram | Gendarmerie Nationale", "Kilowatt Case", "AK-47 | Blue Laminate (Factory New)", "Glove Case"]
+    return items
+
+
+
+
+
 #Use for non-aggregated data
 def fetch_item_from_api(item, dailyCookie):
     # get historical price data of item from API
@@ -51,6 +64,7 @@ def fetch_item_from_api(item, dailyCookie):
     price_history_df.set_index('date', inplace=True)
    
     return price_history_df
+
 #Use for aggregated data
 def fetch_item_to_df(item, dailyCookie):
     price_history_df = fetch_item_from_api(item, dailyCookie)
@@ -60,11 +74,13 @@ def fetch_item_to_df(item, dailyCookie):
     })
     return grouped_current_item
 
+
 def sanitize_filename(filename):
     """Sanitizes the filename to ensure it is valid for most operating systems."""
     filename = re.sub(r'[\\/*?:"<>|]', '_', filename)  # Replace disallowed characters with underscore
     filename = re.sub(r'\s+', '_', filename)  # Replace spaces with underscores
     return filename
+
 
 def save_item_to_csv(item, dailyCookie):
     csv_data = './data/'+ sanitize_filename(item) +'.csv'
