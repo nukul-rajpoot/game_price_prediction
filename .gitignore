@@ -6,3 +6,4 @@ python_scripts/calculate_metrics/__pycache__
 python_scripts/make_graphs/__pycache__
 python_scripts/ml_model_hub/__pycache__
 python_scripts/ml_models/__pycache__
+.vs/
