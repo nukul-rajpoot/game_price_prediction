@@ -70,4 +70,7 @@ def calculate_relative_strength_index(df, window):
 
     return rsi_data
     
-
+    
+def calculate_market_cap(market_cap,date):
+    market_cap['market_cap'] = market_cap['close'] * market_cap['volume']
+    return market_cap.loc[date,'market_cap']
