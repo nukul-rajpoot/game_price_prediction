@@ -29,3 +29,6 @@ C:\Users\Nukul\Desktop\Code\game_price_prediction\SteamGraphsWebApp\obj\Debug\ne
 C:\Users\Nukul\Desktop\Code\game_price_prediction\SteamGraphsWebApp\obj\Debug\net8.0\SteamGraphsWebApp.pdb
 C:\Users\Nukul\Desktop\Code\game_price_prediction\SteamGraphsWebApp\obj\Debug\net8.0\SteamGraphsWebApp.genruntimeconfig.cache
 C:\Users\Nukul\Desktop\Code\game_price_prediction\SteamGraphsWebApp\obj\Debug\net8.0\ref\SteamGraphsWebApp.dll
+C:\Users\Nukul\Desktop\Code\game_price_prediction\SteamGraphsWebApp\bin\Debug\net8.0\Python.Runtime.dll
+C:\Users\Nukul\Desktop\Code\game_price_prediction\SteamGraphsWebApp\obj\Debug\net8.0\SteamGraphsWebApp.csproj.AssemblyReference.cache
+C:\Users\Nukul\Desktop\Code\game_price_prediction\SteamGraphsWebApp\obj\Debug\net8.0\SteamGra.FF61E16D.Up2Date

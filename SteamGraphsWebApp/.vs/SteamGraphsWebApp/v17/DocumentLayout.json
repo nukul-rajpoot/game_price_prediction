@@ -3,28 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\Nukul\\Desktop\\Code\\game_price_prediction\\SteamGraphsWebApp\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{05E8F60E-290D-4F35-90EF-86DE02AB0B59}|SteamGraphsWebApp.csproj|c:\\users\\nukul\\desktop\\code\\game_price_prediction\\steamgraphswebapp\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{05E8F60E-290D-4F35-90EF-86DE02AB0B59}|SteamGraphsWebApp.csproj|solutionrelative:views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{05E8F60E-290D-4F35-90EF-86DE02AB0B59}|SteamGraphsWebApp.csproj|c:\\users\\nukul\\desktop\\code\\game_price_prediction\\steamgraphswebapp\\views\\shared\\_layout.cshtml.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
-      "RelativeMoniker": "D:0:0:{05E8F60E-290D-4F35-90EF-86DE02AB0B59}|SteamGraphsWebApp.csproj|solutionrelative:views\\shared\\_layout.cshtml.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{05E8F60E-290D-4F35-90EF-86DE02AB0B59}|SteamGraphsWebApp.csproj|c:\\users\\nukul\\desktop\\code\\game_price_prediction\\steamgraphswebapp\\models\\steamitemviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{05E8F60E-290D-4F35-90EF-86DE02AB0B59}|SteamGraphsWebApp.csproj|solutionrelative:models\\steamitemviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{05E8F60E-290D-4F35-90EF-86DE02AB0B59}|SteamGraphsWebApp.csproj|c:\\users\\nukul\\desktop\\code\\game_price_prediction\\steamgraphswebapp\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{05E8F60E-290D-4F35-90EF-86DE02AB0B59}|SteamGraphsWebApp.csproj|solutionrelative:controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{05E8F60E-290D-4F35-90EF-86DE02AB0B59}|SteamGraphsWebApp.csproj|c:\\users\\nukul\\desktop\\code\\game_price_prediction\\steamgraphswebapp\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{05E8F60E-290D-4F35-90EF-86DE02AB0B59}|SteamGraphsWebApp.csproj|solutionrelative:views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{05E8F60E-290D-4F35-90EF-86DE02AB0B59}|SteamGraphsWebApp.csproj|c:\\users\\nukul\\desktop\\code\\game_price_prediction\\steamgraphswebapp\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{05E8F60E-290D-4F35-90EF-86DE02AB0B59}|SteamGraphsWebApp.csproj|solutionrelative:controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{05E8F60E-290D-4F35-90EF-86DE02AB0B59}|SteamGraphsWebApp.csproj|c:\\users\\nukul\\desktop\\code\\game_price_prediction\\steamgraphswebapp\\pythonservices\\pythonservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{05E8F60E-290D-4F35-90EF-86DE02AB0B59}|SteamGraphsWebApp.csproj|solutionrelative:pythonservices\\pythonservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{05E8F60E-290D-4F35-90EF-86DE02AB0B59}|SteamGraphsWebApp.csproj|c:\\users\\nukul\\desktop\\code\\game_price_prediction\\steamgraphswebapp\\views\\home\\privacy.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{05E8F60E-290D-4F35-90EF-86DE02AB0B59}|SteamGraphsWebApp.csproj|solutionrelative:views\\home\\privacy.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{05E8F60E-290D-4F35-90EF-86DE02AB0B59}|SteamGraphsWebApp.csproj|c:\\users\\nukul\\desktop\\code\\game_price_prediction\\steamgraphswebapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{05E8F60E-290D-4F35-90EF-86DE02AB0B59}|SteamGraphsWebApp.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -34,82 +26,56 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "_Layout.cshtml.css",
-              "DocumentMoniker": "C:\\Users\\Nukul\\Desktop\\Code\\game_price_prediction\\SteamGraphsWebApp\\Views\\Shared\\_Layout.cshtml.css",
-              "RelativeDocumentMoniker": "Views\\Shared\\_Layout.cshtml.css",
-              "ToolTip": "C:\\Users\\Nukul\\Desktop\\Code\\game_price_prediction\\SteamGraphsWebApp\\Views\\Shared\\_Layout.cshtml.css",
-              "RelativeToolTip": "Views\\Shared\\_Layout.cshtml.css",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2024-06-28T12:55:47.227Z",
+              "DocumentIndex": 3,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Nukul\\Desktop\\Code\\game_price_prediction\\SteamGraphsWebApp\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\Nukul\\Desktop\\Code\\game_price_prediction\\SteamGraphsWebApp\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAAAbAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-01T19:41:32.7Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "SteamItemViewModel.cs",
-              "DocumentMoniker": "C:\\Users\\Nukul\\Desktop\\Code\\game_price_prediction\\SteamGraphsWebApp\\Models\\SteamItemViewModel.cs",
-              "RelativeDocumentMoniker": "Models\\SteamItemViewModel.cs",
-              "ToolTip": "C:\\Users\\Nukul\\Desktop\\Code\\game_price_prediction\\SteamGraphsWebApp\\Models\\SteamItemViewModel.cs",
-              "RelativeToolTip": "Models\\SteamItemViewModel.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAqwAwAAAAZAAAA",
+              "Title": "PythonService.cs",
+              "DocumentMoniker": "C:\\Users\\Nukul\\Desktop\\Code\\game_price_prediction\\SteamGraphsWebApp\\PythonServices\\PythonService.cs",
+              "RelativeDocumentMoniker": "PythonServices\\PythonService.cs",
+              "ToolTip": "C:\\Users\\Nukul\\Desktop\\Code\\game_price_prediction\\SteamGraphsWebApp\\PythonServices\\PythonService.cs",
+              "RelativeToolTip": "PythonServices\\PythonService.cs",
+              "ViewState": "AQIAABAAAAAAAAAAAAAgwCAAAAA3AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-27T18:19:10.999Z",
+              "WhenOpened": "2024-07-01T19:29:11.058Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "_Layout.cshtml",
-              "DocumentMoniker": "C:\\Users\\Nukul\\Desktop\\Code\\game_price_prediction\\SteamGraphsWebApp\\Views\\Shared\\_Layout.cshtml",
-              "RelativeDocumentMoniker": "Views\\Shared\\_Layout.cshtml",
-              "ToolTip": "C:\\Users\\Nukul\\Desktop\\Code\\game_price_prediction\\SteamGraphsWebApp\\Views\\Shared\\_Layout.cshtml",
-              "RelativeToolTip": "Views\\Shared\\_Layout.cshtml",
-              "ViewState": "AQIAAA8AAAAAAAAAAAAswCMAAAAPAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-06-28T11:18:43.254Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\Nukul\\Desktop\\Code\\game_price_prediction\\SteamGraphsWebApp\\Views\\Home\\Index.cshtml",
               "RelativeDocumentMoniker": "Views\\Home\\Index.cshtml",
               "ToolTip": "C:\\Users\\Nukul\\Desktop\\Code\\game_price_prediction\\SteamGraphsWebApp\\Views\\Home\\Index.cshtml",
               "RelativeToolTip": "Views\\Home\\Index.cshtml",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAARAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAAGAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2024-06-27T17:53:23.088Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "Privacy.cshtml",
-              "DocumentMoniker": "C:\\Users\\Nukul\\Desktop\\Code\\game_price_prediction\\SteamGraphsWebApp\\Views\\Home\\Privacy.cshtml",
-              "RelativeDocumentMoniker": "Views\\Home\\Privacy.cshtml",
-              "ToolTip": "C:\\Users\\Nukul\\Desktop\\Code\\game_price_prediction\\SteamGraphsWebApp\\Views\\Home\\Privacy.cshtml",
-              "RelativeToolTip": "Views\\Home\\Privacy.cshtml",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-06-28T11:19:30.706Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 0,
               "Title": "HomeController.cs",
               "DocumentMoniker": "C:\\Users\\Nukul\\Desktop\\Code\\game_price_prediction\\SteamGraphsWebApp\\Controllers\\HomeController.cs",
               "RelativeDocumentMoniker": "Controllers\\HomeController.cs",
               "ToolTip": "C:\\Users\\Nukul\\Desktop\\Code\\game_price_prediction\\SteamGraphsWebApp\\Controllers\\HomeController.cs",
               "RelativeToolTip": "Controllers\\HomeController.cs",
-              "ViewState": "AQIAAAsAAAAAAAAAAAAmwBAAAAAJAAAA",
+              "ViewState": "AQIAABAAAAAAAAAAAAAgwCIAAAAuAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-06-27T17:47:38.414Z",
               "EditorCaption": ""
