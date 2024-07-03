@@ -10,5 +10,7 @@ def fetch_df_to_webapp(item = "Glove Case"):
     non_aggregated_item = fetch_item_from_api(item, dailyCookie)
     return current_item, non_aggregated_item
 
+def supdog():
+    return "supdog"
 # START_DATE = current_item.index[0]
 # END_DATE = current_item.index[-1]
