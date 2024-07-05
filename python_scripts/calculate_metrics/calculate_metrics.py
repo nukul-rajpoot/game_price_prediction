@@ -17,6 +17,16 @@ True
 >>> char_frequency('hello world', 'l')
 3
 """
+import numpy as np
+
+
+def create_ln_df(current_item):
+    ln_df = current_item.copy()
+    ln_df['price_usd_log'] = np.log1p(current_item['price_usd'])
+    ln_df['volume_log'] = np.log1p(current_item['volume'])
+    return ln_df
+
+
 
 # SMA calculation 
 def calculate_sma(df, window):
@@ -71,6 +81,27 @@ def calculate_relative_strength_index(df, window):
     return rsi_data
     
     
+def calculate_money_flow_index(df, window):
+    # Resample the data
+    mfi_data = df.resample(window).agg({
+        'price_usd': ['max', 'min', 'first', 'last'],
+        'volume': 'sum'
+    })
+    
+    # Slice the multi-level columns and rename them
+    mfi_data.columns = ['high', 'low', 'open', 'close', 'volume']
+    
+    # Calculate typical price
+    mfi_data['typical_price'] = (mfi_data['high'] + mfi_data['low'] + mfi_data['close']) / 3
+    
+    # Calculate raw money flow
+    mfi_data['raw_money_flow'] = mfi_data['typical_price'] * mfi_data['volume']
+    
+    return mfi_data
+
+
 def calculate_market_cap(market_cap,date):
     market_cap['market_cap'] = market_cap['close'] * market_cap['volume']
     return market_cap.loc[date,'market_cap']
+
+
