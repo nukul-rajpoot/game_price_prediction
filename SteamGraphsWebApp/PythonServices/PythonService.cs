@@ -13,6 +13,9 @@
         {
             if (!isInitialized)
             {
+                // add python to .net so local python installation is not required
+                // https://github.com/henon/Python.Included
+
                 // Runtime.PythonDLL = @".\PythonServices\python311.dll";
                 Runtime.PythonDLL = @"C:\Users\Nukul\anaconda3\python311.dll";
                 PythonEngine.Initialize();
