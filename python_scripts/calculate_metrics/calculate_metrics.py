@@ -71,6 +71,10 @@ def calculate_relative_strength_index(df, window):
     return rsi_data
     
     
-def calculate_market_cap(market_cap,date):
-    market_cap['market_cap'] = market_cap['close'] * market_cap['volume']
-    return market_cap.loc[date,'market_cap']
+def calculate_market_cap(market_cap, start_date, end_date,):
+
+    # Market cap filtered data
+    mcfd = market_cap.loc[start_date:end_date]
+    mcfd_sum = (mcfd['close']* mcfd['volume']).sum()
+    print(f"Market cap from {start_date} to {end_date}: {mcfd_sum:.2f}")
+    return mcfd_sum
