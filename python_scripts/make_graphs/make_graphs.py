@@ -306,30 +306,12 @@ def plot_bollinger_bands(df, start_date, end_date):
     fig.show()
 
 
-def plot_relative_strength_index(start_date, end_date, rsi_data):
+def plot_relative_strength_index(start_date, end_date, rsi_data, window):
     # Filtering the data based on the date range.
     mask = (rsi_data.index >= pd.to_datetime(start_date)) & (rsi_data.index <= pd.to_datetime(end_date))
     filtered_data = rsi_data.loc[mask]
-
-    # Calculating the daily price change
-    rsi_data['price_change'] = rsi_data['close'].diff()
-    
-    #Separating the positive and negative price changes
-    rsi_data['gain'] = rsi_data['price_change'].apply(lambda x: x if x > 0 else 0)
-    rsi_data['loss'] = rsi_data['price_change'].apply(lambda x: abs(x) if x < 0 else 0)
-  
-    #calculate average gain and loss
-    rsi_data['avg_gain'] = rsi_data['gain'].rolling(window=14).mean()
-    rsi_data['avg_loss'] = rsi_data['loss'].rolling(window=14).mean()
-    
-    #calculate relative strength
-    rsi_data['rs'] = rsi_data['avg_gain'] / rsi_data['avg_loss']
-  
-    #calculate relative strength index
-    rsi_data['rsi'] = 100 - (100 / (1 + rsi_data['rs']))
    
     # Plotting function
-
     fig = go.Figure()
 
     fig.add_trace(go.Scatter(x=rsi_data.index, y=rsi_data['rsi'], mode='lines', name='RSI'))
@@ -362,22 +344,10 @@ def plot_relative_strength_index(start_date, end_date, rsi_data):
 
 
 
-def plot_money_flow_index(start_date, end_date, mfi_data):
+def plot_money_flow_index(start_date, end_date, mfi_data, window):
     # Filtering the data based on the date range.
     mask = (mfi_data.index >= pd.to_datetime(start_date)) & (mfi_data.index <= pd.to_datetime(end_date))
     filtered_data = mfi_data.loc[mask]
-    
-    # Calculate money flow
-    mfi_data['positive_flow'] = np.where(mfi_data['typical_price'] > mfi_data['typical_price'].shift(1), mfi_data['raw_money_flow'], 0)
-    mfi_data['negative_flow'] = np.where(mfi_data['typical_price'] < mfi_data['typical_price'].shift(1), mfi_data['raw_money_flow'], 0)
-    
-    # Calculate money flow ratio
-    mfi_data['sum_positive_flow'] = mfi_data['positive_flow'].rolling(window=14).sum()
-    mfi_data['sum_negative_flow'] = mfi_data['negative_flow'].rolling(window=14).sum()
-    mfi_data['money_flow_ratio'] = mfi_data['sum_positive_flow'] / mfi_data['sum_negative_flow']
-    
-    # Calculate money flow index
-    mfi_data['mfi'] = 100 - (100 / (1 + mfi_data['money_flow_ratio']))
     
     # Plotting function
     fig = go.Figure()
