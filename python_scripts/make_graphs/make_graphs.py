@@ -57,6 +57,78 @@ def plot_historic_price(df, start_date, end_date):
 
 
 
+
+# LOG NORMAL HISTORIC PRICE
+
+def plot_lognormalised_historic_price(ln_df, start_date, end_date):
+    # Filtering the data based on the date range
+    mask = (ln_df.index >= pd.to_datetime(start_date)) & (ln_df.index <= pd.to_datetime(end_date))
+    filtered_data = ln_df.loc[mask]
+
+    # Creating the plot
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=filtered_data.index, y=filtered_data['price_usd_log'], mode='lines+markers', name='Price USD (Log)'))
+
+    # Formatting
+    fig.update_layout(
+        title='Historic Price (Log Normalized) over time',
+        xaxis_title='Date',
+        yaxis_title='Price USD (Log)',
+        yaxis=dict(
+            title='Price USD (Log)',
+            titlefont_size=16,
+            tickfont_size=14,
+        ),
+        xaxis=dict(
+            rangeslider=dict(
+                visible=True
+            ),
+            type="date"
+        ),
+        showlegend=True
+    )
+
+    fig.show()
+
+
+
+# LOG NORMAL HISTORIC VOLUME
+
+def plot_lognormalised_historic_volume(ln_df, start_date, end_date):
+
+    mask = (ln_df.index >= pd.to_datetime(start_date)) & (ln_df.index <= pd.to_datetime(end_date))
+    filtered_data = ln_df.loc[mask]
+
+    # Creating the plot
+    fig = go.Figure()
+    fig.add_trace(go.Bar(x=filtered_data.index, y=filtered_data['volume_log'], name='Volume (Log)'))
+    fig.add_trace(go.Scatter(x=filtered_data.index, y=filtered_data['volume_log'], mode='lines+markers', name='Volume (Log) Peaks'))
+
+
+    # Formatting
+    fig.update_layout(
+        title='Historic Volume (Log Normalized) over time',
+        xaxis_title='Date',
+        yaxis_title='Volume (Log)',
+        yaxis=dict(
+            title='Volume (Log)',
+            titlefont_size=16,
+            tickfont_size=14,
+        ),
+        xaxis=dict(
+            rangeslider=dict(
+                visible=True
+            ),
+            type="date"
+        ),
+        showlegend=True
+    )
+
+    fig.show()
+
+
+
+
 # HISTORIC VOLUME
 def plot_historic_volume(df, start_date, end_date):
     # Filtering the data based on the date range
@@ -91,17 +163,15 @@ def plot_historic_volume(df, start_date, end_date):
 
 
 # SIMPLE MOVING AVERAGE
-# Function to update the graph based on the selected date range
+
 def plot_simple_moving_average(df, start_date, end_date):
-    # Filtering the data based on the date range
+
     mask = (df.index >= pd.to_datetime(start_date)) & (df.index <= pd.to_datetime(end_date))
     filtered_data = df.loc[mask]
 
-    # Creating the plot
     fig = go.Figure()
     fig.add_trace(go.Scatter(x=filtered_data.index, y=filtered_data['smoothened_price'], mode='lines', name='Smoothened Price'))
 
-    # Formatting
     fig.update_layout(
         title='Simple Moving Average Chart',
         xaxis_title='Date',
@@ -111,7 +181,7 @@ def plot_simple_moving_average(df, start_date, end_date):
             titlefont_size=16,
             tickfont_size=14,
         ),
-        xaxis=dict(  # Added lines for range slider
+        xaxis=dict(  
             rangeslider=dict(
                 visible=True
             ),
@@ -131,11 +201,8 @@ def plot_exponential_moving_average(df, start_date, end_date):
     mask = (df.index >= pd.to_datetime(start_date)) & (df.index <= pd.to_datetime(end_date))
     filtered_data = df.loc[mask]
 
-    # Creating the plot
     fig = go.Figure()
     fig.add_trace(go.Scatter(x=filtered_data.index, y=filtered_data['smoothened_price'], mode='lines', name='Smoothened Price'))
-
-    # Formatting
     fig.update_layout(
         title='Exponential Moving Average Chart',
         xaxis_title='Date',
@@ -239,30 +306,12 @@ def plot_bollinger_bands(df, start_date, end_date):
     fig.show()
 
 
-def plot_relative_strength_index(start_date, end_date, rsi_data):
+def plot_relative_strength_index(start_date, end_date, rsi_data, window):
     # Filtering the data based on the date range.
     mask = (rsi_data.index >= pd.to_datetime(start_date)) & (rsi_data.index <= pd.to_datetime(end_date))
     filtered_data = rsi_data.loc[mask]
-
-    # Calculating the daily price change
-    rsi_data['price_change'] = rsi_data['close'].diff()
-    
-    #Separating the positive and negative price changes
-    rsi_data['gain'] = rsi_data['price_change'].apply(lambda x: x if x > 0 else 0)
-    rsi_data['loss'] = rsi_data['price_change'].apply(lambda x: abs(x) if x < 0 else 0)
-  
-    #calculate average gain and loss
-    rsi_data['avg_gain'] = rsi_data['gain'].rolling(window=14).mean()
-    rsi_data['avg_loss'] = rsi_data['loss'].rolling(window=14).mean()
-    
-    #calculate relative strength
-    rsi_data['rs'] = rsi_data['avg_gain'] / rsi_data['avg_loss']
-  
-    #calculate relative strength index
-    rsi_data['rsi'] = 100 - (100 / (1 + rsi_data['rs']))
    
     # Plotting function
-
     fig = go.Figure()
 
     fig.add_trace(go.Scatter(x=rsi_data.index, y=rsi_data['rsi'], mode='lines', name='RSI'))
@@ -287,6 +336,45 @@ def plot_relative_strength_index(start_date, end_date, rsi_data):
         title='Relative Strength Index (RSI)',
         xaxis_title='Date',
         yaxis_title='RSI',
+        xaxis_rangeslider_visible=True,
+        showlegend=True
+    )
+
+    fig.show()
+
+
+
+def plot_money_flow_index(start_date, end_date, mfi_data, window):
+    # Filtering the data based on the date range.
+    mask = (mfi_data.index >= pd.to_datetime(start_date)) & (mfi_data.index <= pd.to_datetime(end_date))
+    filtered_data = mfi_data.loc[mask]
+    
+    # Plotting function
+    fig = go.Figure()
+
+    fig.add_trace(go.Scatter(x=mfi_data.index, y=mfi_data['mfi'], mode='lines', name='MFI'))
+
+    # Add horizontal lines at y=20 and y=80 as Scatter traces
+    fig.add_trace(go.Scatter(
+        x=[filtered_data.index.min(), filtered_data.index.max()],
+        y=[20, 20],
+        mode="lines",
+        line=dict(color="Red", width=1, dash="solid"),
+        name="Oversold"
+    ))
+
+    fig.add_trace(go.Scatter(
+        x=[filtered_data.index.min(), filtered_data.index.max()],
+        y=[80, 80],
+        mode="lines",
+        line=dict(color="Green", width=1, dash="solid"),
+        name="Overbought"
+    ))
+
+    fig.update_layout(
+        title='Money Flow Index (MFI)',
+        xaxis_title='Date',
+        yaxis_title='MFI',
         xaxis_rangeslider_visible=True,
         showlegend=True
     )
