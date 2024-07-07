@@ -1,5 +1,5 @@
 ﻿// Include this script tag in your HTML to load Plotly
-// <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+ /*<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>*/
 
 function renderHistoricPriceChart() {
     // Example data
