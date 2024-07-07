@@ -41,9 +41,6 @@ function renderHistoricPriceChart() {
         },
         showlegend: true
     };
-    debugger;
-    var alert = "this is a debugger test";
-    alert(alert);
 
     Plotly.newPlot('historicPriceChart', data, layout);
 }
