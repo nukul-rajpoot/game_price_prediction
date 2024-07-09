@@ -11,6 +11,17 @@ function renderHistoricPriceChart() {
         { "Date": "2024-07-01", "PriceUSD": 5.8140 }
     ];
 
+    console.log('Data from ViewBag:', myData);
+    console.log(typeof myData);
+
+    //const parsedData = JSON.parse(myData);
+    //console.log('Parsed data from ViewBag:', parsedData);
+    //console.log(typeof parsedData);
+
+    //console.log('Example data:', jsonData);
+    //console.log(typeof jsonData);
+
+
     // Extract the date and price data
     let dates = jsonData.map(item => item.Date);
     let prices = jsonData.map(item => item.PriceUSD);
