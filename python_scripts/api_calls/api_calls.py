@@ -21,7 +21,7 @@ True
 
 import re
 import requests
-import pandas as pd
+import pandas as pd 
 
 
 def fetch_daily_cookie():
@@ -50,12 +50,12 @@ def fetch_item_from_api(item, dailyCookie):
 
     response = requests.get(url, params=params, cookies=cookies)
     json_data = response.json()
-
+    
     # print error message if request failed
     if response.status_code != 200:
         print(f"Failed to fetch data for {item}. Status code: {response.status_code}")
-        return None
-
+        return None 
+           
     # convert and clean data to dataframe object
     price_history = json_data['prices']
     price_history_df = pd.DataFrame(price_history, columns=['date', 'price_usd', 'volume'])
@@ -81,9 +81,12 @@ def sanitize_filename(filename):
     filename = re.sub(r'\s+', '_', filename)  # Replace spaces with underscores
     return filename
 
-
+    
 def save_item_to_csv(item, dailyCookie):
     csv_data = './data/'+ sanitize_filename(item) +'.csv'
     fetch_item_to_df(item, dailyCookie).to_csv(csv_data, index=True)
     
+#0     Nov 29 2016 01: +0      2.017   5261 - original format
+    
+
 #0     Nov 29 2016 01: +0      2.017   5261 - original format
