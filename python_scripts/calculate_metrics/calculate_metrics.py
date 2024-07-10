@@ -65,7 +65,7 @@ def calculate_price_percentage_change(df, start_date, end_date):
     percentage_change = (filtered_data['price_usd'].iloc[-1] - filtered_data['price_usd'].iloc[0]) / filtered_data['price_usd'].iloc[0] * 100
     print(f"Percentage change in price_usd from {start_date} to {end_date}: {percentage_change:.2f}%")
 
-    return df
+    return percentage_change  
 
 
 
