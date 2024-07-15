@@ -25,11 +25,11 @@ import pandas as pd
 
 
 def fetch_daily_cookie():
-    dailyCookie = "76561199704981720||eyAidHlwIjogIkpXVCIsICJhbGciOiAiRWREU0EiIH0.eyAiaXNzIjogInI6MTRGOV8yNDkzRTBBMF8wNzExRSIsICJzdWIiOiAiNzY1NjExOTk3MDQ5ODE3MjAiLCAiYXVkIjogWyAid2ViOmNvbW11bml0eSIgXSwgImV4cCI6IDE3MjA1NTY2NjgsICJuYmYiOiAxNzExODI5NzI4LCAiaWF0IjogMTcyMDQ2OTcyOCwgImp0aSI6ICIwRjJEXzI0QTRFN0MxXzg1MDc3IiwgIm9hdCI6IDE3MTgyNzM5NjQsICJydF9leHAiOiAxNzIwODM0MTkxLCAicGVyIjogMCwgImlwX3N1YmplY3QiOiAiOTAuMTk3Ljc5LjEzMyIsICJpcF9jb25maXJtZXIiOiAiOTAuMTk3Ljc5LjEzMyIgfQ.EcWIf4GYHOcU26kd63J7Ld32ysoM7W590vT_X-mHu8JF_Wyszpx1KlkquTAM_kD_2YhJWIml_I1gDnXFlfy6DQ"
+    dailyCookie = "76561199704981720||eyAidHlwIjogIkpXVCIsICJhbGciOiAiRWREU0EiIH0.eyAiaXNzIjogInI6MTU2N18yNEJCM0YyOF8wQjEzRCIsICJzdWIiOiAiNzY1NjExOTk3MDQ5ODE3MjAiLCAiYXVkIjogWyAid2ViOmNvbW11bml0eSIgXSwgImV4cCI6IDE3MjEwNTI2ODYsICJuYmYiOiAxNzEyMzI1NTU0LCAiaWF0IjogMTcyMDk2NTU1NCwgImp0aSI6ICIxN0EwXzI0QkI0MTBGXzZBQjU1IiwgIm9hdCI6IDE3MjA4NjQ2OTAsICJydF9leHAiOiAxNzM4OTc3NTE4LCAicGVyIjogMCwgImlwX3N1YmplY3QiOiAiOTAuMTk3Ljc5LjEzMyIsICJpcF9jb25maXJtZXIiOiAiOTAuMTk3Ljc5LjEzMyIgfQ.cAR94JXORRCMj6iMJPjeRPYQ76fwPfcPAq5D5k8TAvWGNhsO5xBCh4zXpA9roZ7rCmPD26RnTOAo79HRrkeqBA"
     return dailyCookie
 
 def fetch_items():
-    items = ["Glove Case Key", "Officer Jacques Beltram | Gendarmerie Nationale", "Kilowatt Case", "AK-47 | Blue Laminate (Factory New)", "Glove Case"]
+    items = ["Glove Case Key", "Officer Jacques Beltram | Gendarmerie Nationale", "Kilowatt Case", "AK-47 | Blue Laminate (Factory New)", "Glove Case",]
     return items
 
 
