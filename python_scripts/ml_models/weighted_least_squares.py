@@ -12,33 +12,33 @@
 # #api call and fetching dataframe
 
 
-# dailyCookie = fetch_daily_cookie()
-# items = fetch_items()
-# current_item = fetch_item_to_df(items[4], dailyCookie)
+dailyCookie = fetch_daily_cookie()
+items = fetch_items()
+current_item = fetch_item_to_df(items[4], dailyCookie)
 
 
-# df = current_item.copy()
+df = current_item.copy()
 
-# # Weights = determine the influence of data points in WLS; using weights of 1,1 yields OLS results (OLS has uniform weightings).
+# Weights = determine the influence of data points in WLS; using weights of 1,1 yields OLS results (OLS has uniform weightings).
 
-# df['date_ordinal'] = df.index.map(pd.Timestamp.toordinal)
-# X = df['date_ordinal'].values.reshape(-1, 1)
-# y = df['price_usd'].values
+df['date_ordinal'] = df.index.map(pd.Timestamp.toordinal)
+X = df['date_ordinal'].values.reshape(-1, 1)
+y = df['price_usd'].values
 
-# weights = np.linspace(1, 10, len(X))
+weights = np.linspace(1, 10, len(X))
 
-# model_wls = sm.WLS(y, sm.add_constant(X), weights=weights).fit()
-# y_pred = model_wls.predict(sm.add_constant(X))
+model_wls = sm.WLS(y, sm.add_constant(X), weights=weights).fit()
+y_pred = model_wls.predict(sm.add_constant(X))
 
-# split_point = int(len(X) * 0.80)
-# X_train, X_test = X[:split_point], X[split_point:]
-# y_train, y_test = y[:split_point], y[split_point:]
-
-
+split_point = int(len(X) * 0.80)
+X_train, X_test = X[:split_point], X[split_point:]
+y_train, y_test = y[:split_point], y[split_point:]
 
 
-# start_date_picker = DatePicker(description='Start Date', value=df.index[0], disabled=False)
-# end_date_picker = DatePicker(description='End Date', value=df.index[-1], disabled=False)
+
+
+start_date_picker = DatePicker(description='Start Date', value=df.index[0], disabled=False)
+end_date_picker = DatePicker(description='End Date', value=df.index[-1], disabled=False)
 
 
 # interact(lambda start_date, end_date:
