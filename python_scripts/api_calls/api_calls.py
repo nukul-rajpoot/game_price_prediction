@@ -29,7 +29,7 @@ def fetch_daily_cookie():
     return dailyCookie
 
 def fetch_items():
-    items = ["Glove Case Key", "Officer Jacques Beltram | Gendarmerie Nationale", "Kilowatt Case", "AK-47 | Blue Laminate (Factory New)", "Glove Case"]
+    items = ["Glove Case Key", "Officer Jacques Beltram | Gendarmerie Nationale", "Kilowatt Case", "AK-47 | Blue Laminate (Factory New)", "Glove Case",]
     return items
 
 
@@ -89,3 +89,4 @@ def save_item_to_csv(item, dailyCookie):
 #0     Nov 29 2016 01: +0      2.017   5261 - original format
     
 
+#0     Nov 29 2016 01: +0      2.017   5261 - original format

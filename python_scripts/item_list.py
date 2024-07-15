@@ -22,7 +22,7 @@ if json_data:
 
     get_item_list_df = pd.DataFrame(json_data)
     print(get_item_list_df.head)
-    get_item_list_df.to_csv('./data/CSGO_Item_List.csv', index=True)
+    get_item_list_df.to_csv('./data/Item_lists/CSGO_Item_List.csv', index=True)
   
 else:
     print("Failed to retrieve data")
