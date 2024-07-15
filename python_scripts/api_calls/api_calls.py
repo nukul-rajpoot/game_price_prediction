@@ -25,7 +25,7 @@ import pandas as pd
 
 
 def fetch_daily_cookie():
-    dailyCookie = "76561199704981720||eyAidHlwIjogIkpXVCIsICJhbGciOiAiRWREU0EiIH0.eyAiaXNzIjogInI6MTU2N18yNEJCM0YyOF8wQjEzRCIsICJzdWIiOiAiNzY1NjExOTk3MDQ5ODE3MjAiLCAiYXVkIjogWyAid2ViOmNvbW11bml0eSIgXSwgImV4cCI6IDE3MjEwNTI2ODYsICJuYmYiOiAxNzEyMzI1NTU0LCAiaWF0IjogMTcyMDk2NTU1NCwgImp0aSI6ICIxN0EwXzI0QkI0MTBGXzZBQjU1IiwgIm9hdCI6IDE3MjA4NjQ2OTAsICJydF9leHAiOiAxNzM4OTc3NTE4LCAicGVyIjogMCwgImlwX3N1YmplY3QiOiAiOTAuMTk3Ljc5LjEzMyIsICJpcF9jb25maXJtZXIiOiAiOTAuMTk3Ljc5LjEzMyIgfQ.cAR94JXORRCMj6iMJPjeRPYQ76fwPfcPAq5D5k8TAvWGNhsO5xBCh4zXpA9roZ7rCmPD26RnTOAo79HRrkeqBA"
+    dailyCookie = "76561199704981720%7C%7CeyAidHlwIjogIkpXVCIsICJhbGciOiAiRWREU0EiIH0.eyAiaXNzIjogInI6MTdEOF8yNEJCNDExRV9DMTRBRiIsICJzdWIiOiAiNzY1NjExOTk3MDQ5ODE3MjAiLCAiYXVkIjogWyAid2ViOmNvbW11bml0eSIgXSwgImV4cCI6IDE3MjExNTg2MTYsICJuYmYiOiAxNzEyNDMwODM3LCAiaWF0IjogMTcyMTA3MDgzNywgImp0aSI6ICIxN0EwXzI0QkI0MTIwXzU3NjhDIiwgIm9hdCI6IDE3MjEwNzA4MzUsICJydF9leHAiOiAxNzM4ODM5NDU1LCAicGVyIjogMCwgImlwX3N1YmplY3QiOiAiODQuNjkuMTQ1LjI1MCIsICJpcF9jb25maXJtZXIiOiAiODQuNjkuMTQ1LjI1MCIgfQ.8b2AGX7YuGpFjzHIz5J6uPbolQlf8WGOZAV1S30o4xSDTWBcp-_DcDurSQcjdI9QViYmEF3b9rVtMX0BT6qkBw"
     return dailyCookie
 
 def fetch_items():
@@ -86,7 +86,3 @@ def save_item_to_csv(item, dailyCookie):
     csv_data = './data/'+ sanitize_filename(item) +'.csv'
     fetch_item_to_df(item, dailyCookie).to_csv(csv_data, index=True)
     
-#0     Nov 29 2016 01: +0      2.017   5261 - original format
-    
-
-#0     Nov 29 2016 01: +0      2.017   5261 - original format
