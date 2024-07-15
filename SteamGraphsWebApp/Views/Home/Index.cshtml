@@ -16,10 +16,10 @@
 
 @* <script type="text/javascript" src='@Url.Content("C:/Users/Nukul/Desktop/Code/game_price_prediction/SteamGraphsWebApp/scripts/example.js")'></script> *@
 
-@ViewBag.ExampleData
+@* @ViewBag.JsonData *@
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
-<script>var myData = @Html.Raw(Json.Serialize(ViewBag.ExampleData));</script>
+<script>var jsonData = @Html.Raw(Json.Serialize(ViewBag.JsonData));</script>
 
 <script src="~/js/example.js"></script>
 <div id="historicPriceChart" style="width:100%; height:500px;"></div>
