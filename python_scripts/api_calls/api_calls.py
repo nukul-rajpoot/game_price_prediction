@@ -32,7 +32,18 @@ def fetch_items():
     items = ["Glove Case Key", "Officer Jacques Beltram | Gendarmerie Nationale", "Kilowatt Case", "AK-47 | Blue Laminate (Factory New)", "Glove Case",]
     return items
 
-
+#Gets the itemlist from 3rd party api
+def get_item_list():
+    url = "https://api.steamapis.com/market/items/730?api_key=uJHHr--KdQ-KdymIei9IdHJdMBQ"
+   
+    try:
+        response = requests.get(url)
+        response.raise_for_status()  # Check if the request was successful
+        json_data = response.json()
+        return json_data
+    except requests.exceptions.RequestException as e:
+        print(f"An error occurred: {e}")
+        return None
 
 
 
