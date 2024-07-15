@@ -59,13 +59,25 @@ def calculate_bollinger_bands(df, window):
 
 
 
+
 # Price Percentage Change calculation
 def calculate_price_percentage_change(df, start_date, end_date):
     filtered_data = df.loc[start_date:end_date]
     percentage_change = (filtered_data['price_usd'].iloc[-1] - filtered_data['price_usd'].iloc[0]) / filtered_data['price_usd'].iloc[0] * 100
     print(f"Percentage change in price_usd from {start_date} to {end_date}: {percentage_change:.2f}%")
 
-    return df
+    return percentage_change  
+
+
+
+
+# total volume calc 
+def calculate_volume(df, start_date, end_date): 
+    filtered_data = df.loc[start_date:end_date]
+    volume_metric = filtered_data['volume'].sum()
+    return volume_metric
+
+
 
 
 
@@ -142,7 +154,9 @@ def calculate_market_cap_jupyter(market_cap, start_date, end_date):
 
 
 
-def calculate_market_cap(market_cap,date):
+def calculate_market_cap(market_cap, date):
+    market_cap = market_cap.copy()  # Make a copy of the DataFrame to avoid SettingWithCopyWarning
     market_cap['market_cap'] = market_cap['close'] * market_cap['volume']
-    return market_cap.loc[date,'market_cap']
+    return market_cap.loc[date, 'market_cap']
+
 
