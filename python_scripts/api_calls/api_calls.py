@@ -86,7 +86,3 @@ def save_item_to_csv(item, dailyCookie):
     csv_data = './data/'+ sanitize_filename(item) +'.csv'
     fetch_item_to_df(item, dailyCookie).to_csv(csv_data, index=True)
     
-#0     Nov 29 2016 01: +0      2.017   5261 - original format
-    
-
-#0     Nov 29 2016 01: +0      2.017   5261 - original format
