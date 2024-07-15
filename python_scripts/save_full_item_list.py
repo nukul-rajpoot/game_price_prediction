@@ -4,7 +4,7 @@ import pandas as pd
 import os
 from api_calls import get_item_list
 
- api_item_list = get_item_list()
+api_item_list = get_item_list()
 if api_item_list:
 
     get_item_list_df = pd.DataFrame(api_item_list)
