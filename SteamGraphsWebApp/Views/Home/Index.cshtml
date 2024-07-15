@@ -14,25 +14,19 @@
     <h3>You entered: @Model.SteamItemName</h3>
 }
 
-@ViewBag.jsonPriceHistoryDate
+@* @ViewBag.jsonPriceHistoryDate
+@ViewBag.jsonPriceHistoryPrice
+ *@
 
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
-
-
-
-
-
-
-
-
-@* <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-
-<script>var Data = @Html.Raw(Json.Serialize(ViewBag.JsonData));</script>
+<script>
+    var date = @Html.Raw(Json.Serialize(ViewBag.jsonPriceHistoryDate));
+    var price = @Html.Raw(Json.Serialize(ViewBag.jsonPriceHistoryPrice));
+</script>
 
 <script src="~/js/example.js"></script>
 <div id="historicPriceChart" style="width:100%; height:500px;"></div>
-
- *@
 
 @* <partial name="~/Views/Graphs/HistoricPriceChart.cshtml" /> *@
 
