@@ -9,6 +9,7 @@
     using Newtonsoft.Json.Linq;
     using Microsoft.Data.Analysis;
     using System.Text.Json.Nodes;
+    using Microsoft.AspNetCore.Http;
 
     public class SteamMarketApiCall
     {
@@ -50,7 +51,7 @@
         //}
 
 
-        public async Task<DataFrame> FetchItemFromApiAsync(string item)
+        public async Task<string> FetchItemFromApiAsync(string item)
         {
             string url = "https://steamcommunity.com/market/pricehistory/";
             var queryParams = new Dictionary<string, string>
@@ -71,71 +72,46 @@
                 return null;
             }
 
-            string jsonContent = await response.Content.ReadAsStringAsync();
-            var jsonDocument = JArray.Parse(JObject.Parse(jsonContent)["prices"].ToString());
+            string rawPriceHistory = await response.Content.ReadAsStringAsync();
+            string filteredPriceHistory = JObject.Parse(rawPriceHistory)["prices"].ToString();
 
-            var dates = new PrimitiveDataFrameColumn<DateTime>("Date");
-            var prices = new PrimitiveDataFrameColumn<double>("PriceUSD");
-            var volumes = new PrimitiveDataFrameColumn<int>("Volume");
-
-            foreach (JArray record in jsonDocument)
-            {
-                string dateString = record[0].ToString();
-                dates.Append(DateTime.ParseExact(dateString.Substring(0, dateString.Length - 4), "MMM dd yyyy HH", CultureInfo.InvariantCulture));
-                prices.Append(double.Parse(record[1].ToString()));
-                volumes.Append(int.Parse(record[2].ToString()));
-            }
-
-            var df = new DataFrame(dates, prices, volumes);
-            df.Columns["Date"].SetName("Index");
-            return df;
+            return filteredPriceHistory;
         }
 
-        public string DataFrameToJson(DataFrame df)
+        public async Task<DataFrame> JsonToDataFrame(string filteredPriceHistory)
         {
-            var rows = new List<Dictionary<string, object>>();
-            foreach (var row in df.Rows)
+            var jsonArray = JArray.Parse(filteredPriceHistory);
+            var dateColumn = new PrimitiveDataFrameColumn<DateTime>("date");
+            var priceColumn = new PrimitiveDataFrameColumn<double>("price_usd");
+            var volumeColumn = new PrimitiveDataFrameColumn<int>("volume");
+
+            foreach (JArray item in jsonArray)
             {
-                var rowDict = new Dictionary<string, object>();
-                foreach (var column in df.Columns)
+                try
                 {
-                    rowDict[column.Name] = row[column.Name];
+                    string rawDate = (string) item[0];
+                    string format = "MMM dd yyyy HH: z";
+                    DateTimeOffset parsedDateTimeOffset = DateTimeOffset.ParseExact(rawDate, format, CultureInfo.InvariantCulture);
+                    
+                    dateColumn.Append(parsedDateTimeOffset.DateTime);
+                    priceColumn.Append((double)item[1]);
+                    volumeColumn.Append(int.Parse((string)item[2]));
+
                 }
-                rows.Add(rowDict);
+                catch (FormatException ex)
+                {
+                    // Handle parsing errors, or log them
+                    Console.WriteLine($"Error parsing data: {ex.Message}");
+                }
+                catch (OverflowException ex)
+                {
+                    // Handle cases where numeric data is out of range
+                    Console.WriteLine($"Data overflow: {ex.Message}");
+                }
             }
-            return JsonConvert.SerializeObject(rows);
-        }
 
-        public async Task<DataFrame> JArrayToDataFrame(JArray jsonArray)
-        {
-            return await Task.Run(() =>
-            {
-                var dateColumn = new PrimitiveDataFrameColumn<DateTime>("date");
-                var priceColumn = new PrimitiveDataFrameColumn<double>("price_usd");
-                var volumeColumn = new PrimitiveDataFrameColumn<int>("volume");
-
-                foreach (JArray item in jsonArray)
-                {
-                    try
-                    {
-                        dateColumn.Append(DateTime.Parse((string)item[0]));
-                        priceColumn.Append((double)item[1]);
-                        volumeColumn.Append(int.Parse((string)item[2]));
-                    }
-                    catch (FormatException ex)
-                    {
-                        // Handle parsing errors, or log them
-                        Console.WriteLine($"Error parsing data: {ex.Message}");
-                    }
-                    catch (OverflowException ex)
-                    {
-                        // Handle cases where numeric data is out of range
-                        Console.WriteLine($"Data overflow: {ex.Message}");
-                    }
-                }
-
-                return new DataFrame(dateColumn, priceColumn, volumeColumn);
-            });
+            return new DataFrame(dateColumn, priceColumn, volumeColumn);
+            
         }
 
 

@@ -3,16 +3,16 @@
 
 function renderHistoricPriceChart() {
     // Example data
-    const jsonData = [
-        { "Date": "2024-06-27", "PriceUSD": 5.7695 },
-        { "Date": "2024-06-28", "PriceUSD": 5.6460 },
-        { "Date": "2024-06-29", "PriceUSD": 5.5630 },
-        { "Date": "2024-06-30", "PriceUSD": 5.7410 },
-        { "Date": "2024-07-01", "PriceUSD": 5.8140 }
-    ];
+    //const jsonData = [
+    //    { "Date": "2024-06-27", "PriceUSD": 5.7695 },
+    //    { "Date": "2024-06-28", "PriceUSD": 5.6460 },
+    //    { "Date": "2024-06-29", "PriceUSD": 5.5630 },
+    //    { "Date": "2024-06-30", "PriceUSD": 5.7410 },
+    //    { "Date": "2024-07-01", "PriceUSD": 5.8140 }
+    //];
 
-    console.log('Data from ViewBag:', myData);
-    console.log(typeof myData);
+    console.log('Data from ViewBag:', jsonData);
+    console.log(typeof jsonData);
 
     //const parsedData = JSON.parse(myData);
     //console.log('Parsed data from ViewBag:', parsedData);
