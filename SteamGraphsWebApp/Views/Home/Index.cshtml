@@ -2,7 +2,7 @@
     ViewData["Title"] = "Home Page";
 }
 
-@* @model SteamItemViewModel
+@model SteamItemViewModel
 
 <form asp-action="Index" method="post">
     <input asp-for="SteamItemName" class="form-control" />
@@ -12,19 +12,28 @@
 @if (Model != null && Model.SteamItemName != null)
 {
     <h3>You entered: @Model.SteamItemName</h3>
-} *@
+}
 
-@* <script type="text/javascript" src='@Url.Content("C:/Users/Nukul/Desktop/Code/game_price_prediction/SteamGraphsWebApp/scripts/example.js")'></script> *@
+@ViewBag.jsonPriceHistoryDate
+@Type(ViewBag.jsonPriceHistoryDate))
 
-@* @ViewBag.JsonData *@
-<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
-<script>var jsonData = @Html.Raw(Json.Serialize(ViewBag.JsonData));</script>
+
+
+
+
+
+
+
+
+@* <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+<script>var Data = @Html.Raw(Json.Serialize(ViewBag.JsonData));</script>
 
 <script src="~/js/example.js"></script>
 <div id="historicPriceChart" style="width:100%; height:500px;"></div>
 
-
+ *@
 
 @* <partial name="~/Views/Graphs/HistoricPriceChart.cshtml" /> *@
 

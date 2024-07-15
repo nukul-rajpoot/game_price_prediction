@@ -29,7 +29,8 @@ namespace SteamGraphsWebApp.Controllers
             DataFrame df= await steamMarketApiCall.JsonToDataFrame(data);
 
             //Pass JSON data to the view
-            ViewBag.JsonData = data;
+            ViewBag.jsonPriceHistoryDate = df["date"];
+
             //string jsonObj = steamMarketApiCall.DataFrameToJson(priceHistory);
             //ViewBag.ExampleData = jsonObj;
             return View();
