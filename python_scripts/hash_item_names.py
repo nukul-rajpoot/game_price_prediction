@@ -25,4 +25,4 @@ for index, row in item_list.iterrows():
     hashed_items.loc[index] = ["'" + str(substring)+ "'"] + [ str(hash_substring)]
 print(hashed_items)
 #Saves to CSV
-hashed_items.to_csv('./data/Item_lists/hashed_items.csv', index=True)
+hashed_items.to_csv('./data/Item_lists/hashed_items.csv', index=False)
