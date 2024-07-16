@@ -1,6 +1,501 @@
 item_name,latest_price,lifetime_price_%_change,30d_price_%_change,lifetime_volume,30d_volume_metric,lifetime_market_cap,30d_market_cap,lifetime_average_price,last_30d_average_price
-Glove Case Key,16.1,721.0,21.6,1640581,170,3580137.0,2401.0,6.53,14.33
-Officer Jacques Beltram | Gendarmerie Nationale,7.2,106.0,-6.0,107693,1018,339683.0,7102.0,5.14,6.99
-Kilowatt Case,0.6,-95.0,-20.2,14875900,2206417,26042339.0,1349010.0,0.83,0.62
-AK-47 | Blue Laminate (Factory New),16.8,0.0,50.1,1389641,910,3642946.0,10883.0,6.34,12.62
-Glove Case,5.8,-7.0,-3.0,79313010,112589,37325906.0,646065.0,2.18,5.72
+'★ Flip Knife | Ultraviolet (Field-Tested)',168.5,24.0,-1.2,22032,29,1663819.0,5102.0,95.41,175.92
+'Glock-18 | Twilight Galaxy (Minimal Wear)',146.5,719.0,4.8,24737,27,400279.0,4058.0,30.38,150.65
+'MAC-10 | Malachite (Well-Worn)',1.2,-62.0,7.4,57690,220,35028.0,228.0,0.72,1.02
+'Sticker | Lucky 13 (Foil)',10.4,-25.0,6.3,44432,72,170003.0,653.0,5.98,8.97
+'★ Flip Knife | Safari Mesh (Minimal Wear)',126.5,186.0,-5.5,9285,4,445828.0,519.0,59.5,129.71
+'★ Bayonet | Case Hardened (Minimal Wear)',442.9,1151.0,-7.3,7736,4,1150227.0,1711.0,180.13,427.79
+'★ Driver Gloves | Overtake (Field-Tested)',97.4,-62.0,17.8,19542,262,2078655.0,22530.0,112.17,86.12
+'StatTrak™ P250 | Wingshot (Well-Worn)',1.9,-81.0,-24.0,59581,145,101770.0,332.0,1.83,2.29
+'StatTrak™ MP7 | Nemesis (Minimal Wear)',12.5,-39.0,10.6,42374,72,430827.0,910.0,9.71,12.6
+'ESL One Cologne 2014 Challengers',63.8,7231.0,-1.0,639762,80,1112664.0,4693.0,20.97,59.07
+'StatTrak™ M249 | Warbird (Field-Tested)',0.6,-31.0,-6.3,51955,100,17651.0,60.0,0.42,0.6
+'StatTrak™ UMP-45 | Riot (Well-Worn)',0.2,-80.0,-22.1,40221,90,17099.0,21.0,0.41,0.23
+'AK-47 | Rat Rod (Field-Tested)',2.5,-35.0,-7.5,774996,3907,2339134.0,9808.0,2.86,2.53
+'StatTrak™ SG 553 | Triarch (Field-Tested)',0.4,-90.0,1.9,112685,446,73576.0,205.0,0.62,0.46
+'StatTrak™ Tec-9 | Ice Cap (Field-Tested)',0.2,-92.0,-2.4,345299,1641,120568.0,341.0,0.3,0.21
+'StatTrak™ AK-47 | Rat Rod (Field-Tested)',7.5,-12.0,-5.3,84693,497,709481.0,3821.0,8.12,7.69
+'AK-47 | Rat Rod (Battle-Scarred)',2.5,-68.0,-1.7,227336,1438,648242.0,3344.0,2.73,2.33
+'M4A4 | The Emperor (Well-Worn)',9.6,-76.0,2.8,50358,428,634716.0,3776.0,13.58,8.82
+'StatTrak™ Tec-9 | Ice Cap (Minimal Wear)',0.7,-88.0,-8.8,197969,953,149448.0,664.0,0.7,0.7
+'AK-47 | Baroque Purple (Minimal Wear)',6.2,82.0,-6.3,203262,737,588988.0,4719.0,4.16,6.37
+'AK-47 | Rat Rod (Minimal Wear)',4.1,-19.0,-10.1,286340,1394,1209162.0,5605.0,4.16,4.03
+'StatTrak™ AWP | Atheris (Factory New)',32.7,-85.0,4.4,23365,204,787580.0,6481.0,34.34,31.68
+'AWP | Fever Dream (Factory New)',10.3,-84.0,9.6,348683,1170,3098211.0,12204.0,9.24,10.39
+'Tec-9 | Decimator (Field-Tested)',9.6,258.0,3.5,120917,692,507799.0,6231.0,6.19,9.02
+'StatTrak™ AK-47 | Aquamarine Revenge (Well-Worn)',43.6,-57.0,-6.6,18632,67,674015.0,2679.0,35.86,39.95
+'★ M9 Bayonet | Ultraviolet (Field-Tested)',517.9,88.0,11.1,18896,6,2155473.0,3091.0,160.08,515.17
+'Sealed Graffiti | Rly (Blood Red)',0.2,550.0,-8.9,20507,78,1906.0,15.0,0.15,0.19
+'StatTrak™ R8 Revolver | Memento (Field-Tested)',0.8,236.0,4.6,62621,231,23480.0,185.0,0.49,0.8
+'Desert Eagle | Kumicho Dragon (Factory New)',27.0,12.0,-11.3,88100,274,1244903.0,7800.0,17.76,28.53
+'USP-S | Overgrowth (Factory New)',57.8,591.0,-3.7,6369,23,136202.0,1252.0,28.98,54.42
+'Sticker | coldzera | Cologne 2015',6.7,956.0,28.9,12226,6,8956.0,39.0,2.18,6.58
+'StatTrak™ MP5-SD | Acid Wash (Field-Tested)',0.7,122.0,-2.8,79511,263,31214.0,173.0,0.47,0.66
+'StatTrak™ CZ75-Auto | Yellow Jacket (Field-Tested)',7.8,-45.0,10.0,30589,48,197126.0,401.0,6.13,8.34
+'Negev | Loudmouth (Well-Worn)',0.5,-50.0,-9.4,73147,177,26168.0,87.0,0.39,0.49
+'AK-47 | Baroque Purple (Battle-Scarred)',6.3,597.0,18.4,146527,304,239602.0,1814.0,2.85,5.91
+'SG 553 | Candy Apple (Minimal Wear)',6.1,606.0,0.8,117242,182,148287.0,1101.0,2.85,6.02
+'StatTrak™ MP5-SD | Acid Wash (Minimal Wear)',1.5,190.0,-29.3,34700,133,28891.0,214.0,1.03,1.57
+'StatTrak™ AK-47 | Aquamarine Revenge (Minimal Wear)',104.3,-61.0,-31.3,13867,29,1128176.0,3675.0,83.4,126.96
+'SG 553 | Candy Apple (Factory New)',6.9,66.0,16.3,56217,201,186067.0,1390.0,4.14,6.93
+'ESL One Cologne 2014 Legends',81.2,9251.0,5.3,1153588,106,1717771.0,8280.0,24.46,77.39
+'SG 553 | Colony IV (Field-Tested)',7.7,-0.0,32.3,112744,295,469637.0,2156.0,5.06,7.29
+'StatTrak™ G3SG1 | Black Sand (Field-Tested)',0.6,156.0,-8.3,54690,160,21067.0,96.0,0.52,0.59
+'Tec-9 | Fuel Injector (Minimal Wear)',4.4,-68.0,13.5,188741,859,554354.0,4073.0,3.24,4.74
+'AUG | Arctic Wolf (Factory New)',5.0,71.0,-0.0,53872,262,211236.0,1235.0,4.47,4.72
+'P2000 | Obsidian (Field-Tested)',1.1,176.0,-27.0,174787,349,85976.0,445.0,0.79,1.28
+'StatTrak™ R8 Revolver | Memento (Minimal Wear)',1.8,315.0,-0.4,29745,101,23370.0,186.0,1.07,1.83
+'USP-S | Pathfinder (Factory New)',25.2,8735.0,-4.2,95371,66,205775.0,1730.0,9.9,26.14
+'StatTrak™ AWP | Hyper Beast (Well-Worn)',38.5,-74.0,-19.3,15922,55,657864.0,2034.0,40.66,37.02
+'StatTrak™ AK-47 | Rat Rod (Minimal Wear)',11.8,-7.0,-0.7,39947,234,473353.0,2895.0,11.74,12.34
+'SSG 08 | Bloodshot (Field-Tested)',8.3,20.0,9.6,234816,1037,785853.0,7945.0,5.23,7.64
+'AWP | Fever Dream (Minimal Wear)',8.4,-80.0,-5.4,732592,2000,4713776.0,16768.0,6.98,8.38
+'G3SG1 | Arctic Camo (Field-Tested)',5.7,243.0,-14.0,63519,21,20298.0,132.0,1.4,6.23
+'AK-47 | Rat Rod (Factory New)',9.5,26.0,5.5,56985,332,435020.0,2998.0,7.96,9.0
+"'Music Kit | Daniel Sadowski, Crimson Assault'",1.8,-89.0,16.0,110091,163,261293.0,279.0,2.61,1.72
+'SG 553 | Colony IV (Well-Worn)',7.2,221.0,19.0,66429,188,196304.0,1193.0,4.09,6.33
+'★ Talon Knife | Blue Steel (Field-Tested)',465.6,246.0,-9.1,2291,12,589584.0,5625.0,260.33,468.79
+'XM1014 | VariCamo Blue (Factory New)',13.4,704.0,-3.2,47898,34,136593.0,454.0,4.74,13.38
+'Sealed Graffiti | Oops (Blood Red)',0.3,780.0,5.5,18452,48,2344.0,14.0,0.23,0.3
+'XM1014 | Scumbria (Well-Worn)',0.1,-74.0,-2.9,324873,951,25445.0,92.0,0.09,0.09
+'Sticker | Pocket BBQ',0.1,-72.0,-22.2,150072,315,52034.0,47.0,0.31,0.15
+'AK-47 | Hydroponic (Field-Tested)',815.7,1994.0,6.6,25931,6,1405715.0,4797.0,160.74,799.47
+'AUG | Arctic Wolf (Minimal Wear)',2.4,-72.0,-9.9,155454,677,323590.0,1767.0,2.35,2.61
+'StatTrak™ SSG 08 | Bloodshot (Field-Tested)',15.9,138.0,0.3,27055,116,232185.0,1936.0,10.4,16.65
+'StatTrak™ SG 553 | Cyrex (Well-Worn)',8.0,-51.0,16.3,22249,105,132744.0,758.0,5.99,7.15
+'MP9 | Dart (Well-Worn)',0.3,37.0,-22.0,51141,122,11311.0,43.0,0.28,0.35
+'Tec-9 | Decimator (Minimal Wear)',20.9,347.0,-1.4,39720,118,323938.0,2411.0,12.34,20.43
+'StatTrak™ SSG 08 | Necropos (Battle-Scarred)',0.4,-53.0,5.0,116801,508,55234.0,207.0,0.51,0.41
+'StatTrak™ MAC-10 | Lapis Gator (Minimal Wear)',1.0,-1.0,-4.1,119572,392,66588.0,401.0,0.67,1.02
+'M4A1-S | Moss Quartz (Field-Tested)',29.2,32763.0,-3.3,97628,92,187158.0,2557.0,10.03,27.75
+'Sealed Graffiti | Virtus.Pro | Krakow 2017',0.8,68.0,-24.9,44394,38,15200.0,36.0,0.66,0.95
+'M4A1-S | Flashback (Field-Tested)',0.3,-96.0,-4.4,2091428,7023,1658350.0,1962.0,0.68,0.28
+'M4A1-S | Hyper Beast (Factory New)',97.4,-60.0,-14.1,26778,61,1405703.0,7233.0,61.9,118.71
+'Tec-9 | Avalanche (Well-Worn)',0.7,-73.0,10.3,251630,1229,159206.0,823.0,0.61,0.67
+'M4A1-S | Moss Quartz (Factory New)',75.6,28011.0,24.5,85559,152,375749.0,9730.0,18.02,63.91
+'XM1014 | Teclu Burner (Field-Tested)',0.5,-72.0,-13.3,297372,1424,170189.0,762.0,0.6,0.53
+'MAG-7 | Chainmail (Factory New)',24.9,18881.0,-5.2,120739,120,253646.0,3140.0,10.04,25.9
+'StatTrak™ SG 553 | Aerial (Factory New)',0.7,-92.0,-15.3,99051,436,154350.0,351.0,1.48,0.81
+'G3SG1 | Demeter (Well-Worn)',7.3,52.0,-5.0,30177,27,13676.0,172.0,1.43,6.26
+'StatTrak™ XM1014 | Scumbria (Well-Worn)',0.1,-86.0,-46.3,103533,291,19907.0,63.0,0.2,0.22
+'Tec-9 | Ice Cap (Minimal Wear)',0.2,-87.0,5.1,923901,4059,161138.0,903.0,0.18,0.22
+'MP9 | Green Plaid (Factory New)',4.7,2377.0,-13.0,67512,20,26693.0,108.0,1.16,5.41
+'StatTrak™ MAC-10 | Stalker (Battle-Scarred)',21.1,185.0,-3.6,2966,35,46069.0,617.0,15.9,17.64
+'★ M9 Bayonet | Damascus Steel (Field-Tested)',634.3,138.0,-1.3,14920,10,2145336.0,6222.0,185.85,622.22
+'StatTrak™ Dual Berettas | Cobra Strike (Minimal Wear)',72.0,340.0,-25.5,2618,4,52109.0,332.0,27.09,83.02
+'Sticker | Spiidi | MLG Columbus 2016',1.8,506.0,75.5,29328,3,6786.0,5.0,0.46,1.57
+'AK-47 | Point Disarray (Battle-Scarred)',5.9,-64.0,15.2,145918,2560,1084504.0,15141.0,7.85,5.83
+'UMP-45 | Delusion (Factory New)',1.9,143.0,4.6,42504,78,35053.0,148.0,1.15,1.91
+'StatTrak™ AWP | Elite Build (Field-Tested)',22.1,-23.0,12.9,42759,108,608440.0,2220.0,14.85,20.57
+'Sticker | Xyp9x | MLG Columbus 2016',2.3,430.0,-3.2,26219,3,8014.0,7.0,0.83,2.26
+'Sawed-Off | Highwayman (Factory New)',1.9,29.0,3.2,50916,85,35935.0,170.0,1.12,2.03
+'Desert Eagle | Sunset Storm 弐 (Factory New)',257.1,783.0,-12.1,26833,5,650278.0,1401.0,63.97,280.19
+'PP-Bizon | Blue Streak (Well-Worn)',1.0,-39.0,-32.2,35045,26,16407.0,37.0,0.63,1.42
+'SCAR-20 | Outbreak (Minimal Wear)',0.2,-74.0,17.7,319926,1438,52920.0,275.0,0.19,0.18
+'AWP | Containment Breach (Field-Tested)',72.7,110.0,0.9,54783,231,2464082.0,16891.0,53.73,73.21
+'Souvenir MP9 | Setting Sun (Battle-Scarred)',2.4,-11.0,-13.3,8712,51,11723.0,125.0,1.52,2.46
+'Galil AR | Firefight (Well-Worn)',0.2,-90.0,-15.1,298611,1906,79370.0,463.0,0.26,0.24
+'Sticker | KRIMZ | Cologne 2016',1.7,216.0,14.1,24262,9,9821.0,13.0,0.56,1.47
+'MP5-SD | Acid Wash (Factory New)',0.9,247.0,-12.1,63827,179,28599.0,173.0,0.65,0.96
+'Sticker | karrigan (Foil) | Cologne 2015',15.0,729.0,14.3,7675,4,8011.0,51.0,1.81,12.8
+'G3SG1 | Flux (Minimal Wear)',10.1,-8.0,2.5,116190,186,455645.0,1848.0,5.6,9.92
+'StatTrak™ SG 553 | Atlas (Minimal Wear)',0.3,-91.0,-15.4,115645,379,48955.0,128.0,0.41,0.33
+'StatTrak™ R8 Revolver | Reboot (Field-Tested)',1.5,-79.0,-8.9,108899,394,147305.0,577.0,1.34,1.46
+'XM1014 | Quicksilver (Battle-Scarred)',0.2,-47.0,-5.8,69199,117,7570.0,23.0,0.13,0.2
+'G3SG1 | Orange Crash (Field-Tested)',0.1,-88.0,1.5,675005,3469,45199.0,261.0,0.07,0.07
+'StatTrak™ SG 553 | Cyrex (Minimal Wear)',15.2,-56.0,10.1,25392,86,344839.0,1208.0,15.35,14.03
+'StatTrak™ AUG | Bengal Tiger (Minimal Wear)',17.7,-65.0,-4.9,11227,27,135307.0,455.0,14.62,16.76
+'P2000 | Coach Class (Field-Tested)',7.6,5834.0,-5.2,113302,17,21329.0,130.0,1.54,7.65
+'M4A1-S | Mecha Industries (Battle-Scarred)',12.9,-63.0,-6.6,104956,1033,1050726.0,13487.0,10.05,13.01
+'StatTrak™ MAC-10 | Curse (Factory New)',13.2,-23.0,-14.9,12209,13,72951.0,192.0,8.21,14.74
+'MAC-10 | Carnivore (Minimal Wear)',0.1,-86.0,9.6,495924,2088,56499.0,264.0,0.11,0.12
+'P2000 | Obsidian (Well-Worn)',1.2,42.0,12.0,95756,246,38787.0,277.0,0.63,1.14
+'CZ75-Auto | Indigo (Field-Tested)',1.4,3034.0,4.1,333741,395,47714.0,513.0,0.59,1.29
+'MAC-10 | Classic Crate (Battle-Scarred)',0.1,-31.0,196.7,209975,1286,19384.0,138.0,0.09,0.09
+'StatTrak™ MP9 | Bioleak (Minimal Wear)',0.6,-80.0,9.8,166612,1309,104920.0,787.0,0.66,0.6
+'Tec-9 | Ice Cap (Field-Tested)',0.1,-89.0,-7.2,1203244,5489,105615.0,733.0,0.09,0.13
+'R8 Revolver | Memento (Field-Tested)',0.4,-4.0,-6.5,243768,735,48379.0,291.0,0.38,0.39
+'StatTrak™ CZ75-Auto | Polymer (Minimal Wear)',0.4,-81.0,-13.3,155030,368,78602.0,146.0,0.49,0.4
+'StatTrak™ M249 | Nebula Crusader (Field-Tested)',2.4,-58.0,-5.8,65264,144,95493.0,347.0,1.65,2.41
+'AK-47 | Orbit Mk01 (Field-Tested)',10.0,11.0,-2.2,432856,1133,2776032.0,11324.0,7.75,10.0
+'Five-SeveN | Jungle (Well-Worn)',1.5,56.0,19.2,57284,52,9895.0,66.0,0.68,1.26
+'StatTrak™ Five-SeveN | Monkey Business (Battle-Scarred)',1.5,56.0,19.2,57284,52,9895.0,66.0,0.68,1.26
+'M4A4 | Dark Blossom (Field-Tested)',1.5,56.0,19.2,57284,52,9895.0,66.0,0.68,1.26
+'StatTrak™ XM1014 | Red Python (Well-Worn)',1.5,56.0,19.2,57284,52,9895.0,66.0,0.68,1.26
+"'StatTrak™ Music Kit | Mord Fustang, Diamonds'",1.5,56.0,19.2,57284,52,9895.0,66.0,0.68,1.26
+'Sawed-Off | Highwayman (Battle-Scarred)',0.7,12.0,80.1,69787,150,23800.0,89.0,0.34,0.57
+'Sticker | Crown (Foil)',496.1,9658.0,-10.2,63526,53,3353265.0,28807.0,230.71,533.65
+'XM1014 | Black Tie (Minimal Wear)',0.7,-78.0,-13.1,249175,1895,153433.0,1422.0,0.63,0.75
+'AK-47 | Point Disarray (Factory New)',24.6,-58.0,-10.3,84266,577,1944367.0,14739.0,24.89,25.63
+'StatTrak™ Sawed-Off | Fubar (Battle-Scarred)',0.1,-94.0,-1.4,310922,1143,45767.0,84.0,0.14,0.07
+'Sticker | Luck Skill (Foil)',3.9,-72.0,1.7,44338,108,112009.0,374.0,3.27,3.47
+'StatTrak™ UMP-45 | Briefing (Minimal Wear)',0.2,-92.0,0.5,199364,689,99195.0,143.0,0.42,0.21
+'Sawed-Off | Yorick (Minimal Wear)',0.2,-70.0,-2.4,328264,1202,52836.0,207.0,0.18,0.17
+'★ Hydra Gloves | Rattler (Field-Tested)',65.5,-73.0,6.7,26740,257,1563093.0,16314.0,74.97,63.3
+'M4A1-S | Decimator (Minimal Wear)',14.5,-73.0,-9.0,484729,1818,3870280.0,26194.0,9.99,14.42
+'StatTrak™ MP9 | Modest Threat (Well-Worn)',0.2,-78.0,7.0,48813,606,16244.0,124.0,0.32,0.2
+'Dual Berettas | Balance (Minimal Wear)',0.8,-51.0,-10.9,144510,539,46410.0,448.0,0.53,0.83
+'Sticker | Stupid Banana (Foil)',24.7,967.0,-16.5,68346,81,287473.0,2250.0,9.8,27.68
+'MP9 | Slide (Factory New)',0.0,-91.0,-27.4,66448,1075,6528.0,51.0,0.1,0.05
+'Sticker | Supreme Master First Class',0.1,-88.0,9.6,273029,810,42184.0,47.0,0.12,0.06
+'StatTrak™ M249 | Spectre (Field-Tested)',0.2,-89.0,28.5,190502,1135,36613.0,140.0,0.19,0.12
+'PP-Bizon | Embargo (Field-Tested)',1.1,7.0,-22.7,151186,321,78137.0,410.0,0.77,1.27
+"'Music Kit | Sean Murray, A*D*8'",1.6,-89.0,11.5,79862,101,148576.0,140.0,2.14,1.39
+'SCAR-20 | Torn (Minimal Wear)',0.6,996.0,-2.6,113596,236,30629.0,144.0,0.47,0.6
+'MAC-10 | Carnivore (Field-Tested)',0.1,-86.0,-21.1,693273,3057,57942.0,404.0,0.09,0.12
+'StatTrak™ Sawed-Off | Highwayman (Minimal Wear)',2.6,11.0,-34.4,36228,39,47470.0,155.0,1.93,3.83
+'StatTrak™ CZ75-Auto | Pole Position (Well-Worn)',0.6,-90.0,-11.0,32657,89,24500.0,51.0,0.79,0.58
+'StatTrak™ AUG | Torque (Well-Worn)',9.2,-44.0,-9.7,15904,9,31578.0,83.0,2.98,9.27
+'StatTrak™ Glock-18 | Ironwork (Field-Tested)',0.3,-91.0,19.4,401051,1915,187164.0,548.0,0.44,0.29
+'Sticker | NiKo | Cluj-Napoca 2015',93.2,6865.0,29.5,22183,3,42082.0,255.0,12.17,84.99
+'MP7 | Impire (Field-Tested)',1.9,83.0,-0.4,232967,611,133126.0,1125.0,0.87,1.84
+'MAG-7 | Praetorian (Field-Tested)',1.7,63.0,-7.5,235554,531,127797.0,945.0,0.83,1.77
+'StatTrak™ Dual Berettas | Cartel (Field-Tested)',0.5,-33.0,-3.6,129088,402,34283.0,203.0,0.32,0.51
+'MAC-10 | Nuclear Garden (Battle-Scarred)',4.4,86.0,-6.8,26768,58,34256.0,260.0,1.52,4.49
+'StatTrak™ Dual Berettas | Balance (Field-Tested)',1.0,213.0,-24.9,50276,221,26393.0,216.0,0.67,0.98
+'FAMAS | Decommissioned (Well-Worn)',0.1,-66.0,-1.4,526444,2724,35291.0,230.0,0.07,0.08
+'StatTrak™ G3SG1 | Orange Crash (Field-Tested)',0.1,-93.0,-5.0,188211,946,33543.0,113.0,0.17,0.12
+'SCAR-20 | Powercore (Field-Tested)',0.2,-78.0,-7.5,520263,1419,128572.0,352.0,0.25,0.25
+'R8 Revolver | Canal Spray (Minimal Wear)',1.7,820.0,-4.8,142296,101,30109.0,178.0,0.71,1.76
+'StatTrak™ PP-Bizon | Photic Zone (Well-Worn)',0.4,-39.0,-17.2,125334,315,32941.0,120.0,0.28,0.38
+'SCAR-20 | Stone Mosaico (Minimal Wear)',1.6,1611.0,-13.7,159245,138,34612.0,273.0,0.73,1.97
+'XM1014 | Scumbria (Battle-Scarred)',0.1,-80.0,-13.5,222251,495,16849.0,47.0,0.08,0.09
+'★ Karambit | Ultraviolet (Field-Tested)',627.1,175.0,1.5,16963,15,3057993.0,9408.0,239.56,627.87
+'★ Bayonet | Damascus Steel (Field-Tested)',256.4,23.0,-3.7,15840,19,1847997.0,5229.0,148.49,275.72
+'FAMAS | Styx (Battle-Scarred)',2.4,17.0,30.4,32683,169,32311.0,372.0,1.31,2.11
+'AUG | Navy Murano (Minimal Wear)',1.7,1135.0,-6.1,246379,356,73235.0,632.0,0.8,1.77
+'StatTrak™ MAC-10 | Carnivore (Minimal Wear)',0.4,-82.0,-10.4,143676,570,54323.0,214.0,0.38,0.38
+'Dual Berettas | Pyre (Minimal Wear)',22.9,20889.0,-2.5,54307,31,101598.0,741.0,8.57,23.72
+'StatTrak™ P250 | Verdigris (Well-Worn)',0.3,-89.0,14.7,38224,234,14151.0,65.0,0.37,0.28
+'StatTrak™ Glock-18 | Ironwork (Well-Worn)',0.2,-93.0,2.1,316381,2106,129134.0,364.0,0.38,0.18
+'★ Falchion Knife | Fade (Factory New)',313.3,3.0,-8.2,34205,40,4123974.0,13718.0,164.4,342.88
+'StatTrak™ MAC-10 | Lapis Gator (Factory New)',1.8,-6.0,2.0,93575,395,93845.0,746.0,1.17,1.9
+'M4A1-S | Flashback (Battle-Scarred)',0.2,-96.0,-7.2,542414,2466,397431.0,611.0,0.63,0.25
+'StatTrak™ XM1014 | Scumbria (Minimal Wear)',0.6,-55.0,-5.8,94712,237,33414.0,160.0,0.45,0.67
+'Glock-18 | Royal Legion (Battle-Scarred)',1.4,29.0,-13.9,187724,516,117223.0,744.0,0.73,1.45
+'SCAR-20 | Army Sheen (Factory New)',4.6,1962.0,31.8,515459,179,111421.0,637.0,0.96,3.51
+'Tec-9 | Flash Out (Field-Tested)',0.1,-59.0,27.5,616906,3645,39701.0,416.0,0.08,0.1
+'StatTrak™ Dual Berettas | Balance (Minimal Wear)',1.7,168.0,-0.9,32470,150,28695.0,269.0,1.11,1.8
+'G3SG1 | Black Sand (Minimal Wear)',0.6,242.0,6.6,113510,227,30475.0,130.0,0.44,0.57
+'Nova | Ranger (Factory New)',0.6,-7.0,39.1,99010,185,22573.0,100.0,0.32,0.54
+'Sticker | Silver',0.3,-76.0,7.0,311913,1110,79601.0,217.0,0.24,0.19
+'StatTrak™ AK-47 | Frontside Misty (Well-Worn)',20.9,-70.0,-2.7,23372,105,508979.0,2206.0,22.38,21.04
+'Negev | Power Loader (Well-Worn)',0.7,-61.0,9.8,143160,1103,80007.0,781.0,0.61,0.7
+'M4A1-S | Flashback (Factory New)',2.1,-90.0,-7.0,157452,746,466837.0,1557.0,2.73,2.09
+'USP-S | Para Green (Well-Worn)',10.0,809.0,-5.1,43149,21,31291.0,206.0,1.65,9.72
+'SCAR-20 | Torn (Factory New)',0.8,1106.0,-20.0,115682,198,46564.0,183.0,0.69,0.95
+'MP5-SD | Acid Wash (Minimal Wear)',0.6,273.0,-9.2,127670,358,34294.0,219.0,0.45,0.61
+'P250 | Iron Clad (Field-Tested)',0.1,-78.0,19.8,1026488,3698,96684.0,458.0,0.1,0.12
+'XM1014 | Slipstream (Factory New)',0.3,-75.0,-3.0,582263,3187,104803.0,845.0,0.2,0.26
+'Sawed-Off | Limelight (Minimal Wear)',0.8,-80.0,22.0,223059,679,152558.0,501.0,0.67,0.72
+'G3SG1 | Orange Kimono (Factory New)',4.1,395.0,-1.5,139703,82,57667.0,352.0,1.27,4.33
+'StatTrak™ XM1014 | Quicksilver (Battle-Scarred)',0.5,-54.0,30.2,29062,110,9327.0,65.0,0.34,0.59
+'StatTrak™ CZ75-Auto | Imprint (Well-Worn)',0.1,-94.0,-19.0,270452,1070,50425.0,96.0,0.17,0.09
+'SCAR-20 | Outbreak (Factory New)',0.3,-60.0,0.0,294661,1045,81736.0,321.0,0.28,0.3
+'PP-Bizon | Judgement of Anubis (Field-Tested)',3.3,-83.0,-7.5,139664,761,496394.0,2524.0,3.5,3.31
+'StatTrak™ AK-47 | Frontside Misty (Battle-Scarred)',18.2,-66.0,19.1,31686,300,509950.0,5280.0,17.16,17.63
+'Negev | Power Loader (Minimal Wear)',2.6,-8.0,-1.1,169833,869,256335.0,2261.0,1.93,2.59
+'StatTrak™ Five-SeveN | Fowl Play (Battle-Scarred)',3.0,-71.0,-12.1,29279,178,92755.0,527.0,2.88,2.92
+'Tec-9 | Jambiya (Minimal Wear)',0.6,12.0,-9.2,498653,933,62453.0,519.0,0.22,0.55
+'StatTrak™ Galil AR | Eco (Well-Worn)',4.4,-81.0,-4.6,38618,150,137547.0,693.0,3.54,4.63
+'M4A1-S | Flashback (Well-Worn)',0.2,-96.0,-10.3,1027312,4676,752495.0,1148.0,0.64,0.25
+'StatTrak™ Galil AR | Chatterbox (Well-Worn)',49.1,135.0,5.5,13915,17,234412.0,790.0,19.92,46.47
+'AK-47 | Orbit Mk01 (Minimal Wear)',12.4,7.0,-7.2,305088,697,2202978.0,8742.0,9.07,12.56
+'StatTrak™ AK-47 | Point Disarray (Field-Tested)',16.8,-75.0,-17.7,49996,389,1283578.0,6964.0,26.1,17.92
+'P2000 | Grassland (Battle-Scarred)',3.0,1959.0,48.2,65391,46,10791.0,121.0,0.47,2.63
+'StatTrak™ Five-SeveN | Scumbria (Well-Worn)',0.1,-94.0,1.3,236510,772,43125.0,70.0,0.16,0.09
+'R8 Revolver | Canal Spray (Field-Tested)',1.3,3218.0,-4.6,305374,261,40853.0,337.0,0.59,1.27
+'StatTrak™ Tec-9 | Jambiya (Field-Tested)',0.5,-62.0,-9.1,190818,395,65951.0,212.0,0.33,0.54
+'StatTrak™ UMP-45 | Briefing (Well-Worn)',0.1,-95.0,5.3,255148,808,51250.0,64.0,0.19,0.08
+'StatTrak™ FAMAS | Survivor Z (Battle-Scarred)',0.4,-84.0,-2.2,62016,241,32365.0,90.0,0.55,0.37
+'Souvenir P250 | Contamination (Factory New)',4.8,-86.0,-6.0,7153,9,30398.0,77.0,4.81,8.51
+'R8 Revolver | Memento (Minimal Wear)',0.6,253.0,-15.4,118827,238,32335.0,157.0,0.46,0.66
+'Nova | Exo (Field-Tested)',0.1,-75.0,20.7,774175,3173,72247.0,631.0,0.17,0.56
+'SCAR-20 | Bloodsport (Factory New)',6.2,-41.0,-8.1,129943,370,465597.0,2371.0,4.27,6.37
+'StatTrak™ MP7 | Neon Ply (Field-Tested)',2.6,110.0,3.1,39193,134,51323.0,322.0,1.54,2.41
+'CZ75-Auto | Imprint (Minimal Wear)',0.1,-85.0,4.6,795324,2153,68982.0,185.0,0.09,0.08
+'SG 553 | Triarch (Field-Tested)',0.2,-76.0,-9.4,556859,1494,139647.0,360.0,0.25,0.24
+'Glock-18 | Weasel (Battle-Scarred)',0.2,-95.0,-2.1,424186,1750,159016.0,395.0,0.34,0.24
+'Souvenir Sawed-Off | Amber Fade (Minimal Wear)',1.4,-5.0,13.5,7629,13,8673.0,17.0,1.31,1.27
+'USP-S | Cyrex (Battle-Scarred)',0.7,-80.0,-6.0,226425,1355,264639.0,925.0,1.1,0.68
+'XM1014 | Red Python (Well-Worn)',1.9,666.0,-13.3,39710,34,7457.0,74.0,0.42,2.12
+'M4A1-S | Decimator (Field-Tested)',8.4,-79.0,-11.0,1131126,4376,6510396.0,37291.0,6.78,8.55
+'Souvenir MP7 | Orange Peel (Well-Worn)',0.7,-42.0,-9.5,7913,15,5586.0,12.0,0.73,0.8
+'Five-SeveN | Retrobution (Well-Worn)',0.4,-79.0,0.2,186066,679,95357.0,277.0,0.52,0.41
+'P250 | Iron Clad (Minimal Wear)',0.1,-89.0,11.7,423260,1111,50621.0,129.0,0.12,0.12
+'SG 553 | Colony IV (Battle-Scarred)',6.0,277.0,14.9,46780,239,126208.0,1296.0,3.59,5.27
+'MAG-7 | Petroglyph (Minimal Wear)',0.4,-71.0,-7.1,383650,797,134433.0,355.0,0.38,0.44
+'SCAR-20 | Green Marine (Battle-Scarred)',0.1,-83.0,-2.0,179869,345,14566.0,34.0,0.09,0.09
+'StatTrak™ CZ75-Auto | Polymer (Field-Tested)',0.2,-84.0,-6.8,292057,678,80993.0,141.0,0.26,0.21
+'Glock-18 | Wraiths (Well-Worn)',0.4,-71.0,29.2,138919,469,28964.0,154.0,0.24,0.32
+'AK-47 | First Class (Well-Worn)',62.1,1060.0,12.1,22575,17,139085.0,974.0,15.89,57.71
+'R8 Revolver | Crimson Web (Battle-Scarred)',0.0,-99.0,11.6,247095,803,39122.0,38.0,0.09,0.05
+'StatTrak™ Glock-18 | Weasel (Well-Worn)',0.6,-97.0,-11.5,149434,1166,217417.0,624.0,1.5,0.54
+'Glock-18 | Groundwater (Well-Worn)',11.3,515.0,0.7,39912,32,14577.0,308.0,1.58,9.6
+'StatTrak™ MAC-10 | Carnivore (Well-Worn)',0.1,-90.0,-11.1,173417,756,34659.0,109.0,0.19,0.14
+'MAG-7 | Praetorian (Minimal Wear)',2.6,72.0,10.5,225574,445,162746.0,1025.0,1.1,2.29
+'StatTrak™ MAG-7 | Heat (Factory New)',7.4,-42.0,-16.1,22252,73,118223.0,623.0,6.17,8.51
+'P90 | Grim (Field-Tested)',0.1,-96.0,-7.2,2306260,10651,307074.0,823.0,0.12,0.07
+'Negev | Loudmouth (Battle-Scarred)',0.4,-43.0,-23.0,111406,239,32945.0,109.0,0.31,0.44
+'StatTrak™ SG 553 | Wave Spray (Battle-Scarred)',4.9,-20.0,-12.5,20681,19,20376.0,92.0,1.94,4.8
+'StatTrak™ Five-SeveN | Violent Daimyo (Factory New)',2.2,-89.0,-0.0,80414,339,185909.0,685.0,2.17,2.02
+'P250 | Mint Kimono (Battle-Scarred)',2.4,2248.0,-2.0,187689,92,25627.0,237.0,0.63,2.56
+'AK-47 | Fuel Injector (Battle-Scarred)',85.1,277.0,2.2,57861,155,1627803.0,12911.0,38.42,83.22
+'Sticker | flusha | Cologne 2016',1.9,150.0,-6.3,25024,25,12504.0,50.0,0.67,1.95
+'★ Flip Knife | Urban Masked (Minimal Wear)',147.9,310.0,-17.8,8491,6,499493.0,886.0,70.55,147.68
+'SCAR-20 | Torn (Field-Tested)',0.4,281.0,13.5,178308,337,34970.0,138.0,0.37,0.4
+'Sticker | dennis | Cologne 2016',0.8,67.0,-16.8,23860,9,7627.0,11.0,0.54,1.24
+'StatTrak™ SCAR-20 | Green Marine (Minimal Wear)',0.8,-42.0,1.8,87057,198,32305.0,160.0,0.46,0.78
+'Nova | Exo (Minimal Wear)',0.1,-85.0,-14.9,459580,1448,64731.0,178.0,0.14,0.12
+'CZ75-Auto | Red Astor (Battle-Scarred)',0.2,-89.0,-11.3,192527,1005,52425.0,213.0,0.26,0.21
+'FAMAS | Night Borre (Minimal Wear)',5.4,17770.0,-5.6,177025,164,57853.0,946.0,1.76,5.76
+'StatTrak™ CZ75-Auto | Imprint (Battle-Scarred)',0.1,-89.0,-29.9,142523,460,27246.0,46.0,0.18,0.1
+'Sticker | PGL (Holo) | Krakow 2017',2.8,203.0,23.1,46500,78,32696.0,191.0,1.4,2.43
+'Souvenir PP-Bizon | Brass (Field-Tested)',6.9,-48.0,28.5,6433,10,12762.0,60.0,2.37,5.97
+'Boston 2018 Minor Challengers with Flash Gaming Autograph Capsule',16.5,1765.0,-4.9,657067,42,319616.0,717.0,7.19,16.82
+'StatTrak™ M4A4 | X-Ray (Field-Tested)',26.6,-37.0,-24.4,9850,21,201839.0,677.0,21.62,31.96
+'MAG-7 | Petroglyph (Field-Tested)',0.2,-76.0,-23.3,360742,992,92532.0,474.0,0.29,0.5
+'Glock-18 | Weasel (Factory New)',1.7,-87.0,10.4,106692,534,245237.0,860.0,2.2,1.61
+'G3SG1 | Safari Mesh (Battle-Scarred)',1.8,250.0,-5.8,49842,18,7171.0,34.0,0.34,1.87
+'StatTrak™ Dual Berettas | Ventilators (Factory New)',0.8,-86.0,0.8,121213,558,93522.0,430.0,0.77,0.77
+'Sticker | wayLander (Foil) | Cologne 2016',12.6,590.0,0.0,2036,1,2516.0,13.0,2.3,12.58
+'XM1014 | Slipstream (Minimal Wear)',0.1,-83.0,-11.7,668772,3360,64372.0,428.0,0.1,0.13
+'Sawed-Off | Yorick (Well-Worn)',0.0,-87.0,-2.0,300636,1180,26840.0,57.0,0.09,0.05
+'Sticker | Skull Lil Boney',0.6,-42.0,41.0,183466,458,89400.0,231.0,0.5,0.51
+'M249 | Nebula Crusader (Battle-Scarred)',0.8,-62.0,-11.3,147174,369,77135.0,298.0,0.59,0.8
+'Tec-9 | Remote Control (Well-Worn)',0.7,-97.0,2.7,43741,994,59909.0,930.0,1.37,0.95
+'★ Bayonet | Marble Fade (Factory New)',582.1,113.0,-3.1,14922,34,4850698.0,20546.0,395.28,604.41
+'SSG 08 | Dragonfire (Factory New)',16.6,-74.0,-9.6,107359,612,1802372.0,10587.0,17.21,17.22
+'SSG 08 | Big Iron (Factory New)',10.1,-42.0,-39.4,81095,95,500413.0,1580.0,9.42,16.5
+'Sealed Graffiti | Cloud9 | Krakow 2017',1.5,95.0,28.3,46629,66,17683.0,87.0,0.69,1.32
+'FAMAS | Mecha Industries (Factory New)',6.0,-56.0,-2.7,147160,559,619346.0,3346.0,4.69,6.0
+'Souvenir AUG | Radiation Hazard (Well-Worn)',2.6,-33.0,68.9,7939,22,12596.0,41.0,1.71,1.88
+'P90 | Shallow Grave (Minimal Wear)',2.6,-64.0,-9.1,156240,430,359102.0,1182.0,2.39,2.75
+'★ Falchion Knife | Ultraviolet (Minimal Wear)',154.9,35.0,15.1,5082,23,536727.0,3297.0,104.86,143.3
+'StatTrak™ Galil AR | Black Sand (Minimal Wear)',0.5,-84.0,1.9,153199,775,77833.0,382.0,0.5,0.49
+'USP-S | Cyrex (Well-Worn)',1.2,-73.0,-0.3,186032,1152,318022.0,1260.0,1.62,1.09
+'StatTrak™ Sawed-Off | Origami (Battle-Scarred)',0.2,-86.0,-13.7,56109,126,12619.0,34.0,0.22,0.29
+'StatTrak™ PP-Bizon | Photic Zone (Minimal Wear)',1.1,-40.0,-2.8,115102,279,81131.0,305.0,0.87,1.08
+'StatTrak™ AWP | Hyper Beast (Minimal Wear)',86.6,-67.0,-18.0,12566,43,1244799.0,4185.0,96.72,97.37
+'StatTrak™ Glock-18 | Royal Legion (Well-Worn)',3.3,-32.0,-1.6,64667,239,142216.0,761.0,2.29,3.17
+'StatTrak™ FAMAS | Djinn (Minimal Wear)',10.1,-71.0,-2.0,33428,63,220724.0,595.0,6.47,9.34
+'StatTrak™ P2000 | Turf (Field-Tested)',0.2,-94.0,-2.8,273575,926,73138.0,180.0,0.25,0.19
+'StatTrak™ Galil AR | Firefight (Field-Tested)',0.8,-90.0,-15.9,101676,883,85795.0,669.0,0.87,0.76
+'StatTrak™ Five-SeveN | Scumbria (Minimal Wear)',0.2,-92.0,-6.8,181760,722,57584.0,177.0,0.29,0.25
+'StatTrak™ MP9 | Bioleak (Factory New)',1.1,-77.0,-2.3,133098,863,130133.0,833.0,1.04,0.98
+'SCAR-20 | Palm (Minimal Wear)',14.4,602.0,-1.1,72246,33,35045.0,505.0,3.59,15.03
+'CZ75-Auto | Yellow Jacket (Battle-Scarred)',2.7,-52.0,4.5,85794,294,194293.0,748.0,2.08,2.54
+'Sticker | kennyS (Foil) | Cologne 2016',127.1,1353.0,0.0,2272,1,31925.0,127.0,31.48,127.1
+'CZ75-Auto | Indigo (Battle-Scarred)',1.2,3156.0,1.5,81602,66,13049.0,72.0,0.48,1.09
+'MAC-10 | Carnivore (Well-Worn)',0.1,-81.0,17.9,472047,1945,41191.0,234.0,0.09,0.11
+'Sticker | The Spartan',0.2,-87.0,-22.1,221947,647,71454.0,116.0,0.35,0.18
+'Sealed Graffiti | Smarmy (Desert Amber)',0.4,1153.0,-4.3,16115,34,1601.0,12.0,0.2,0.36
+'StatTrak™ MP7 | Cirrus (Field-Tested)',0.2,-90.0,-6.5,446505,2376,160887.0,542.0,0.33,0.23
+'StatTrak™ P250 | Iron Clad (Battle-Scarred)',0.2,-89.0,-0.6,137707,517,30895.0,77.0,0.22,0.15
+'★ StatTrak™ Paracord Knife | Case Hardened (Field-Tested)',174.0,-4.0,-16.8,205,5,43608.0,1182.0,212.33,236.43
+'Patch | Longevity',0.7,10.0,1.2,40374,346,32029.0,250.0,0.88,0.72
+'Negev | Boroque Sand (Well-Worn)',1.1,2937.0,-8.0,121870,140,19963.0,155.0,0.51,1.09
+'Patch | Howl',15.0,-35.0,2.8,22846,184,407410.0,2623.0,15.97,14.18
+'Patch | Rage',4.1,14.0,-29.8,18442,141,75454.0,642.0,4.77,4.52
+'StatTrak™ Dual Berettas | Cartel (Well-Worn)',0.4,-31.0,-1.9,99955,330,23084.0,126.0,0.25,0.38
+'Patch | Chicken Lover',1.1,52.0,-3.8,42182,380,48339.0,442.0,1.36,1.16
+'Patch | Danger Zone',1.7,172.0,281.7,45856,857,26368.0,520.0,0.62,0.59
+'Patch | The Boss',22.1,32.0,23.1,20468,164,401115.0,3079.0,20.06,18.61
+'★ Butterfly Knife | Stained (Battle-Scarred)',765.8,532.0,1.4,8727,9,979184.0,6383.0,164.55,709.24
+'Patch | Vanguard',0.2,-32.0,14.1,176720,1762,48347.0,320.0,0.27,0.18
+'Patch | Koi',0.9,46.0,7.5,43635,440,36861.0,428.0,1.0,0.97
+'Patch | Shattered Web',0.4,25.0,-0.3,206544,2028,87959.0,714.0,0.41,0.35
+'Patch | Breakout',0.2,-35.0,19.4,200340,2321,48415.0,365.0,0.23,0.16
+'CS:GO Patch Pack',1.3,-12.0,10.4,296355,2296,410314.0,2788.0,1.34,1.21
+'Patch | Hydra',0.4,-21.0,-17.6,181967,1618,93295.0,721.0,0.55,0.43
+'★ Huntsman Knife | Blue Steel (Minimal Wear)',219.5,-15.0,-10.9,9770,10,899211.0,2082.0,99.03,208.23
+'Patch | Wildfire',0.6,-49.0,4.6,159837,1434,140669.0,748.0,0.79,0.52
+'Patch | Easy Peasy',1.1,14.0,2.5,44667,352,46698.0,349.0,1.14,0.99
+'StatTrak™ G3SG1 | Ventilator (Field-Tested)',0.1,-92.0,-4.6,251228,948,39074.0,93.0,0.14,0.1
+'G3SG1 | Orange Crash (Factory New)',0.2,-82.0,2.8,325639,1244,57131.0,232.0,0.18,0.19
+'★ Huntsman Knife | Stained (Minimal Wear)',128.1,-52.0,-16.9,10311,17,691066.0,2504.0,74.99,146.88
+'StatTrak™ Five-SeveN | Buddy (Field-Tested)',1.1,-47.0,5.9,50905,306,46606.0,313.0,0.92,1.0
+'P2000 | Red FragCam (Well-Worn)',1.2,191.0,62.8,25948,30,7653.0,31.0,0.47,1.04
+'SSG 08 | Necropos (Factory New)',0.7,-65.0,-25.2,111294,450,109068.0,378.0,1.06,0.84
+'★ StatTrak™ Survival Knife | Urban Masked',0.7,-65.0,-25.2,111294,450,109068.0,378.0,1.06,0.84
+'★ StatTrak™ Survival Knife | Crimson Web',0.7,-65.0,-25.2,111294,450,109068.0,378.0,1.06,0.84
+'★ StatTrak™ Skeleton Knife | Scorched',0.7,-65.0,-25.2,111294,450,109068.0,378.0,1.06,0.84
+'Sticker | Skulltorgeist',0.6,-59.0,-2.3,187243,389,122212.0,234.0,0.68,0.6
+'★ StatTrak™ Nomad Knife | Boreal Forest',0.6,-59.0,-2.3,187243,389,122212.0,234.0,0.68,0.6
+'★ StatTrak™ Paracord Knife | Blue Steel (Minimal Wear)',227.1,-5.0,49.3,216,6,39808.0,1081.0,183.94,180.09
+'★ Flip Knife | Rust Coat (Well-Worn)',141.7,27.0,-14.1,1610,2,107864.0,307.0,69.98,153.41
+'Negev | Boroque Sand (Minimal Wear)',1.6,1315.0,-20.8,121543,109,28979.0,195.0,0.72,1.78
+'★ StatTrak™ Paracord Knife | Forest DDPAT (Factory New)',565.2,346.0,0.0,10,1,3083.0,565.0,308.32,565.19
+'★ Gut Knife | Night (Minimal Wear)',96.1,133.0,-1.0,8143,11,514816.0,1020.0,69.22,92.74
+'StatTrak™ P2000 | Turf (Minimal Wear)',0.5,-89.0,-15.6,207637,627,103591.0,316.0,0.5,0.51
+'StatTrak™ UMP-45 | Momentum (Factory New)',14.9,-58.0,-0.2,24796,203,464593.0,3279.0,18.29,15.61
+'★ Survival Knife | Forest DDPAT',14.9,-58.0,-0.2,24796,203,464593.0,3279.0,18.29,15.61
+'★ Nomad Knife | Night Stripe',14.9,-58.0,-0.2,24796,203,464593.0,3279.0,18.29,15.61
+'StatTrak™ Glock-18 | Ironwork (Battle-Scarred)',0.2,-91.0,40.5,198006,1140,82678.0,196.0,0.39,0.17
+'MP7 | Special Delivery (Factory New)',3.0,-40.0,-3.2,156298,231,228360.0,746.0,1.88,3.22
+'★ Nomad Knife | Night Stripe (Well-Worn)',143.9,20.0,-0.0,615,5,65709.0,728.0,107.67,145.52
+'Nova | Plume (Field-Tested)',0.4,277.0,16.3,239398,609,44561.0,245.0,0.34,0.37
+'StatTrak™ M4A1-S | Decimator (Field-Tested)',18.7,-80.0,-23.5,111674,502,1517166.0,10128.0,15.28,20.23
+'★ StatTrak™ Skeleton Knife | Safari Mesh',18.7,-80.0,-23.5,111674,502,1517166.0,10128.0,15.28,20.23
+'Nova | Exo (Factory New)',0.2,-84.0,-14.4,427799,1486,87294.0,309.0,0.22,0.21
+'Patch | Phoenix',0.4,-30.0,17.9,172899,1518,76201.0,521.0,0.45,0.34
+'Sticker | Chabo',0.7,-52.0,18.3,205261,459,149374.0,247.0,0.77,0.53
+'Sticker | Bombsquad',0.1,-93.0,-27.7,227451,613,53177.0,52.0,0.26,0.08
+'Patch | Dragon',3.1,12.0,6.6,17476,152,67782.0,460.0,4.06,3.02
+'MAG-7 | Petroglyph (Factory New)',1.2,-36.0,4.2,221893,451,154311.0,491.0,0.77,1.08
+'Patch | Bravo',0.2,-40.0,-1.6,195695,2067,55806.0,357.0,0.28,0.17
+'Patch | Bloodhound',0.4,-4.0,-13.6,189688,1736,75765.0,615.0,0.43,0.35
+'SG 553 | Tiger Moth (Battle-Scarred)',0.4,-72.0,12.7,111528,475,64667.0,182.0,0.59,0.38
+'Five-SeveN | Scumbria (Minimal Wear)',0.1,-87.0,6.8,559220,1440,50131.0,111.0,0.09,0.08
+'Pinups Capsule',0.8,-60.0,9.7,667788,1638,593565.0,1315.0,0.84,0.81
+'Patch | Welcome to the Clutch',1.4,-4.0,1.1,43975,364,80179.0,514.0,2.08,1.4
+'SCAR-20 | Green Marine (Factory New)',0.4,-74.0,81.3,98490,155,24093.0,66.0,0.32,0.42
+'Patch | Payback',0.2,-19.0,28.1,210006,2267,47871.0,361.0,0.22,0.16
+'StatTrak™ M4A4 | Desolate Space (Field-Tested)',11.9,-92.0,-6.6,79330,479,1551861.0,5761.0,20.03,12.07
+'Patch | Vigilance',0.7,57.0,30.1,41566,388,20382.0,206.0,0.55,0.52
+'★ Skeleton Knife | Urban Masked',0.7,57.0,30.1,41566,388,20382.0,206.0,0.55,0.52
+'Patch | Crazy Banana',1.6,52.0,3.4,44975,370,60564.0,527.0,1.5,1.42
+'★ StatTrak™ Survival Knife | Stained',1.6,52.0,3.4,44975,370,60564.0,527.0,1.5,1.42
+'USP-S | Torque (Battle-Scarred)',1.3,61.0,-1.5,49699,170,34153.0,224.0,0.95,1.33
+'★ StatTrak™ Nomad Knife | Safari Mesh',1.3,61.0,-1.5,49699,170,34153.0,224.0,0.95,1.33
+'★ StatTrak™ Nomad Knife | Blue Steel',1.3,61.0,-1.5,49699,170,34153.0,224.0,0.95,1.33
+'★ StatTrak™ Skeleton Knife | Slaughter',1.3,61.0,-1.5,49699,170,34153.0,224.0,0.95,1.33
+'R8 Revolver | Nitro (Factory New)',0.2,-96.0,-7.5,33656,759,19365.0,141.0,0.61,0.18
+'Glock-18 | Groundwater (Battle-Scarred)',8.8,301.0,-26.8,49146,26,16663.0,236.0,1.63,9.03
+'Souvenir Tec-9 | Brass (Well-Worn)',32.4,1302.0,275.3,7008,20,21554.0,224.0,3.46,11.2
+'PP-Bizon | Embargo (Well-Worn)',1.0,228.0,-25.1,80840,224,34993.0,246.0,0.63,1.1
+'P250 | Inferno (Battle-Scarred)',0.5,-32.0,7.3,102474,511,34601.0,219.0,0.36,0.42
+'StatTrak™ Glock-18 | Wraiths (Factory New)',4.4,-59.0,6.1,49443,139,135447.0,602.0,3.04,4.34
+'P2000 | Imperial (Field-Tested)',0.2,-81.0,14.9,180069,880,28665.0,130.0,0.18,0.15
+'SCAR-20 | Powercore (Minimal Wear)',0.5,-72.0,-4.7,249110,686,89766.0,338.0,0.4,0.49
+'G3SG1 | Orange Crash (Minimal Wear)',0.1,-90.0,-2.3,385362,1667,40080.0,146.0,0.1,0.09
+"'Music Kit | Sasha, LNOE'",1.3,-90.0,-16.8,63202,170,140428.0,248.0,2.62,1.46
+'Galil AR | Chatterbox (Field-Tested)',64.7,75.0,-0.3,16311,25,259874.0,1469.0,22.86,58.8
+'StatTrak™ Dual Berettas | Ventilators (Minimal Wear)',0.3,-93.0,-18.9,142096,790,57440.0,264.0,0.4,0.33
+'MP5-SD | Bamboo Garden (Field-Tested)',3.5,5802.0,-6.6,259402,256,53459.0,923.0,1.21,3.58
+'MAC-10 | Rangeen (Well-Worn)',0.1,-73.0,-2.2,105501,393,14143.0,49.0,0.15,0.12
+'Sawed-Off | Irradiated Alert (Battle-Scarred)',2.2,256.0,-3.2,62628,37,12057.0,72.0,0.53,1.84
+'UMP-45 | Plastique (Factory New)',1.3,-63.0,-15.5,46197,238,53033.0,336.0,1.21,1.41
+'MP7 | Neon Ply (Battle-Scarred)',1.0,168.0,4.0,79005,463,35669.0,399.0,0.59,0.85
+'Tec-9 | Toxic (Well-Worn)',5.2,457.0,6.7,19763,12,35243.0,60.0,1.91,5.03
+'Sticker | The Samurai',0.2,-90.0,19.1,240611,695,73277.0,123.0,0.34,0.18
+'Sticker | MIBR (Foil) | London 2018',12.3,75.0,19.4,3372,6,13377.0,66.0,4.99,10.87
+'StatTrak™ Galil AR | Black Sand (Field-Tested)',0.2,-84.0,-8.0,236145,1229,69555.0,319.0,0.29,0.29
+'StatTrak™ XM1014 | Slipstream (Minimal Wear)',0.7,-59.0,16.5,158795,1057,63766.0,619.0,0.43,0.59
+'★ Skeleton Knife | Stained',0.7,-59.0,16.5,158795,1057,63766.0,619.0,0.43,0.59
+'Sealed Graffiti | Hop (Blood Red)',0.2,325.0,-19.6,17751,22,1834.0,6.0,0.18,0.25
+'StatTrak™ AK-47 | Aquamarine Revenge (Battle-Scarred)',37.9,-52.0,2.8,18595,138,522042.0,4840.0,28.84,35.14
+'CZ75-Auto | Imprint (Field-Tested)',0.1,-83.0,8.7,957168,3271,64599.0,283.0,0.07,0.08
+'P2000 | Coach Class (Minimal Wear)',8.2,3511.0,-26.9,67781,10,23503.0,89.0,2.02,8.87
+'Sticker | Silent Ninja',0.1,-92.0,-68.3,221324,622,67476.0,125.0,0.34,0.19
+'Sticker | The Zombie',0.2,-77.0,7.0,207468,601,73376.0,130.0,0.38,0.21
+'G3SG1 | Ventilator (Factory New)',0.2,-78.0,14.1,534889,1777,91434.0,324.0,0.17,0.18
+'Desert Eagle | Pilot (Minimal Wear)',89.6,1002.0,7.1,18877,4,202697.0,342.0,28.18,85.45
+'Souvenir Five-SeveN | Orange Peel (Well-Worn)',1.1,-85.0,-6.5,6548,10,6889.0,10.0,1.12,1.03
+'StatTrak™ Dual Berettas | Elite 1.6 (Factory New)',0.9,-70.0,25.0,37468,242,32896.0,216.0,0.9,0.89
+'★ Nomad Knife | Safari Mesh',0.9,-70.0,25.0,37468,242,32896.0,216.0,0.9,0.89
+'SG 553 | Barricade (Factory New)',6.8,11896.0,-2.7,94009,115,45509.0,820.0,2.1,7.22
+'R8 Revolver | Reboot (Well-Worn)',0.3,-89.0,-0.9,254665,788,99170.0,261.0,0.36,0.33
+'★ Flip Knife | Damascus Steel (Field-Tested)',193.2,42.0,5.2,20924,18,1451882.0,3297.0,90.41,183.16
+'UMP-45 | Plastique (Battle-Scarred)',0.5,-36.0,5.5,96080,447,31749.0,198.0,0.36,0.44
+'P90 | Grim (Battle-Scarred)',0.0,-98.0,-14.3,547617,2509,65711.0,116.0,0.1,0.05
+'Negev | Boroque Sand (Field-Tested)',1.4,3058.0,4.3,166306,168,28238.0,218.0,0.56,1.29
+'★ Ursus Knife | Damascus Steel (Minimal Wear)',159.2,18.0,14.1,3364,24,417866.0,3521.0,125.1,146.69
+'P2000 | Imperial Dragon (Factory New)',6.3,-63.0,-5.6,106467,249,400097.0,1679.0,4.57,6.71
+'SG 553 | Barricade (Minimal Wear)',5.7,918.0,0.8,142639,140,39724.0,806.0,1.67,5.73
+'StatTrak™ UMP-45 | Briefing (Battle-Scarred)',0.1,-94.0,27.4,148014,451,30425.0,45.0,0.19,0.08
+'Sealed Graffiti | Little Bock (Bazooka Pink)',0.4,1080.0,9.3,17146,56,1575.0,18.0,0.16,0.31
+'Sticker | DeadFox (Foil) | London 2018',3.2,308.0,3.2,6437,17,3032.0,52.0,0.74,3.03
+'Dual Berettas | Cartel (Well-Worn)',0.4,104.0,-21.9,284733,873,30261.0,352.0,0.15,0.39
+'StatTrak™ XM1014 | Scumbria (Battle-Scarred)',0.2,-75.0,-18.4,71516,193,13901.0,42.0,0.2,0.22
+'P250 | Dark Filigree (Factory New)',6.5,2440.0,-12.0,64222,92,64248.0,647.0,3.15,7.02
+'Five-SeveN | Violent Daimyo (Battle-Scarred)',0.1,-91.0,-15.8,346201,1439,38382.0,156.0,0.1,0.1
+'★ StatTrak™ Classic Knife | Urban Masked (Minimal Wear)',155.0,3.0,23.5,190,2,20561.0,281.0,108.33,140.26
+'Sticker | olofmeister | Krakow 2017',1.6,423.0,-26.0,71522,58,19238.0,115.0,0.91,1.94
+'Tec-9 | Rust Leaf (Field-Tested)',22.3,21587.0,-6.6,75050,44,84185.0,974.0,6.53,22.07
+'★ StatTrak™ Survival Knife | Stained',22.3,21587.0,-6.6,75050,44,84185.0,974.0,6.53,22.07
+'FAMAS | Night Borre (Field-Tested)',5.5,18130.0,1.6,259448,265,74589.0,1480.0,1.8,5.56
+'Dual Berettas | Balance (Battle-Scarred)',0.3,768.0,0.0,98642,375,20888.0,116.0,0.33,0.3
+'Tec-9 | Rust Leaf (Minimal Wear)',20.8,16148.0,-18.3,59789,43,78498.0,977.0,6.74,22.79
+'Sealed Graffiti | 200 IQ (Wire Blue)',0.1,-7.0,-17.4,17825,50,825.0,3.0,0.06,0.06
+'StatTrak™ AUG | Arctic Wolf (Minimal Wear)',7.2,11.0,-2.5,20723,114,145070.0,847.0,7.26,7.43
+'MAG-7 | Firestarter (Battle-Scarred)',0.4,71.0,1.9,38131,90,8619.0,35.0,0.32,0.39
+'★ StatTrak™ Nomad Knife | Forest DDPAT',0.4,71.0,1.9,38131,90,8619.0,35.0,0.32,0.39
+'AK-47 | Neon Revolution (Battle-Scarred)',10.1,-82.0,3.9,148322,1768,1976757.0,17746.0,13.43,10.04
+'★ Survival Knife | Blue Steel',10.1,-82.0,3.9,148322,1768,1976757.0,17746.0,13.43,10.04
+'Dual Berettas | Urban Shock (Well-Worn)',1.2,-62.0,12.6,50297,156,24677.0,157.0,0.62,1.0
+'Sealed Graffiti | 200 IQ (Monster Purple)',0.1,-1.0,-30.0,17756,67,981.0,8.0,0.08,0.11
+'PP-Bizon | Harvester (Field-Tested)',0.1,-85.0,-27.5,484214,1837,68891.0,244.0,0.14,0.12
+'UMP-45 | Briefing (Minimal Wear)',0.1,-91.0,25.4,804566,1855,85677.0,156.0,0.1,0.09
+'StatTrak™ M4A4 | Evil Daimyo (Battle-Scarred)',4.6,-57.0,-14.9,20504,73,86093.0,317.0,4.85,4.35
+'★ StatTrak™ Survival Knife | Urban Masked',4.6,-57.0,-14.9,20504,73,86093.0,317.0,4.85,4.35
+'★ StatTrak™ Survival Knife | Blue Steel (Battle-Scarred)',115.0,-54.0,-6.7,198,5,23619.0,635.0,117.96,127.03
+'Sticker | Nelu the Bear',0.7,-71.0,-16.4,93935,189,90487.0,146.0,1.38,0.78
+'StatTrak™ G3SG1 | Murky (Field-Tested)',1.2,451.0,-94.8,58277,49,21103.0,76.0,0.55,1.65
+'StatTrak™ MP5-SD | Agent (Well-Worn)',0.8,-81.0,-1.9,47991,329,39334.0,264.0,0.8,0.8
+'Sealed Graffiti | Hop (Monarch Blue)',0.2,425.0,9.1,17056,62,1503.0,9.0,0.15,0.15
+'SG 553 | Triarch (Well-Worn)',0.2,-74.0,21.8,252304,774,61441.0,166.0,0.24,0.21
+'Five-SeveN | Triumvirate (Factory New)',3.0,36.0,-11.5,116981,177,132020.0,575.0,1.64,3.23
+'StatTrak™ CZ75-Auto | Eco (Factory New)',6.8,-73.0,4.0,7878,67,61362.0,456.0,7.73,6.82
+'MAC-10 | Surfwood (Field-Tested)',3.6,1743.0,-1.9,249891,244,51680.0,899.0,1.2,3.66
+'Sticker | Queen Of Pain',0.8,-82.0,3.9,116861,354,116868.0,288.0,1.15,0.81
+'StatTrak™ MP7 | Cirrus (Minimal Wear)',0.6,-88.0,-1.9,179032,1160,147063.0,710.0,0.78,0.62
+'USP-S | Neo-Noir (Field-Tested)',11.1,-74.0,-5.0,287152,2049,4439904.0,21770.0,14.5,10.64
+'StatTrak™ FAMAS | Afterimage (Factory New)',30.3,-17.0,9.9,9808,20,160419.0,597.0,18.86,29.75
+'Sealed Graffiti | 200 IQ (Brick Red)',0.1,45.0,61.5,17270,67,881.0,5.0,0.07,0.07
+'Sealed Graffiti | Smarmy (SWAT Blue)',0.5,1673.0,-14.1,16537,36,2429.0,19.0,0.28,0.53
+'FAMAS | Roll Cage (Well-Worn)',1.3,-92.0,12.8,179828,1372,446215.0,1853.0,2.35,1.35
+'★ StatTrak™ Skeleton Knife | Case Hardened',1.3,-92.0,12.8,179828,1372,446215.0,1853.0,2.35,1.35
+'P90 | Sunset Lily (Minimal Wear)',22.6,16895.0,-2.3,64168,44,81033.0,1025.0,6.73,23.17
+'SSG 08 | Red Stone (Field-Tested)',5.5,6063.0,-2.1,335441,373,92889.0,2059.0,1.9,5.5
+'Shadow Case',0.6,-90.0,-18.3,44894093,78232,10568759.0,51265.0,0.29,0.66
+'XM1014 | Slipstream (Field-Tested)',0.1,-88.0,19.4,901145,4258,58517.0,320.0,0.06,0.07
+'StatTrak™ CZ75-Auto | Polymer (Factory New)',0.9,-75.0,-5.7,119948,292,100141.0,254.0,0.84,0.86
+'P90 | Facility Negative (Well-Worn)',0.1,-93.0,-22.2,35742,613,9248.0,53.0,0.26,0.08
+'Sticker | Flickshot',0.9,-44.0,7.2,97322,246,97733.0,201.0,1.34,0.82
+'AWP | Containment Breach (Battle-Scarred)',39.4,141.0,-2.4,44245,354,1116771.0,14988.0,29.51,42.23
+'Sticker | Ninjas in Pyjamas (Foil) | London 2018',9.9,78.0,-28.1,3312,4,12202.0,44.0,5.07,11.23
+'Sticker | Skull Troop',0.1,-90.0,-26.3,194221,640,45840.0,53.0,0.24,0.08
+'AK-47 | Bloodsport (Field-Tested)',93.4,10.0,6.3,174839,608,7283673.0,52882.0,50.26,87.08
+'Sealed Graffiti | Fart (Jungle Green)',0.4,987.0,30.9,21009,53,2329.0,16.0,0.18,0.29
+'Sawed-Off | Rust Coat (Factory New)',13.4,4462.0,0.9,44737,13,28502.0,194.0,2.89,14.47
+'Sticker | The Guru',0.2,-87.0,14.1,217034,568,68113.0,97.0,0.34,0.17
+'SCAR-20 | Stone Mosaico (Field-Tested)',1.3,3326.0,-5.0,272227,272,35445.0,351.0,0.58,1.28
+'SSG 08 | Sand Dune (Battle-Scarred)',2.8,9183.0,-8.7,49621,32,10038.0,81.0,0.83,2.52
+'★ Classic Knife | Blue Steel (Field-Tested)',185.3,-2.0,-12.0,3892,18,483037.0,3422.0,126.99,190.1
+'AUG | Navy Murano (Field-Tested)',1.3,2420.0,-3.4,278037,362,47782.0,465.0,0.59,1.28
+'Sticker | SnypeR (Foil) | Cologne 2015',6.3,800.0,-29.4,9221,6,7024.0,41.0,1.56,7.01
+'CZ75-Auto | Imprint (Well-Worn)',0.1,-86.0,40.9,655373,2498,50897.0,141.0,0.07,0.05
+'StatTrak™ MP7 | Special Delivery (Field-Tested)',2.4,-46.0,-8.1,78926,138,111719.0,337.0,1.61,2.43
+'★ StatTrak™ Skeleton Knife | Crimson Web',2.4,-46.0,-8.1,78926,138,111719.0,337.0,1.61,2.43
+'Sealed Graffiti | Smarmy (Princess Pink)',0.4,1183.0,16.3,15957,33,1709.0,12.0,0.21,0.36
+'Sealed Graffiti | Dizzy (Tracer Yellow)',0.2,707.0,-15.1,15882,47,1368.0,12.0,0.16,0.25
+'★ StatTrak™ Paracord Knife | Urban Masked (Battle-Scarred)',84.9,4.0,4.2,256,3,22631.0,245.0,87.85,81.72
+'Sticker | Combine Helmet',0.3,83.0,156.7,380175,2004,52178.0,303.0,0.12,0.14
+'Combine Helmet Pin',4.0,51.0,11.4,29289,276,122338.0,1045.0,4.1,3.78
+'★ StatTrak™ Survival Knife | Scorched',4.0,51.0,11.4,29289,276,122338.0,1045.0,4.1,3.78
+'Black Mesa Pin',3.9,46.0,2.6,33897,322,137923.0,1241.0,4.07,3.86
+'Sticker | Big Hugs',0.0,-69.0,-6.3,362212,1316,29874.0,45.0,0.05,0.03
+'Patch | Alyx',3.5,-13.0,18.1,4077,58,17657.0,184.0,4.21,3.15
+'Copper Lambda Pin',5.2,-28.0,0.3,18738,205,111777.0,1029.0,5.62,5.02
+'Half-Life: Alyx Collectible Pins Capsule',8.4,-5.0,8.8,13123,136,106525.0,1007.0,8.08,7.48
+'★ StatTrak™ Huntsman Knife | Ultraviolet',8.4,-5.0,8.8,13123,136,106525.0,1007.0,8.08,7.48
+'★ Classic Knife | Scorched',8.4,-5.0,8.8,13123,136,106525.0,1007.0,8.08,7.48
+'★ StatTrak™ Nomad Knife | Fade',8.4,-5.0,8.8,13123,136,106525.0,1007.0,8.08,7.48
+'★ StatTrak™ Paracord Knife | Boreal Forest',8.4,-5.0,8.8,13123,136,106525.0,1007.0,8.08,7.48
+'★ StatTrak™ Skeleton Knife | Urban Masked',8.4,-5.0,8.8,13123,136,106525.0,1007.0,8.08,7.48
+'Sticker | Last Vance',0.0,-57.0,51.5,360970,1624,34158.0,54.0,0.06,0.03
+'CMB Pin',3.3,34.0,27.0,34587,348,121646.0,1084.0,3.47,3.11
+'Sticker | Lambda (Holo)',3.8,-28.0,12586.7,143492,602,763376.0,2162.0,4.37,3.52
+'★ StatTrak™ Skeleton Knife | Safari Mesh (Minimal Wear)',198.9,-6.0,0.0,111,1,24085.0,199.0,216.83,198.91
+'StatTrak™ AUG | Tom Cat (Factory New)',1.0,-86.0,-14.2,42342,415,59284.0,454.0,1.35,1.09
+'StatTrak™ MP5-SD | Desert Strike (Factory New)',1.6,-76.0,70.4,22007,195,28137.0,195.0,1.25,1.0
+'StatTrak™ R8 Revolver | Bone Forged (Battle-Scarred)',0.1,-95.0,-18.3,71138,650,9020.0,70.0,0.13,0.11
+'StatTrak™ Desert Eagle | Blue Ply (Well-Worn)',0.5,-91.0,-10.0,389845,5008,261499.0,2608.0,0.66,0.52
+'★ Sport Gloves | Superconductor',0.5,-91.0,-10.0,389845,5008,261499.0,2608.0,0.66,0.52
+'Sawed-Off | Apocalypto (Minimal Wear)',0.5,-92.0,-15.7,301747,2570,230222.0,1540.0,0.68,0.59
+'StatTrak™ SSG 08 | Fever Dream (Field-Tested)',1.2,-88.0,-16.4,237848,2562,331816.0,3174.0,1.42,1.24
+'AK-47 | Phantom Disruptor (Factory New)',7.6,-91.0,-10.0,144441,1367,1642453.0,10655.0,10.57,7.79
+'Glock-18 | Bullet Queen (Factory New)',30.8,-87.0,-19.2,9061,153,469170.0,5462.0,52.42,35.64
+'MP5-SD | Desert Strike (Factory New)',0.2,-92.0,-25.9,87529,660,23115.0,161.0,0.25,0.24
+'StatTrak™ CZ75-Auto | Distressed (Field-Tested)',0.1,-94.0,37.7,180731,975,25124.0,86.0,0.12,0.09
