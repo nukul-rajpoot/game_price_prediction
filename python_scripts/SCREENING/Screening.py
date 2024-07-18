@@ -1,21 +1,24 @@
+import sys
+import os
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
 import pandas as pd
-from api_calls import fetch_item_from_api, fetch_daily_cookie, fetch_items
-from calculate_metrics import calculate_price_percentage_change, calculate_volume, calculate_market_cap, calculate_market_cap_jupyter
+
+
+from python_scripts.api_calls import fetch_item_from_api, fetch_daily_cookie, fetch_items
+from python_scripts.calculate_metrics import calculate_price_percentage_change, calculate_volume, calculate_market_cap, calculate_market_cap_jupyter
 from screening_metrics import calculate_screening_metrics
 
 dailyCookie = fetch_daily_cookie()
 items = fetch_items()
+
 hash_item_list = pd.read_csv('./data/Item_lists/hashed_items.csv')
-
-
 
 def screening_total_items():
     item_data = []
 
     # Iterate through each item
-   # for index, item in items.iterrows():
-    for index,item in hash_item_list.iterrows():
-        if index == 20:
+    for index, item in hash_item_list.iterrows():
+        if index == 5:
             break
         
         substring = item["market_hash_name"].split("'")[1]
@@ -23,7 +26,7 @@ def screening_total_items():
         if data is not None:  # Check if data fetching was successful
             df = pd.DataFrame(data)
 
-        metrics_row= calculate_screening_metrics(df,item["market_hash_name"])   
+        metrics_row = calculate_screening_metrics(df, item["market_hash_name"])   
         print(item)
         print(type(item))
         item_data.append(metrics_row)
@@ -35,9 +38,6 @@ def screening_total_items():
     item_data_df.to_csv('./data/Item_lists/total_screened_items.csv', index=False)
 
 screening_total_items()
-
-
-
 
 def screening_judgement():
     items_data_df = './data/Item_lists/total_screened_items.csv'
