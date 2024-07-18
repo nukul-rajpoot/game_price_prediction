@@ -12,8 +12,3 @@ if api_item_list:
   
 else:
     print("Failed to retrieve data")
-
-
-
-
-
