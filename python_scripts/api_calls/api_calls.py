@@ -25,11 +25,11 @@ import pandas as pd
 
 
 def fetch_daily_cookie():
-    dailyCookie = "76561199704981720%7C%7CeyAidHlwIjogIkpXVCIsICJhbGciOiAiRWREU0EiIH0.eyAiaXNzIjogInI6MTU2Nl8yNEJCM0Y0M181QTAzRCIsICJzdWIiOiAiNzY1NjExOTk3MDQ5ODE3MjAiLCAiYXVkIjogWyAid2ViOmNvbW11bml0eSIgXSwgImV4cCI6IDE3MjEyMzkzNTEsICJuYmYiOiAxNzEyNTEyMTU5LCAiaWF0IjogMTcyMTE1MjE1OSwgImp0aSI6ICIxN0EwXzI0QkI0MTJEXzU2MEVEIiwgIm9hdCI6IDE3MjEwNDAyMTAsICJydF9leHAiOiAxNzM5MjgwNDUyLCAicGVyIjogMCwgImlwX3N1YmplY3QiOiAiMTQ4LjI1Mi4xMjguMjA3IiwgImlwX2NvbmZpcm1lciI6ICI3OC44Ni4xMzYuMTEyIiB9.dZn0rS7NWZb3-A1xza55zh6wQ1cBaov0GC_gK2iHN88ZhAAKlYDQY3GhCAbyNdGnRs3BQQtxJJ1vjH8IMr2yAQ"
+    dailyCookie = "76561199704981720||eyAidHlwIjogIkpXVCIsICJhbGciOiAiRWREU0EiIH0.eyAiaXNzIjogInI6MTU2N18yNEJCM0YyOF8wQjEzRCIsICJzdWIiOiAiNzY1NjExOTk3MDQ5ODE3MjAiLCAiYXVkIjogWyAid2ViOmNvbW11bml0eSIgXSwgImV4cCI6IDE3MjEzOTUzMzAsICJuYmYiOiAxNzEyNjY4NTc0LCAiaWF0IjogMTcyMTMwODU3NCwgImp0aSI6ICIwRjgwXzI0QzA5OEE0X0IxQjNBIiwgIm9hdCI6IDE3MjA4NjQ2OTAsICJydF9leHAiOiAxNzM4OTc3NTE4LCAicGVyIjogMCwgImlwX3N1YmplY3QiOiAiOTAuMTk3Ljc5LjEzMyIsICJpcF9jb25maXJtZXIiOiAiOTAuMTk3Ljc5LjEzMyIgfQ.jA7H_FUFP9EEh7fEPZx-Jn9auGqCNZ-q9Y6XpyRQx_gKIRf5P2UYSIqLNaITj2_ROToov_G9WmIGYdFlDzuuBw"
     return dailyCookie
 
 def fetch_items():
-    items = ["Glove Case Key", "Officer Jacques Beltram | Gendarmerie Nationale", "Kilowatt Case", "AK-47 | Blue Laminate (Factory New)", "Glove Case",]
+    items = ["Glove Case Key", "Officer Jacques Beltram | Gendarmerie Nationale", "Kilowatt Case", "AK-47 | Blue Laminate (Factory New)", "Glove Case", "★ StatTrak™ Paracord Knife | Case Hardened (Field-Tested)"]
     return items
 
 #Gets the itemlist from 3rd party api
