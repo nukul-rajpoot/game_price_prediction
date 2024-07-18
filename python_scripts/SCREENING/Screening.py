@@ -13,31 +13,53 @@ items = fetch_items()
 
 hash_item_list = pd.read_csv('./data/Item_lists/hashed_items.csv')
 
+
+
 def screening_total_items():
+    # Load existing screened items if the file exists
+    screened_items_file = './data/Item_lists/total_screened_items.csv'
+    screened_items_df = pd.read_csv(screened_items_file) if os.path.exists(screened_items_file) else pd.DataFrame()
+    screened_item_names = set(screened_items_df['item_name']) if not screened_items_df.empty else set()
+
     item_data = []
 
     # Iterate through each item
     for index, item in hash_item_list.iterrows():
-        if index == 5:
+        if index == 70:
             break
         
-        substring = item["market_hash_name"].split("'")[1]
+        item_name = item["market_hash_name"]
+        if item_name in screened_item_names:
+            continue  # Skip if the item is already screened
+
+        substring = item_name.split("'")[1]
         data = fetch_item_from_api(substring, dailyCookie)
         if data is not None:  # Check if data fetching was successful
             df = pd.DataFrame(data)
+            metrics_row = calculate_screening_metrics(df, item_name)
+            item_data.append(metrics_row)
+            print(f"Item {item_name} processed successfully.")
+        else:
+            print(f"Error fetching data for item {item_name}.")
 
-        metrics_row = calculate_screening_metrics(df, item["market_hash_name"])   
-        print(item)
-        print(type(item))
-        item_data.append(metrics_row)
+        # Append data every 10 items
+        if len(item_data) >= 10:
+            item_data_df = pd.DataFrame(item_data)
+            screened_items_df = pd.concat([screened_items_df, item_data_df], ignore_index=True) if not screened_items_df.empty else item_data_df
+            screened_items_df.to_csv(screened_items_file, index=False)
+            item_data = []
 
-    # Convert the list of item data to a DataFrame
-    item_data_df = pd.DataFrame(item_data)
-    
-    # Save full data to a CSV
-    item_data_df.to_csv('./data/Item_lists/total_screened_items.csv', index=False)
+    # Append any remaining data
+    if item_data:
+        item_data_df = pd.DataFrame(item_data)
+        screened_items_df = pd.concat([screened_items_df, item_data_df], ignore_index=True) if not screened_items_df.empty else item_data_df
+        screened_items_df.to_csv(screened_items_file, index=False)
 
 screening_total_items()
+
+
+
+
 
 def screening_judgement():
     items_data_df = './data/Item_lists/total_screened_items.csv'
