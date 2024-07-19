@@ -18,31 +18,25 @@ NOTE: Uses ~20p to run
 ------------------------------------
 """
 
-def generate_CSGO_item_list():
+def fetch_CSGO_item_list():
     api_item_list = get_item_list()
     if api_item_list:
-
         get_item_list_df = pd.DataFrame(api_item_list)
         get_item_list_df.to_csv('./data/Item_lists/CSGO_Item_List.csv', index=True)
-    
     else:
         print("Failed to retrieve data")
 
-# generate_csgo_item_list():
+# fetch_CSGO_item_list():
 
 def generate_CSGO_item_list():
-    # Calls read_item_list function
     item_list = pd.read_csv('./data/Item_lists/CSGO_Item_List.csv')
-    
-    # convert "" into ' 
-    item_list['data'] = item_list['data'].str.replace('""', "'", regex=False)
 
+    # double "" in CSGO_Item_List.csv were manually replaced with '
     # Regular expression pattern to get market_hash_name values
     pattern = r"'market_hash_name': '(.*?)', 'border_color'"
     market_hash_names = item_list['data'].str.extract(pattern, flags=re.DOTALL)
+    market_hash_names.sort_values(0, ascending=True, inplace=True)
 
-    # add hash only when needed
-    # hash_substring = int(hashlib.sha256(substring.encode('utf-8')).hexdigest(), 16) 
     market_hash_names.to_csv('./data/Item_lists/market_hash_names.csv', index=False, header=False)
 
-# generate_CSGO_item_list()
+generate_CSGO_item_list()
