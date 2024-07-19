@@ -18,8 +18,6 @@ NOTE: Uses ~20p to run
 ------------------------------------
 """
 
-
-
 def generate_CSGO_item_list():
     api_item_list = get_item_list()
     if api_item_list:
@@ -32,32 +30,19 @@ def generate_CSGO_item_list():
 
 # generate_csgo_item_list():
 
-
-
-
-#Reads CSGO_Item_list file and returns it
-def read_CSGO_item_list():
-    item_list = pd.read_csv('./data/Item_lists/CSGO_Item_List.csv')
-
-    return item_list
-
-
-
-
-def generate_CSGO_hashed_item_list():
+def generate_CSGO_item_list():
     # Calls read_item_list function
-    item_list = read_CSGO_item_list()
-    #Creates dataframe to store output
-    hashed_items = pd.DataFrame(columns =("market_hash_name", "hash"))
+    item_list = pd.read_csv('./data/Item_lists/CSGO_Item_List.csv')
+    
+    # convert "" into ' 
+    item_list['data'] = item_list['data'].str.replace('""', "'", regex=False)
 
-    #for loop which goes through each row in dataframe iteratively
-    for index, row in item_list.iterrows():
-    #Cuts row to what we need
-        substring = row["data"].split("'")[7]
-    #Hashes each substring into 8 digits
-        hash_substring = int(hashlib.sha256(substring.encode('utf-8')).hexdigest(), 16) 
-    #Adds item name and hash into respective columns
-        hashed_items.loc[index] = ["'" + str(substring)+ "'"] + [ str(hash_substring)]
-    print(hashed_items)
-    #Saves to CSV
-    hashed_items.to_csv('./data/Item_lists/hashed_items.csv', index=False)
+    # Regular expression pattern to get market_hash_name values
+    pattern = r"'market_hash_name': '(.*?)', 'border_color'"
+    market_hash_names = item_list['data'].str.extract(pattern, flags=re.DOTALL)
+
+    # add hash only when needed
+    # hash_substring = int(hashlib.sha256(substring.encode('utf-8')).hexdigest(), 16) 
+    market_hash_names.to_csv('./data/Item_lists/market_hash_names.csv', index=False, header=False)
+
+# generate_CSGO_item_list()

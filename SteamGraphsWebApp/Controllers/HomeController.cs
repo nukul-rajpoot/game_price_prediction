@@ -8,6 +8,7 @@ using Newtonsoft.Json.Linq;
 using Microsoft.Data.Analysis;
 using Newtonsoft.Json;
 using Python.Runtime;
+using System.Reflection;
 
 namespace SteamGraphsWebApp.Controllers
 {
@@ -15,51 +16,46 @@ namespace SteamGraphsWebApp.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly SteamMarketApiCall steamMarketApiCall = new SteamMarketApiCall();
+        private readonly NameService _nameService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, NameService nameService)
         {
             _logger = logger;
+            _nameService = nameService;
         }
 
         public async Task<IActionResult> Index()
         {
-            string data = await steamMarketApiCall.FetchItemFromApiAsync("AK-47 | Redline (Field-Tested)");
-            //priceHistory.Info(); 
-
-            DataFrame df= await steamMarketApiCall.JsonToDataFrame(data);
-
+            SteamItemModel initialModel = new SteamItemModel();
+            DataFrame? df = await steamMarketApiCall.FetchItemToDataFrame(initialModel);
             //Pass JSON data to the view
             ViewBag.jsonPriceHistoryDate = df["date"];
             ViewBag.jsonPriceHistoryPrice = df["price_usd"];
 
-            //string jsonObj = steamMarketApiCall.DataFrameToJson(priceHistory);
-            //ViewBag.ExampleData = jsonObj;
             return View();
         }
 
 
-        //public void PrintDataTable(DataTable table)
-        //{
-        //    foreach (DataColumn column in table.Columns)
-        //    {
-        //        Console.Write($"{column.ColumnName}\t");
-        //    }
-        //    Console.WriteLine();
-
-        //    foreach (DataRow row in table.Rows)
-        //    {
-        //        foreach (var item in row.ItemArray)
-        //        {
-        //            Console.Write($"{item}\t");
-        //        }
-        //        Console.WriteLine();
-        //    }
-        //}
-
         // POST: Home
         [HttpPost]
-        public IActionResult Index(SteamItemViewModel model)
+        public async Task<IActionResult> Index(SteamItemModel model)
         {
+            if (model.InputItemName != null)
+            {
+                DataFrame? df = await steamMarketApiCall.FetchItemToDataFrame(model);
+
+                if (df != null)
+                {
+                    //Pass JSON data to the view
+                    ViewBag.jsonPriceHistoryDate = df["date"];
+                    ViewBag.jsonPriceHistoryPrice = df["price_usd"];
+                }
+            }
+            else
+            {
+
+            }
+
             return View(model);
         }
 
