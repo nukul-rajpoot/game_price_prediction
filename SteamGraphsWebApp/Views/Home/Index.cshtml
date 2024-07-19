@@ -2,16 +2,16 @@
     ViewData["Title"] = "Home Page";
 }
 
-@model SteamItemViewModel
+@model SteamItemModel
 
 <form asp-action="Index" method="post">
-    <input asp-for="SteamItemName" class="form-control" />
+    <input asp-for="InputItemName" class="form-control" />
     <button type="submit">Submit</button>
 </form>
 
-@if (Model != null && Model.SteamItemName != null)
+@if (Model != null && Model.InputItemName != null)
 {
-    <h3>You entered: @Model.SteamItemName</h3>
+    <h3>You entered: @Model.InputItemName</h3>
 }
 
 @* @ViewBag.jsonPriceHistoryDate
@@ -21,8 +21,8 @@
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
 <script>
-    var date = @Html.Raw(Json.Serialize(ViewBag.jsonPriceHistoryDate));
-    var price = @Html.Raw(Json.Serialize(ViewBag.jsonPriceHistoryPrice));
+    var dates = @Html.Raw(Json.Serialize(ViewBag.jsonPriceHistoryDate));
+    var prices = @Html.Raw(Json.Serialize(ViewBag.jsonPriceHistoryPrice));
 </script>
 
 <script src="~/js/example.js"></script>

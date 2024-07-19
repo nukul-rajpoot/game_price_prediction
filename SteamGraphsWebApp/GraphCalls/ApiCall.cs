@@ -10,6 +10,7 @@
     using Microsoft.Data.Analysis;
     using System.Text.Json.Nodes;
     using Microsoft.AspNetCore.Http;
+    using SteamGraphsWebApp.Models;
 
     public class SteamMarketApiCall
     {
@@ -22,64 +23,39 @@
             httpClient.DefaultRequestHeaders.Add("Cookie", $"steamLoginSecure={dailyCookie}");
         }
 
-        //public async Task<JArray?> FetchItemFromApi(string item)
-        //{
-        //    string url = "https://steamcommunity.com/market/pricehistory/";
-        //    var parameters = new Dictionary<string, string>
-        //    {
-        //        ["country"] = "US",
-        //        ["currency"] = "1",
-        //        ["appid"] = "730",
-        //        ["market_hash_name"] = item
-        //    };
-
-        //    var response = await client.GetAsync(url + "?" + await new FormUrlEncodedContent(parameters).ReadAsStringAsync());
-
-        //    if (response.IsSuccessStatusCode)
-        //    {
-        //        var json = await response.Content.ReadAsStringAsync();
-        //        var jsonData = JObject.Parse(json);
-        //        var prices = jsonData["prices"] as JArray;
-
-        //        return prices;
-        //    }
-        //    else
-        //    {
-        //        Console.WriteLine($"Failed to fetch data for {item}. Status code: {response.StatusCode}");
-        //        return null;
-        //    }
-        //}
-
-
-        public async Task<string> FetchItemFromApiAsync(string item)
+        public async Task<string?> FetchItemFromApi(SteamItemModel model)
         {
             string url = "https://steamcommunity.com/market/pricehistory/";
             var queryParams = new Dictionary<string, string>
-        {
-            {"country", "US"},
-            {"currency", "1"},
-            {"appid", "730"},
-            {"market_hash_name", item}
-        };
+            {
+                {"country", "US"},
+                {"currency", "1"},
+                {"appid", "730"},
+                {"market_hash_name", model.InputItemName}
+            };
 
             httpClient.DefaultRequestHeaders.Add("Cookie", $"steamLoginSecure={dailyCookie}");
 
             var response = await httpClient.GetAsync($"{url}?{await new FormUrlEncodedContent(queryParams).ReadAsStringAsync()}");
 
-            if (!response.IsSuccessStatusCode)
+            if (response.IsSuccessStatusCode)
             {
-                Console.WriteLine($"Failed to fetch data for {item}. Status code: {response.StatusCode}");
+                string rawPriceHistory = await response.Content.ReadAsStringAsync();
+                string filteredPriceHistory = JObject.Parse(rawPriceHistory)["prices"].ToString();
+                return filteredPriceHistory;
+
+            }
+            else
+            {
+                Console.WriteLine($"Failed to fetch data for {model.InputItemName}. Status code: {response.StatusCode}");
                 return null;
             }
-
-            string rawPriceHistory = await response.Content.ReadAsStringAsync();
-            string filteredPriceHistory = JObject.Parse(rawPriceHistory)["prices"].ToString();
-
-            return filteredPriceHistory;
         }
 
-        public async Task<DataFrame> JsonToDataFrame(string filteredPriceHistory)
+        public async Task<DataFrame?> JsonToDataFrame(string filteredPriceHistory)
         {
+            if (filteredPriceHistory == null) return null;
+
             var jsonArray = JArray.Parse(filteredPriceHistory);
             var dateColumn = new PrimitiveDataFrameColumn<DateTime>("date");
             var priceColumn = new PrimitiveDataFrameColumn<double>("price_usd");
@@ -102,11 +78,13 @@
                 {
                     // Handle parsing errors, or log them
                     Console.WriteLine($"Error parsing data: {ex.Message}");
+                    return null;
                 }
                 catch (OverflowException ex)
                 {
                     // Handle cases where numeric data is out of range
                     Console.WriteLine($"Data overflow: {ex.Message}");
+                    return null;
                 }
             }
 
@@ -114,8 +92,24 @@
             
         }
 
+        public async Task<DataFrame?> FetchItemToDataFrame(SteamItemModel model)
+        {
+            string? data = await FetchItemFromApi(model);
+            //priceHistory.Info(); 
+            if (data == null)
+            {
+                return null;
+            }
 
+            DataFrame? df = await JsonToDataFrame(data);
+
+            return df;
+            //Pass JSON data to the view
+        }
+
+
+
+        
     }
-
 
 }
