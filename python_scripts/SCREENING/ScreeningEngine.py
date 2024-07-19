@@ -25,7 +25,7 @@ def screening_total_items():
 
     # Iterate through each item
     for index, item in hash_item_list.iterrows():
-        if index == 70:
+        if index == 23000:
             break
         
         item_name = item["market_hash_name"]
@@ -55,9 +55,7 @@ def screening_total_items():
         screened_items_df = pd.concat([screened_items_df, item_data_df], ignore_index=True) if not screened_items_df.empty else item_data_df
         screened_items_df.to_csv(screened_items_file, index=False)
 
-screening_total_items()
-
-
+# screening_total_items()
 
 
 
@@ -67,7 +65,7 @@ def screening_judgement():
 
     # Define the conditions for filtering
     volume_condition = items_data_df['30d_volume_metric'] > 1000
-    price_condition = items_data_df['last_30d_average_price'] > 2
+    price_condition = items_data_df['last_30d_average_price'] > 0.5
     
     # Filtered data that meets the criteria
     filtered_data_df = items_data_df[volume_condition & price_condition]
@@ -85,9 +83,14 @@ def screening_judgement():
 
     # Save rejected items to a new CSV
     rejected_data_df.to_csv('./data/Item_lists/rejected-items.csv', index=False)
+
+    filtered_data_df = filtered_data_df.sort_values(by='30d_price_%_change', ascending=False)
     
     # Save filtered data to a CSV
     filtered_data_df.to_csv('./data/Item_lists/accepted_items.csv', index=False)
 
 # Call the screening_judgement function
 screening_judgement()
+
+
+
