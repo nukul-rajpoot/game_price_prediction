@@ -10,9 +10,11 @@ namespace SteamGraphsWebApp.Models
         public string? InputItemName { get; set; } = "Glove Case Key";
         public bool IsValidName { get; set; }
 
-        public void ValidateName(List<string> validNames)
+
+        public void ValidateName(HashSet<Item> NamesList)
         {
-            if (string.IsNullOrEmpty(InputItemName))
+            bool inList = NamesList.Contains(new Item { MarketHashName = InputItemName });
+            if (string.IsNullOrEmpty(InputItemName) || !inList)
             {
                 IsValidName = false;
             }
@@ -21,7 +23,5 @@ namespace SteamGraphsWebApp.Models
                 IsValidName = true;
             }
         }
-
     }
-
 }

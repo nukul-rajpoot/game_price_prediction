@@ -9,9 +9,13 @@
     <button type="submit">Submit</button>
 </form>
 
-@if (Model != null && Model.InputItemName != null)
+@if (Model != null && Model.IsValidName)
 {
-    <h3>You entered: @Model.InputItemName</h3>
+    <h3>Graphs for: @Model.InputItemName</h3>
+}
+else
+{
+    <h3>Invalid item name!</h3>
 }
 
 @* @ViewBag.jsonPriceHistoryDate
