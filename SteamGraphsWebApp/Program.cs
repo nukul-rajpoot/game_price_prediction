@@ -1,9 +1,11 @@
+using SteamGraphsWebApp.GraphCalls;
 using SteamGraphsWebApp.PythonServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add python service
 builder.Services.AddScoped<PythonService>();
+builder.Services.AddScoped<NameService>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
