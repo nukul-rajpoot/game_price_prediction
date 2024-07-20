@@ -12,28 +12,32 @@
 
     public class Item
     {
-        [Index(0), Name("market_hash_name")]
+        [Name("market_hash_name")]
         public string? MarketHashName { get; set; }
 
-        [Index(1), Name("hash")]
-        public string? Hash { get; set; }
+        public override bool Equals(object? obj)
+        {
+            return obj is Item item &&
+                   MarketHashName == item.MarketHashName;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(MarketHashName);
+        }
     }
 
     public class NameService
     {
         public HashSet<Item> ReadFileToDict()
         {
-
-            using (var reader = new StreamReader("C:\\Users\\Nukul\\Desktop\\Code\\game_price_prediction\\SteamGraphsWebApp\\hashed_items.csv"))
+            using (var reader = new StreamReader("Data/market_hash_names.csv"))
             using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
             {
-                var records = csv.GetRecords<Item>().ToHashSet();
-                return records;
+                var NamesList = csv.GetRecords<Item>().ToHashSet();
+                return NamesList;
             }
         }
-        // clean item list ""
-
-        
     }
 
 }
