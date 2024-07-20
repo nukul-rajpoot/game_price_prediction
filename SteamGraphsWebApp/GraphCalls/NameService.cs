@@ -31,14 +31,13 @@
     {
         public HashSet<Item> ReadFileToDict()
         {
-            using (var reader = new StreamReader("Data\\market_hash_names.csv"))
+            using (var reader = new StreamReader("Data/market_hash_names.csv"))
             using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
             {
                 var NamesList = csv.GetRecords<Item>().ToHashSet();
                 return NamesList;
             }
         }
-        
     }
 
 }

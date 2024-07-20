@@ -26,21 +26,22 @@ namespace SteamGraphsWebApp.Controllers
 
         public async Task<IActionResult> Index()
         {
-            SteamItemModel initialModel = new SteamItemModel();
-            DataFrame? df = await steamMarketApiCall.FetchItemToDataFrame(initialModel);
+            SteamItemModel model = new SteamItemModel();
+            model.ValidateName(_nameService.ReadFileToDict());
+            DataFrame? df = await steamMarketApiCall.FetchItemToDataFrame(model);
             //Pass JSON data to the view
             ViewBag.jsonPriceHistoryDate = df["date"];
             ViewBag.jsonPriceHistoryPrice = df["price_usd"];
 
-            return View();
+            return View(model);
         }
-
 
         // POST: Home
         [HttpPost]
         public async Task<IActionResult> Index(SteamItemModel model)
         {
-            if (model.InputItemName != null)
+            model.ValidateName(_nameService.ReadFileToDict());
+            if (model.IsValidName)
             {
                 DataFrame? df = await steamMarketApiCall.FetchItemToDataFrame(model);
 
@@ -53,7 +54,8 @@ namespace SteamGraphsWebApp.Controllers
             }
             else
             {
-
+                ModelState.AddModelError("InputItemName", "Invalid item name");
+                await Index();
             }
 
             return View(model);
