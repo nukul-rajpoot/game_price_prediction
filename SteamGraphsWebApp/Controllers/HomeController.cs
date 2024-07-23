@@ -9,6 +9,8 @@ using Microsoft.Data.Analysis;
 using Newtonsoft.Json;
 using Python.Runtime;
 using System.Reflection;
+using Highsoft.Web.Mvc.Stocks;
+using System;
 
 namespace SteamGraphsWebApp.Controllers
 {
@@ -32,6 +34,22 @@ namespace SteamGraphsWebApp.Controllers
             //Pass JSON data to the view
             ViewBag.jsonPriceHistoryDate = df["date"];
             ViewBag.jsonPriceHistoryPrice = df["price_usd"];
+
+            // new code
+            List<AreasplineSeriesData> appleData = new List<AreasplineSeriesData>();
+
+            foreach (DataFrameRow row in df.Rows)
+            {
+                DateTime date = (DateTime) row["date"];
+                appleData.Add(new AreasplineSeriesData
+                {
+                    //X = (data.Date.ToUniversalTime() - new DateTime(1970, 1, 1, DateTimeKind.Utc)).TotalMilliseconds,
+                    X = new DateTimeOffset(date).ToUnixTimeMilliseconds(),
+                    Y = Convert.ToDouble(row["price_usd"])
+                });
+            }
+
+            ViewBag.AppleData = appleData.OrderBy(o => o.X).ToList();
 
             return View(model);
         }
