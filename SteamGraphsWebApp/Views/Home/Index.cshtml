@@ -19,10 +19,7 @@ else
     <h3>Showing default graphs for: Glove Case Key</h3>
 }
 
-@* @ViewBag.jsonPriceHistoryDate
-@ViewBag.jsonPriceHistoryPrice
- *@
-
+<!-- old plotly code-->
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
 <script>
@@ -32,6 +29,60 @@ else
 
 <script src="~/js/example.js"></script>
 <div id="historicPriceChart" style="width:100%; height:500px;"></div>
+<!-- old plotly code-->
+
 
 @* <partial name="~/Views/Graphs/HistoricPriceChart.cshtml" /> *@
 
+
+
+
+
+
+@using Highsoft.Web.Mvc.Stocks
+@using Highsoft.Web.Mvc.Stocks.Rendering
+
+<script src="https://code.highcharts.com/stock/highstock.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+<script type="text/javascript">
+
+    function formatYAxis() {
+        return (this.value > 0 ? ' + ' : '') + this.value + '%';
+    }
+
+</script>
+
+@{
+    var chartOptions =
+          new Highstock
+                  {
+                      RangeSelector = new RangeSelector
+                      {
+                          Selected = 1
+                      },
+                      Title = new Title
+                      {
+                          Text = "Apple Stock Price"
+                      },
+                      Series = new List<Series>
+                      {
+                new AreasplineSeries
+                {
+                   Data = ViewBag.AppleData as List<AreasplineSeriesData>,
+                   Name = "Apple Stock Price",
+                   TurboThreshold = 10000,
+                   Tooltip = new AreasplineSeriesTooltip
+                   {
+                       ValueDecimals = 2
+                   },
+                   FillColor = @ViewBag.fillColor
+                }
+                                      }
+                  };
+
+    chartOptions.ID = "chart";
+    var renderer = new HighstockRenderer(chartOptions);
+}
+
+@Html.Raw(renderer.RenderHtml())
