@@ -18,8 +18,9 @@ namespace SteamGraphsWebApp.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly SteamMarketApiCall steamMarketApiCall = new SteamMarketApiCall();
+        private readonly ApiCalls ApiCalls = new ApiCalls();
         private readonly NameService _nameService;
+        private readonly MakeGraphs _makeGraphs = new MakeGraphs();
 
         public HomeController(ILogger<HomeController> logger, NameService nameService)
         {
@@ -31,26 +32,12 @@ namespace SteamGraphsWebApp.Controllers
         {
             SteamItemModel model = new SteamItemModel();
             model.ValidateName(_nameService.ReadFileToDict());
-            DataFrame? df = await steamMarketApiCall.FetchItemToDataFrame(model);
+            DataFrame? df = await ApiCalls.FetchItemToDataFrame(model);
             //Pass JSON data to the view
             ViewBag.jsonPriceHistoryDate = df["date"];
             ViewBag.jsonPriceHistoryPrice = df["price_usd"];
 
-            // new code
-            List<AreasplineSeriesData> appleData = new List<AreasplineSeriesData>();
-
-            foreach (DataFrameRow row in df.Rows)
-            {
-                DateTime date = (DateTime) row["date"];
-                appleData.Add(new AreasplineSeriesData
-                {
-                    //X = (data.Date.ToUniversalTime() - new DateTime(1970, 1, 1, DateTimeKind.Utc)).TotalMilliseconds,
-                    X = new DateTimeOffset(date).ToUnixTimeMilliseconds(),
-                    Y = Convert.ToDouble(row["price_usd"])
-                });
-            }
-
-            ViewBag.AppleData = appleData;
+            ViewBag.PriceHistoryHighChart = await _makeGraphs.ListPriceHistoryGraph(df);
 
             return View(model);
         }
@@ -62,13 +49,15 @@ namespace SteamGraphsWebApp.Controllers
             model.ValidateName(_nameService.ReadFileToDict());
             if (model.IsValidName)
             {
-                DataFrame? df = await steamMarketApiCall.FetchItemToDataFrame(model);
+                DataFrame? df = await ApiCalls.FetchItemToDataFrame(model);
 
                 if (df != null)
                 {
                     //Pass JSON data to the view
                     ViewBag.jsonPriceHistoryDate = df["date"];
                     ViewBag.jsonPriceHistoryPrice = df["price_usd"];
+
+                    ViewBag.PriceHistoryHighChart = await _makeGraphs.ListPriceHistoryGraph(df);
                 }
             }
             else
