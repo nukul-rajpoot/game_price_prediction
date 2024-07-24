@@ -15,7 +15,7 @@
     public class SteamMarketApiCall
     {
         private HttpClient httpClient = new HttpClient();
-        private string dailyCookie = "76561199704981720%7C%7CeyAidHlwIjogIkpXVCIsICJhbGciOiAiRWREU0EiIH0.eyAiaXNzIjogInI6MTcwQl8yNDkzRTBDMF80QkU4NSIsICJzdWIiOiAiNzY1NjExOTk3MDQ5ODE3MjAiLCAiYXVkIjogWyAid2ViOmNvbW11bml0eSIgXSwgImV4cCI6IDE3MjE4NDk2NzAsICJuYmYiOiAxNzEzMTIxNjMxLCAiaWF0IjogMTcyMTc2MTYzMSwgImp0aSI6ICIwRjgwXzI0Qzg3Q0QzX0NCMTFGIiwgIm9hdCI6IDE3MTgzNjI3ODYsICJydF9leHAiOiAxNzM2NjE4ODA2LCAicGVyIjogMCwgImlwX3N1YmplY3QiOiAiODEuMTA1LjIwMS41NyIsICJpcF9jb25maXJtZXIiOiAiOTAuMTk3Ljc5LjEzMyIgfQ.d66fsREeR6dYWlkYz8IV0avCFxHamsto0s8MZnzTmF4x36HnNmx4AaxW1TUAZoU9nkCnMxYQJK-vAvVVrikcAA";
+        private string dailyCookie = "76561199704981720%7C%7CeyAidHlwIjogIkpXVCIsICJhbGciOiAiRWREU0EiIH0.eyAiaXNzIjogInI6MTcwQl8yNDkzRTBDMF80QkU4NSIsICJzdWIiOiAiNzY1NjExOTk3MDQ5ODE3MjAiLCAiYXVkIjogWyAid2ViOmNvbW11bml0eSIgXSwgImV4cCI6IDE3MjE5Mzc3NDgsICJuYmYiOiAxNzEzMjA5OTU1LCAiaWF0IjogMTcyMTg0OTk1NSwgImp0aSI6ICIwRjdFXzI0QzlEMjI5XzdDRDFDIiwgIm9hdCI6IDE3MTgzNjI3ODYsICJydF9leHAiOiAxNzM2NjE4ODA2LCAicGVyIjogMCwgImlwX3N1YmplY3QiOiAiODEuMTA1LjIwMS41NyIsICJpcF9jb25maXJtZXIiOiAiOTAuMTk3Ljc5LjEzMyIgfQ.XluFv1akngj7VCSopyMSnVS1RZU56outipAW7TCHKFJ7Ulv_-2-39GgsHN0XJ9Irh1HhMkrZHogkk5cUwHVuBw";
 
         public SteamMarketApiCall()
         {
@@ -88,8 +88,15 @@
                 }
             }
 
-            return new DataFrame(dateColumn, priceColumn, volumeColumn);
-            
+            // aggregate data
+            DataFrame PriceHistory = new DataFrame(dateColumn, priceColumn, volumeColumn);
+
+            //DataFrame GroupedPriceHistory = PriceHistory.GroupBy("date").Mean("price_usd");
+            //DataFrame df = GroupedPriceHistory.GroupBy("date").Sum("volume");
+
+            return PriceHistory;
+
+
         }
 
         public async Task<DataFrame?> FetchItemToDataFrame(SteamItemModel model)

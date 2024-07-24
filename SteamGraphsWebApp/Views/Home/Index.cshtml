@@ -56,30 +56,30 @@ else
 @{
     var chartOptions =
           new Highstock
-                  {
-                      RangeSelector = new RangeSelector
-                      {
-                          Selected = 1
-                      },
-                      Title = new Title
-                      {
-                          Text = "Apple Stock Price"
-                      },
-                      Series = new List<Series>
-                      {
-                new AreasplineSeries
+            {
+                RangeSelector = new RangeSelector
                 {
-                   Data = ViewBag.AppleData as List<AreasplineSeriesData>,
-                   Name = "Apple Stock Price",
-                   TurboThreshold = 10000,
-                   Tooltip = new AreasplineSeriesTooltip
-                   {
-                       ValueDecimals = 2
-                   },
-                   FillColor = @ViewBag.fillColor
+                    Selected = 1
+                },
+                Title = new Title
+                {
+                    Text = @Model.InputItemName
+                },
+                Series = new List<Series>
+                {
+                    new AreasplineSeries
+                    {
+                        Data = ViewBag.AppleData as List<AreasplineSeriesData>,
+                        Name = "Apple Stock Price",
+                        TurboThreshold = 10000,
+                        Tooltip = new AreasplineSeriesTooltip
+                        {
+                            ValueDecimals = 2
+                        },
+                        FillColor = @ViewBag.fillColor
+                    }
                 }
-                                      }
-                  };
+            };
 
     chartOptions.ID = "chart";
     var renderer = new HighstockRenderer(chartOptions);
