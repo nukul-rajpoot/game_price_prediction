@@ -12,12 +12,12 @@
     using Microsoft.AspNetCore.Http;
     using SteamGraphsWebApp.Models;
 
-    public class SteamMarketApiCall
+    public class ApiCalls
     {
         private HttpClient httpClient = new HttpClient();
         private string dailyCookie = "REDACTED";
 
-        public SteamMarketApiCall()
+        public ApiCalls()
         {
             // Assuming the cookie does not change frequently, set it once in the constructor
             httpClient.DefaultRequestHeaders.Add("Cookie", $"steamLoginSecure={dailyCookie}");
