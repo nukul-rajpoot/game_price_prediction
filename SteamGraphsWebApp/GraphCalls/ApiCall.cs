@@ -88,8 +88,15 @@
                 }
             }
 
-            return new DataFrame(dateColumn, priceColumn, volumeColumn);
-            
+            // aggregate data
+            DataFrame PriceHistory = new DataFrame(dateColumn, priceColumn, volumeColumn);
+
+            //DataFrame GroupedPriceHistory = PriceHistory.GroupBy("date").Mean("price_usd");
+            //DataFrame df = GroupedPriceHistory.GroupBy("date").Sum("volume");
+
+            return PriceHistory;
+
+
         }
 
         public async Task<DataFrame?> FetchItemToDataFrame(SteamItemModel model)

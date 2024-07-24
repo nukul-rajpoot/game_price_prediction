@@ -11,6 +11,7 @@ using Python.Runtime;
 using System.Reflection;
 using Highsoft.Web.Mvc.Stocks;
 using System;
+using System.Net;
 
 namespace SteamGraphsWebApp.Controllers
 {
@@ -49,7 +50,7 @@ namespace SteamGraphsWebApp.Controllers
                 });
             }
 
-            ViewBag.AppleData = appleData.OrderBy(o => o.X).ToList();
+            ViewBag.AppleData = appleData;
 
             return View(model);
         }
