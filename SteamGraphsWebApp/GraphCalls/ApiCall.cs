@@ -12,12 +12,12 @@
     using Microsoft.AspNetCore.Http;
     using SteamGraphsWebApp.Models;
 
-    public class SteamMarketApiCall
+    public class ApiCalls
     {
         private HttpClient httpClient = new HttpClient();
         private string dailyCookie = "76561199704981720%7C%7CeyAidHlwIjogIkpXVCIsICJhbGciOiAiRWREU0EiIH0.eyAiaXNzIjogInI6MTcwQl8yNDkzRTBDMF80QkU4NSIsICJzdWIiOiAiNzY1NjExOTk3MDQ5ODE3MjAiLCAiYXVkIjogWyAid2ViOmNvbW11bml0eSIgXSwgImV4cCI6IDE3MjE5Mzc3NDgsICJuYmYiOiAxNzEzMjA5OTU1LCAiaWF0IjogMTcyMTg0OTk1NSwgImp0aSI6ICIwRjdFXzI0QzlEMjI5XzdDRDFDIiwgIm9hdCI6IDE3MTgzNjI3ODYsICJydF9leHAiOiAxNzM2NjE4ODA2LCAicGVyIjogMCwgImlwX3N1YmplY3QiOiAiODEuMTA1LjIwMS41NyIsICJpcF9jb25maXJtZXIiOiAiOTAuMTk3Ljc5LjEzMyIgfQ.XluFv1akngj7VCSopyMSnVS1RZU56outipAW7TCHKFJ7Ulv_-2-39GgsHN0XJ9Irh1HhMkrZHogkk5cUwHVuBw";
 
-        public SteamMarketApiCall()
+        public ApiCalls()
         {
             // Assuming the cookie does not change frequently, set it once in the constructor
             httpClient.DefaultRequestHeaders.Add("Cookie", $"steamLoginSecure={dailyCookie}");
