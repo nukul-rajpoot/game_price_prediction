@@ -37,7 +37,7 @@ namespace SteamGraphsWebApp.Controllers
             ViewBag.jsonPriceHistoryDate = df["date"];
             ViewBag.jsonPriceHistoryPrice = df["price_usd"];
 
-            ViewBag.PriceHistoryHighChart = await _makeGraphs.ListPriceHistoryGraph(df);
+            ViewBag.PriceHistoryHighChart = await _makeGraphs.ListVolumeGraph(df);
 
             return View(model);
         }
@@ -57,7 +57,7 @@ namespace SteamGraphsWebApp.Controllers
                     ViewBag.jsonPriceHistoryDate = df["date"];
                     ViewBag.jsonPriceHistoryPrice = df["price_usd"];
 
-                    ViewBag.PriceHistoryHighChart = await _makeGraphs.ListPriceHistoryGraph(df);
+                    ViewBag.PriceHistoryHighChart = await _makeGraphs.ListVolumeGraph(df);
                 }
             }
             else
