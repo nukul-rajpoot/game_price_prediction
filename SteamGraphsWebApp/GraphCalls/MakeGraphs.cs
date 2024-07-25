@@ -12,24 +12,47 @@
     using Microsoft.AspNetCore.Http;
     using SteamGraphsWebApp.Models;
     using Highsoft.Web.Mvc.Stocks;
+    using SteamGraphsWebApp.GraphCalls;
+
 
     public class MakeGraphs
     {
+        private readonly CalculateMetrics _calculateMetrics = new CalculateMetrics();
+
         public async Task<List<AreasplineSeriesData>> ListPriceHistoryGraph(DataFrame df)
         {
-            List<AreasplineSeriesData> appleData = new List<AreasplineSeriesData>();
+            List<AreasplineSeriesData> priceHistoryList= new List<AreasplineSeriesData>();
 
             foreach (DataFrameRow row in df.Rows)
             {
-                DateTime date = (DateTime)row["date"];
-                appleData.Add(new AreasplineSeriesData
+                DateTime date = (DateTime) row["date"];
+                priceHistoryList.Add(new AreasplineSeriesData
                 {
                     //X = (data.Date.ToUniversalTime() - new DateTime(1970, 1, 1, DateTimeKind.Utc)).TotalMilliseconds,
                     X = new DateTimeOffset(date).ToUnixTimeMilliseconds(),
                     Y = Convert.ToDouble(row["price_usd"])
                 });
             }
-            return appleData;
+            return priceHistoryList;
+        }
+
+        public async Task<List<AreasplineSeriesData>> ListVolumeGraph(DataFrame df)
+        {
+            List<AreasplineSeriesData> volumeDataList = new List<AreasplineSeriesData>();
+
+            DataFrame aggregatedVolumeDf = await _calculateMetrics.AggregateVolume(df);
+
+            foreach (DataFrameRow row in aggregatedVolumeDf.Rows)
+            {
+                DateTime date = (DateTime) row["daily_date"];
+                volumeDataList.Add(new AreasplineSeriesData
+                {
+                    //X = (data.Date.ToUniversalTime() - new DateTime(1970, 1, 1, DateTimeKind.Utc)).TotalMilliseconds,
+                    X = new DateTimeOffset(date).ToUnixTimeMilliseconds(),
+                    Y = Convert.ToInt32(row["volume"])
+                });
+            }
+            return volumeDataList;
         }
 
     }
