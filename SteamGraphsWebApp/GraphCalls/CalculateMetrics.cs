@@ -11,4 +11,13 @@
     using System.Text.Json.Nodes;
     using Microsoft.AspNetCore.Http;
     using SteamGraphsWebApp.Models;
+
+    public class CalculateMetrics()
+    {
+        public async Task<DataFrame> AggregateVolume(DataFrame df)
+        {
+            DataFrame aggregatedVolume = df.GroupBy("date").Sum("volume");
+            return aggregatedVolume;
+        }
+    }
 }
