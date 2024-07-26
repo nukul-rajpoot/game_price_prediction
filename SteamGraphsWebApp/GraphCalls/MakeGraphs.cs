@@ -19,7 +19,7 @@
     {
         private readonly CalculateMetrics _calculateMetrics = new CalculateMetrics();
 
-        public async Task<List<AreasplineSeriesData>> ListPriceHistoryGraph(DataFrame df)
+        public async Task<List<AreasplineSeriesData>> MakePriceHistoryGraph(DataFrame df)
         {
             List<AreasplineSeriesData> priceHistoryList= new List<AreasplineSeriesData>();
 
@@ -36,20 +36,20 @@
             return priceHistoryList;
         }
 
-        public async Task<List<AreasplineSeriesData>> ListVolumeGraph(DataFrame df)
+        public async Task<List<ColumnSeriesData>> MakeVolumeGraph(DataFrame df)
         {
-            List<AreasplineSeriesData> volumeDataList = new List<AreasplineSeriesData>();
+            List<ColumnSeriesData> volumeDataList = new List<ColumnSeriesData>();
 
             DataFrame aggregatedVolumeDf = await _calculateMetrics.AggregateVolume(df);
 
             foreach (DataFrameRow row in aggregatedVolumeDf.Rows)
             {
                 DateTime date = (DateTime) row["daily_date"];
-                volumeDataList.Add(new AreasplineSeriesData
+                volumeDataList.Add(new ColumnSeriesData
                 {
                     //X = (data.Date.ToUniversalTime() - new DateTime(1970, 1, 1, DateTimeKind.Utc)).TotalMilliseconds,
                     X = new DateTimeOffset(date).ToUnixTimeMilliseconds(),
-                    Y = Convert.ToInt32(row["volume"])
+                    Y = Convert.ToDouble(row["volume"])
                 });
             }
             return volumeDataList;
