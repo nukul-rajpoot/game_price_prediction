@@ -23,8 +23,8 @@ else
 
 
 @* <partial name="~/Views/Graphs/_PriceHistoryGraph.cshtml" /> *@
-<partial name="~/Views/Graphs/_CandleStickWithVolume.cshtml" />
-
+@* <partial name="~/Views/Graphs/_CandleStickWithVolume.cshtml" /> *@
+@await Html.PartialAsync("~/Views/Graphs/_CandleStickWithVolume.cshtml")
 
 
 
