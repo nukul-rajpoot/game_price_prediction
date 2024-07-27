@@ -23,9 +23,11 @@
         {
             List<AreasplineSeriesData> priceHistoryList= new List<AreasplineSeriesData>();
 
-            foreach (DataFrameRow row in df.Rows)
+            DataFrame aggregatedPriceDf = await _calculateMetrics.AggregatePrice(df);
+
+            foreach (DataFrameRow row in aggregatedPriceDf.Rows)
             {
-                DateTime date = (DateTime) row["date"];
+                DateTime date = (DateTime) row["daily_date"];
                 priceHistoryList.Add(new AreasplineSeriesData
                 {
                     //X = (data.Date.ToUniversalTime() - new DateTime(1970, 1, 1, DateTimeKind.Utc)).TotalMilliseconds,
