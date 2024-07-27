@@ -77,27 +77,5 @@
 
             return aggregatedVolumeDf;
         }
-
-        public async Task<DataFrame> CalculateLnPriceHistory(DataFrame df)
-        {
-            // Create a copy of the original DataFrame
-
-            // Apply log transformation to 'price_usd' column
-            var priceUsdColumn = df.Columns["price_usd"] as PrimitiveDataFrameColumn<double>;
-            var priceUsdLogColumn = new PrimitiveDataFrameColumn<double>("price_usd_log", priceUsdColumn.Select(price => Math.Log(1 + (double) price)));
-            // Apply log transformation to 'volume' column
-            //var volumeColumn = df.Columns["volume"] as PrimitiveDataFrameColumn<double>;
-            //var volumeLogColumn = new PrimitiveDataFrameColumn<double>("volume_log", volumeColumn.Select(volume => Math.Log(1 + (double) volume)));
-
-            // Add the new columns to the DataFrame
-            DataFrame lnDf = df;
-
-            lnDf.Columns.Add(priceUsdLogColumn);
-            //lnDf.Columns.Add(volumeLogColumn);
-
-            return lnDf;
-        }
-
-
     }
 }
