@@ -12,6 +12,9 @@
     using Microsoft.AspNetCore.Http;
     using SteamGraphsWebApp.Models;
     using Microsoft.AspNetCore.DataProtection.KeyManagement;
+    using System.Text.RegularExpressions;
+    using Microsoft.Ajax.Utilities;
+    using System.Linq;
 
     public class CalculateMetrics()
     {
@@ -21,8 +24,10 @@
             foreach (DataFrameRow row in df.Rows)
             {
                 DateTime date = (DateTime)row["date"];
-                DateTime dailyDate = date.Date;
-                dailyDateColumn.Append(dailyDate);
+                DateOnly dailyDate = DateOnly.FromDateTime(date);
+                DateTime dateTimeWithoutTime = dailyDate.ToDateTime(TimeOnly.MinValue);
+
+                dailyDateColumn.Append(dateTimeWithoutTime);
             }
             df["daily_date"] = dailyDateColumn;
             return df;
@@ -31,9 +36,36 @@
         public async Task<DataFrame> AggregatePrice(DataFrame df)
         {
             df = await MakeDailyDateColumn(df);
-            //DataFrame aggregatedPriceDf = df.GroupBy("daily_date").Median("price_usd");
+            var groupingsByDay = df.Rows.GroupBy(row => row["daily_date"]);
+            var newDateColumn = new PrimitiveDataFrameColumn<DateTime>("daily_date");
+            var newPriceColumn = new PrimitiveDataFrameColumn<double>("price_usd");
 
-            return CalculateMedian(df);
+            foreach (var group in groupingsByDay)
+            {
+                int numberOfPrices = group.Count();
+                //if (numberOfPrices == 1) continue;
+
+                if (numberOfPrices % 2 == 0)
+                {
+                    var row1 = group.ElementAt(numberOfPrices / 2 - 1);
+                    var row2 = group.ElementAt(numberOfPrices / 2);
+                    double median = ((double)row1["price_usd"] + (double)row2["price_usd"]) / 2;
+                    row1["price_usd"] = median;
+                    newDateColumn.Append((DateTime) row1["daily_date"]);
+                    newPriceColumn.Append(median);
+                }
+                else if (numberOfPrices % 2 == 1)
+                {
+                    int middleIndex = numberOfPrices / 2;
+                    var row = group.ElementAt(middleIndex);
+                    newDateColumn.Append((DateTime) row["daily_date"]);
+                    newPriceColumn.Append((double) row["price_usd"]);
+                }
+            }
+
+            DataFrame aggregatedPriceDF = new DataFrame(newDateColumn, newPriceColumn);
+
+            return aggregatedPriceDF;
         }
 
         public async Task<DataFrame> AggregateVolume(DataFrame df)
@@ -41,50 +73,9 @@
             df = await MakeDailyDateColumn(df);
 
             DataFrame aggregatedVolumeDf = df.GroupBy("daily_date").Sum("volume");
+            //var tail = aggregatedVolumeDf.Tail(5);
 
             return aggregatedVolumeDf;
         }
-
-        public static DataFrame CalculateMedian(DataFrame dataFrame)
-        {
-            // Create a dictionary to group all rows (single group)
-            var keyToRowIndices = new Dictionary<int, ICollection<long>> { { 0, Enumerable.Range(0, (int)dataFrame.Rows.Count).Select(i => (long)i).ToList() } };
-
-            // Create a new DataFrame to store the result
-            DataFrame result = new DataFrame();
-
-            // Iterate over each column in the DataFrame
-            foreach (var column in dataFrame.Columns)
-            {
-                // Convert the column to a list of doubles (if possible)
-                var values = keyToRowIndices[0].Select(index => column[index])
-                                                .Where(value => value != null && double.TryParse(value.ToString(), out _))
-                                                .Select(value => Convert.ToDouble(value))
-                                                .OrderBy(value => value)
-                                                .ToList();
-
-                // Calculate the median
-                double median;
-                int count = values.Count;
-                if (count % 2 == 0)
-                {
-                    // Even number of elements
-                    median = (values[count / 2 - 1] + values[count / 2]) / 2.0;
-                }
-                else
-                {
-                    // Odd number of elements
-                    median = values[count / 2];
-                }
-
-                // Create a new column with the median value and add it to the result DataFrame
-                var resultColumn = new PrimitiveDataFrameColumn<double>(column.Name, new double[] { median });
-                result.Columns.Add(resultColumn);
-            }
-
-            return result;
-        }
-
-
     }
 }
