@@ -57,5 +57,26 @@
             return volumeDataList;
         }
 
+        public async Task<List<AreasplineSeriesData>> MakeLnPriceHistoryGraph(DataFrame df)
+        {
+            List<AreasplineSeriesData> LnPriceHistoryList = new List<AreasplineSeriesData>();
+
+            DataFrame aggregatedPriceDf = await _calculateMetrics.AggregatePrice(df);
+
+            DataFrame lnPriceHistoryDf = await _calculateMetrics.CalculateLnPriceHistory(aggregatedPriceDf);
+
+            foreach (DataFrameRow row in lnPriceHistoryDf.Rows)
+            {
+                DateTime date = (DateTime)row["daily_date"];
+                LnPriceHistoryList.Add(new AreasplineSeriesData
+                {
+                    //X = (data.Date.ToUniversalTime() - new DateTime(1970, 1, 1, DateTimeKind.Utc)).TotalMilliseconds,
+                    X = new DateTimeOffset(date).ToUnixTimeMilliseconds(),
+                    Y = Convert.ToDouble(row["price_usd_log"])
+                });
+            }
+            return LnPriceHistoryList;
+        }
+
     }
 }
