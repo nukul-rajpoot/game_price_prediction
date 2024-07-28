@@ -15,4 +15,11 @@
     <PackageReference Include="pythonnet" Version="3.0.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="Views\Graphs\_LnPriceHistoryWithVolume.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>
