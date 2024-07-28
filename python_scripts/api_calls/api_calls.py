@@ -94,6 +94,6 @@ def sanitize_filename(filename):
 
     
 def save_item_to_csv(item, dailyCookie):
-    csv_data = './data/'+ sanitize_filename(item) +'.csv'
+    csv_data = './data/Individual_Item_Historic/'+ sanitize_filename(item) +'.csv'
     fetch_item_to_df(item, dailyCookie).to_csv(csv_data, index=True)
     
