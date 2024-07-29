@@ -25,7 +25,8 @@ import pandas as pd
 
 
 def fetch_daily_cookie():
-    dailyCookie = "REDACTED"
+    with open('cookie.txt', 'r') as file:
+        dailyCookie = file.read()
     return dailyCookie
 
 def fetch_items():
