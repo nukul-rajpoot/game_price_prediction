@@ -25,7 +25,8 @@ import pandas as pd
 
 
 def fetch_daily_cookie():
-    dailyCookie = "76561199704981720%7C%7CeyAidHlwIjogIkpXVCIsICJhbGciOiAiRWREU0EiIH0.eyAiaXNzIjogInI6MTcwQl8yNDkzRTBDMF80QkU4NSIsICJzdWIiOiAiNzY1NjExOTk3MDQ5ODE3MjAiLCAiYXVkIjogWyAid2ViOmNvbW11bml0eSIgXSwgImV4cCI6IDE3MjIxOTEyMjEsICJuYmYiOiAxNzEzNDY0NTAzLCAiaWF0IjogMTcyMjEwNDUwMywgImp0aSI6ICIwRjdFXzI0QzlEMjUxXzQxN0I5IiwgIm9hdCI6IDE3MTgzNjI3ODYsICJydF9leHAiOiAxNzM2NjE4ODA2LCAicGVyIjogMCwgImlwX3N1YmplY3QiOiAiODEuMTA1LjIwMS41NyIsICJpcF9jb25maXJtZXIiOiAiOTAuMTk3Ljc5LjEzMyIgfQ.BCNdwV7IxDaTUZvdE4BVPgyXxk99CFfYihVnqduOx9blu1ZTEEc-Kgm6YrqX6X9pubw8BsTlUAUbHDMNlN7oBA"
+    with open('cookie.txt', 'r') as file:
+        dailyCookie = file.read()
     return dailyCookie
 
 def fetch_items():
