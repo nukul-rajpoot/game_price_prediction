@@ -1,0 +1,87 @@
+﻿@using Highsoft.Web.Mvc.Stocks
+@using Highsoft.Web.Mvc.Stocks.Rendering
+
+<script src="https://code.highcharts.com/stock/highstock.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+@{ 
+    var chartOptions =
+        new Highstock
+           {
+               Chart = new Highsoft.Web.Mvc.Stocks.Chart
+               {
+
+               },
+               RangeSelector = new RangeSelector
+               {
+                   Selected = 1
+               },
+               Title = new Title
+               {
+                    Text = $"{Model.InputItemName} SMA (7 day fixed)"
+               },
+               YAxis = new List<YAxis>
+               {
+                new YAxis
+                {
+                    Labels = new YAxisLabels
+                    {
+                        Align = YAxisLabelsAlign.Right,
+                        X = -3
+                    },
+                    Title = new YAxisTitle
+                    {
+                        Text = "Price"
+                    },
+                    Height = "60%",
+                    LineWidth = 2
+                },
+                new YAxis
+                {
+                    Labels = new YAxisLabels
+                    {
+                        Align = YAxisLabelsAlign.Right,
+                        X = -3
+                    },
+                    Title = new YAxisTitle
+                    {
+                        Text = "Volume"
+                    },
+                    Top = "65%",
+                    Height = "35%",
+                    Offset = -1,
+                    LineWidth = 2,
+                    Id = "VolumeAxis"
+
+                }
+                               },
+               Series = new List<Series>
+               {
+                new AreasplineSeries
+                {
+                    Data = ViewBag.SmaHighChart as List<AreasplineSeriesData>,
+                    Name = "Price",
+                    TurboThreshold = 10000,
+                    Tooltip = new AreasplineSeriesTooltip
+                    {
+                        ValueDecimals = 2
+                    },
+                    FillColor = @ViewBag.fillColor
+                },
+                new ColumnSeries
+                {
+                    Name = "Volume",
+                    Data = ViewBag.VolumeData as List<ColumnSeriesData>,
+                    DataGrouping = new ColumnSeriesDataGrouping() {Enabled = true, Forced = true },
+                    YAxis = "VolumeAxis",
+                    TurboThreshold = 10000,
+                    ShowInNavigator = true
+                }
+               }
+           };
+
+    chartOptions.ID = "smaChart";
+    var renderer = new HighstockRenderer(chartOptions);
+}
+
+@Html.Raw(renderer.RenderHtml())
