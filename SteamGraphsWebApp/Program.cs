@@ -1,5 +1,6 @@
 using SteamGraphsWebApp.GraphCalls;
 using SteamGraphsWebApp.PythonServices;
+using Microsoft.Extensions.Azure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +10,11 @@ builder.Services.AddScoped<NameService>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddAzureClients(clientBuilder =>
+{
+    clientBuilder.AddBlobServiceClient(builder.Configuration["steamgraphsconnection:blob"]!, preferMsi: true);
+    clientBuilder.AddQueueServiceClient(builder.Configuration["steamgraphsconnection:queue"]!, preferMsi: true);
+});
 
 var app = builder.Build();
 

@@ -15,6 +15,7 @@
     using System.Text.RegularExpressions;
     using Microsoft.Ajax.Utilities;
     using System.Linq;
+    using Skender.Stock.Indicators;
 
     public class CalculateMetrics()
     {
@@ -46,7 +47,7 @@
                 //if (numberOfPrices == 1) continue;
 
                 if (numberOfPrices % 2 == 0)
-                {
+                {   
                     var row1 = group.ElementAt(numberOfPrices / 2 - 1);
                     var row2 = group.ElementAt(numberOfPrices / 2);
                     double median = ((double)row1["price_usd"] + (double)row2["price_usd"]) / 2;
@@ -98,6 +99,43 @@
             return lnDf;
         }
 
+        public async Task<DataFrame> CalculateSma(DataFrame data, int period)
+        {
+            // Extract the date and price columns into a list of Quote
+            var quotes = new List<Quote>();
+            DateTime[] dates = data.Columns["daily_date"].Cast<DateTime>().ToArray();
+            double[] prices = data.Columns["price_usd"].Cast<double>().ToArray();
+
+            for (int i = 0; i < data.Rows.Count; i++)
+            {
+                quotes.Add(new Quote
+                {
+                    Date = dates[i],
+                    Close = (decimal)prices[i]
+                });
+            }
+
+            // Calculate SMA
+            IEnumerable<SmaResult> smaResults = quotes.GetSma(period);
+
+            // Prepare new DataFrame columns
+            var smaDates = new List<DateTime>();
+            var smaValues = new List<double?>();
+
+            foreach (var result in smaResults)
+            {
+                smaDates.Add(result.Date);
+                smaValues.Add(result.Sma);
+            }
+
+            // Create the resulting DataFrame
+            var smaColumn = new DoubleDataFrameColumn("price_sma", smaValues.Skip(period).Select(v => v ?? double.NaN)); // Handle nulls
+            var dateColumn = new PrimitiveDataFrameColumn<DateTime>("daily_date", smaDates.Skip(period));
+
+            var resultDataFrame = new DataFrame(dateColumn, smaColumn);
+
+            return resultDataFrame;
+        }
 
     }
 }
