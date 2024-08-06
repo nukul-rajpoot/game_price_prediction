@@ -1,3 +1,4 @@
+import sys
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
 from azure.storage.blob import BlobClient
@@ -43,5 +44,6 @@ blob_client = BlobClient.from_blob_url(blob_url=blob_url, credential=sas_token)
 
 # Overwrite the existing blob or create a new one if it doesn't exist
 blob_client.upload_blob(cookieDict["value"], overwrite=True)
+sys.exit(0)
 
 #print("Cookie has been updated.")
