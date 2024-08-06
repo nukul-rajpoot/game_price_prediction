@@ -18,21 +18,23 @@ namespace SteamGraphsWebApp.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly ApiCalls ApiCalls = new ApiCalls();
+        private readonly ApiCalls _apiCalls;
         private readonly NameService _nameService;
-        private readonly MakeGraphs _makeGraphs = new MakeGraphs();
+        private readonly MakeGraphs _makeGraphs;
 
-        public HomeController(ILogger<HomeController> logger, NameService nameService)
+        public HomeController(ILogger<HomeController> logger, NameService nameService, MakeGraphs makeGraphs, ApiCalls apiCalls)
         {
             _logger = logger;
             _nameService = nameService;
+            _makeGraphs = makeGraphs;
+            _apiCalls = apiCalls;
         }
 
         public async Task<IActionResult> Index()
         {
             SteamItemModel model = new SteamItemModel();
             model.ValidateName(_nameService.ReadFileToDict());
-            DataFrame? df = await ApiCalls.FetchItemToDataFrame(model);
+            DataFrame? df = await _apiCalls.FetchItemToDataFrame(model);
             //Pass JSON data to the view
             ViewBag.jsonPriceHistoryDate = df["date"];
             ViewBag.jsonPriceHistoryPrice = df["price_usd"];
@@ -55,7 +57,7 @@ namespace SteamGraphsWebApp.Controllers
             model.ValidateName(_nameService.ReadFileToDict());
             if (model.IsValidName)
             {
-                DataFrame? df = await ApiCalls.FetchItemToDataFrame(model);
+                DataFrame? df = await _apiCalls.FetchItemToDataFrame(model);
 
                 if (df != null)
                 {

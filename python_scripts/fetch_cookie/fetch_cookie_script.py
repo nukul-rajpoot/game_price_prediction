@@ -1,5 +1,7 @@
+import sys
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
+from azure.storage.blob import BlobClient
 
 # Specify the path to your Firefox profile
 # profile_path = "C:/Users/Nukul/AppData/Roaming/Mozilla/Firefox/Profiles/nezbuhz8.default-release-1"
@@ -25,13 +27,23 @@ cookies = driver.get_cookies()
 
 # Close the browser
 driver.quit()
-# end_time = time.time()  # Record the end time
-# duration = end_time - start_time  # Calculate the duration
 
-cookieDict = cookies[0]
+cookieDict = cookies[2]
+#print(cookieDict)
+# for cookie in cookies:
+#     print(cookie)
 
-print(cookieDict["value"])
+#print(cookieDict["value"])
 
-# print(f"The program took {duration} seconds to run.")
-with open('cookie.txt', 'w') as file:
-    file.write(cookieDict["value"])
+# Your blob URL and SAS token
+blob_url = 'https://steamgraphsstorage.blob.core.windows.net/container-for-blob/cookie.txt'
+sas_token = 'sp=rwd&st=2024-08-06T20:45:18Z&se=2025-09-10T04:45:18Z&spr=https&sv=2022-11-02&sr=c&sig=MKticGz9P9HPI7iXp1a6yuErc5Sv6P9fY%2FfCbxL0PLg%3D'
+
+# Initialize the BlobClient with the SAS token
+blob_client = BlobClient.from_blob_url(blob_url=blob_url, credential=sas_token)
+
+# Overwrite the existing blob or create a new one if it doesn't exist
+blob_client.upload_blob(cookieDict["value"], overwrite=True)
+sys.exit(0)
+
+#print("Cookie has been updated.")
