@@ -16,6 +16,7 @@
     using Microsoft.Ajax.Utilities;
     using System.Linq;
     using Skender.Stock.Indicators;
+    using Highsoft.Web.Mvc.Stocks;
 
     public class CalculateMetrics()
     {
@@ -99,21 +100,10 @@
             return lnDf;
         }
 
-        public async Task<DataFrame> CalculateSma(DataFrame data, int period)
+        public async Task<DataFrame> CalculateSma(DataFrame df, int period)
         {
             // Extract the date and price columns into a list of Quote
-            var quotes = new List<Quote>();
-            DateTime[] dates = data.Columns["daily_date"].Cast<DateTime>().ToArray();
-            double[] prices = data.Columns["price_usd"].Cast<double>().ToArray();
-
-            for (int i = 0; i < data.Rows.Count; i++)
-            {
-                quotes.Add(new Quote
-                {
-                    Date = dates[i],
-                    Close = (decimal)prices[i]
-                });
-            }
+            var quotes = DataFrameToQuotes(df);
 
             // Calculate SMA
             IEnumerable<SmaResult> smaResults = quotes.GetSma(period);
@@ -135,6 +125,50 @@
             var resultDataFrame = new DataFrame(dateColumn, smaColumn);
 
             return resultDataFrame;
+        }
+
+        public async Task<DataFrame> CalculateEma(DataFrame df, int period)
+        {
+
+            var quotes = DataFrameToQuotes(df);
+            // Calculate EMA
+            IEnumerable<EmaResult> emaResults = quotes.GetEma(period);
+
+            // Prepare new DataFrame columns
+            var emaDates = new List<DateTime>();
+            var emaValues = new List<double?>();
+
+            foreach (var result in emaResults)
+            {
+                emaDates.Add(result.Date);
+                emaValues.Add(result.Ema);
+            }
+
+            // Create the resulting DataFrame
+            var emaColumn = new DoubleDataFrameColumn("price_ema", emaValues.Skip(period).Select(v => v ?? double.NaN)); // Handle nulls
+            var dateColumn = new PrimitiveDataFrameColumn<DateTime>("daily_date", emaDates.Skip(period));
+
+            var resultDataFrame = new DataFrame(dateColumn, emaColumn);
+
+            return resultDataFrame;
+        }
+
+        public List<Quote> DataFrameToQuotes(DataFrame df)
+        {
+            // Extract the date and price columns into a list of Quote
+            var quotes = new List<Quote>();
+            DateTime[] dates = df.Columns["daily_date"].Cast<DateTime>().ToArray();
+            double[] prices = df.Columns["price_usd"].Cast<double>().ToArray();
+
+            for (int i = 0; i < df.Rows.Count; i++)
+            {
+                quotes.Add(new Quote
+                {
+                    Date = dates[i],
+                    Close = (decimal)prices[i]
+                });
+            }
+            return quotes;
         }
 
     }
