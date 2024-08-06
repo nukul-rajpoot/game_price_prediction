@@ -99,5 +99,26 @@
             return LnPriceHistoryList;
         }
 
+        public async Task<List<AreasplineSeriesData>> MakeEmaGraph(DataFrame df)
+        {
+            List<AreasplineSeriesData> LnPriceHistoryList = new List<AreasplineSeriesData>();
+
+            DataFrame aggregatedPriceDf = await _calculateMetrics.AggregatePrice(df);
+
+            DataFrame lnPriceHistoryDf = await _calculateMetrics.CalculateEma(aggregatedPriceDf, 7);
+
+            foreach (DataFrameRow row in lnPriceHistoryDf.Rows)
+            {
+                DateTime date = (DateTime)row["daily_date"];
+                LnPriceHistoryList.Add(new AreasplineSeriesData
+                {
+                    //X = (data.Date.ToUniversalTime() - new DateTime(1970, 1, 1, DateTimeKind.Utc)).TotalMilliseconds,
+                    X = new DateTimeOffset(date).ToUnixTimeMilliseconds(),
+                    Y = Convert.ToDouble(row["price_ema"])
+                });
+            }
+            return LnPriceHistoryList;
+        }
+
     }
 }
