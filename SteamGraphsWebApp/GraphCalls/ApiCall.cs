@@ -28,7 +28,7 @@
 
         public async Task<string> GetCookieFromBlob()
         {
-            String blobUrl = "https://steamgraphsstorage.blob.core.windows.net/container-for-blob/cookie.txt?sp=r&st=2024-08-06T19:20:44Z&se=2024-08-07T03:20:44Z&spr=https&sv=2022-11-02&sr=c&sig=Csu5jI%2BbxXvLLBJMiV3KQWLEiFhp9uYDiUIoAUaKLoA%3D";
+            String blobUrl = "https://steamgraphsstorage.blob.core.windows.net/container-for-blob/cookie.txt?sp=rwd&st=2024-08-06T20:45:18Z&se=2025-09-10T04:45:18Z&spr=https&sv=2022-11-02&sr=c&sig=MKticGz9P9HPI7iXp1a6yuErc5Sv6P9fY%2FfCbxL0PLg%3D";
 
             var response = await _httpClient.GetAsync(blobUrl);
             response.EnsureSuccessStatusCode();
