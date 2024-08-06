@@ -40,6 +40,8 @@ namespace SteamGraphsWebApp.Controllers
             ViewBag.PriceHistoryHighChart = await _makeGraphs.MakePriceHistoryGraph(df);
             ViewBag.LnPriceHistoryHighChart = await _makeGraphs.MakeLnPriceHistoryGraph(df);
             ViewBag.SmaHighChart = await _makeGraphs.MakeSmaGraph(df);
+            ViewBag.EmaHighChart = await _makeGraphs.MakeEmaGraph(df);
+
 
             ViewBag.VolumeData = await _makeGraphs.MakeVolumeGraph(df);
 
@@ -64,6 +66,7 @@ namespace SteamGraphsWebApp.Controllers
                     ViewBag.PriceHistoryHighChart = await _makeGraphs.MakePriceHistoryGraph(df);
                     ViewBag.LnPriceHistoryHighChart = await _makeGraphs.MakeLnPriceHistoryGraph(df);
                     ViewBag.SmaHighChart = await _makeGraphs.MakeSmaGraph(df);
+                    ViewBag.EmaHighChart = await _makeGraphs.MakeEmaGraph(df);
 
                     ViewBag.VolumeData = await _makeGraphs.MakeVolumeGraph(df);
                 }
