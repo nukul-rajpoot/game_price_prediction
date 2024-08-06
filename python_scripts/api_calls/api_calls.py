@@ -22,12 +22,13 @@ True
 import re
 import requests
 import pandas as pd 
+import os
 
-
-def fetch_daily_cookie():
-    with open('cookie.txt', 'r') as file:
-        dailyCookie = file.read()
-    return dailyCookie
+def get_cookie_from_blob():
+    blob_url = "https://steamgraphsstorage.blob.core.windows.net/container-for-blob/cookie.txt?REDACTED"
+    response = requests.get(blob_url)
+    response.raise_for_status()
+    return response.text
 
 def fetch_items():
     items = ["Glove Case Key", "Officer Jacques Beltram | Gendarmerie Nationale", "Kilowatt Case", "AK-47 | Blue Laminate (Factory New)", "Glove Case", "★ StatTrak™ Paracord Knife | Case Hardened (Field-Tested)"]

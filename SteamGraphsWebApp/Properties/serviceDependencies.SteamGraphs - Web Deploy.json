@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "storage1": {
+      "serviceConnectorResourceId": "/subscriptions/[parameters('subscriptionId')]/resourcegroups/[parameters('resourceGroupName')]/providers/Microsoft.Web/sites/SteamGraphs/providers/Microsoft.ServiceLinker/linkers/steamgraphsconnectionstring_5F25E5740C, /subscriptions/2c68599b-c1ae-450f-9918-2f58a974fc4b/resourcegroups/SteamGraphs2/providers/Microsoft.Web/sites/SteamGraphs/providers/Microsoft.ServiceLinker/linkers/steamgraphsconnectionstring_8381062BF4",
+      "secretStore": "AzureAppSettings",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Storage/storageAccounts/steamgraphsstorage",
+      "type": "storage.azure",
+      "connectionId": "steam-graphs-connection-string",
+      "dynamicId": null
+    }
+  }
+}
