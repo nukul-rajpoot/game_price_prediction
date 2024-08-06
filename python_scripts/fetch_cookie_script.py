@@ -28,7 +28,10 @@ driver.quit()
 # end_time = time.time()  # Record the end time
 # duration = end_time - start_time  # Calculate the duration
 
-cookieDict = cookies[0]
+cookieDict = cookies[2]
+#print(cookieDict)
+# for cookie in cookies:
+#     print(cookie)
 
 print(cookieDict["value"])
 

@@ -7,6 +7,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add python service
 builder.Services.AddScoped<PythonService>();
 builder.Services.AddScoped<NameService>();
+builder.Services.AddScoped<MakeGraphs>();
+builder.Services.AddScoped<ApiCalls>();
+builder.Services.AddHttpClient<ApiCalls>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

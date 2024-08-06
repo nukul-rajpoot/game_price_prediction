@@ -11,16 +11,28 @@
     using System.Text.Json.Nodes;
     using Microsoft.AspNetCore.Http;
     using SteamGraphsWebApp.Models;
+    using SteamGraphsWebApp.GraphCalls;
+    using Microsoft.Net.Http.Headers;
 
     public class ApiCalls
     {
-        private HttpClient httpClient = new HttpClient();
-        private string dailyCookie = "REDACTED";
+        private HttpClient _httpClient;
+        private string cookie;
 
-        public ApiCalls()
+        public ApiCalls(HttpClient httpClient)
         {
-            // Assuming the cookie does not change frequently, set it once in the constructor
-            httpClient.DefaultRequestHeaders.Add("Cookie", $"steamLoginSecure={dailyCookie}");
+            _httpClient = httpClient;
+            cookie = GetCookieFromBlob().Result;
+            _httpClient.DefaultRequestHeaders.Add("Cookie", $"steamLoginSecure={cookie}");
+        }
+
+        public async Task<string> GetCookieFromBlob()
+        {
+            String blobUrl = "https://steamgraphsstorage.blob.core.windows.net/container-for-blob/cookie.txt?REDACTED";
+
+            var response = await _httpClient.GetAsync(blobUrl);
+            response.EnsureSuccessStatusCode();
+            return await response.Content.ReadAsStringAsync();
         }
 
         public async Task<string?> FetchItemFromApi(SteamItemModel model)
@@ -34,9 +46,9 @@
                 {"market_hash_name", model.InputItemName}
             };
 
-            httpClient.DefaultRequestHeaders.Add("Cookie", $"steamLoginSecure={dailyCookie}");
+            _httpClient.DefaultRequestHeaders.Add("Cookie", $"steamLoginSecure={cookie}");
 
-            var response = await httpClient.GetAsync($"{url}?{await new FormUrlEncodedContent(queryParams).ReadAsStringAsync()}");
+            var response = await _httpClient.GetAsync($"{url}?{await new FormUrlEncodedContent(queryParams).ReadAsStringAsync()}");
 
             if (response.IsSuccessStatusCode)
             {
@@ -95,8 +107,6 @@
             //DataFrame df = GroupedPriceHistory.GroupBy("date").Sum("volume");
 
             return PriceHistory;
-
-
         }
 
         public async Task<DataFrame?> FetchItemToDataFrame(SteamItemModel model)
@@ -114,9 +124,6 @@
             //Pass JSON data to the view
         }
 
-
-
-        
     }
 
 }
