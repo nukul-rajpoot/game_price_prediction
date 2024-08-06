@@ -22,12 +22,14 @@ True
 import re
 import requests
 import pandas as pd 
-
+import os
 
 def fetch_daily_cookie():
-    with open('cookie.txt', 'r') as file:
+    with open('../../cookie.txt', 'r') as file:
         dailyCookie = file.read()
     return dailyCookie
+
+fetch_daily_cookie()
 
 def fetch_items():
     items = ["Glove Case Key", "Officer Jacques Beltram | Gendarmerie Nationale", "Kilowatt Case", "AK-47 | Blue Laminate (Factory New)", "Glove Case", "★ StatTrak™ Paracord Knife | Case Hardened (Field-Tested)"]

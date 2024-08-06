@@ -11,16 +11,28 @@
     using System.Text.Json.Nodes;
     using Microsoft.AspNetCore.Http;
     using SteamGraphsWebApp.Models;
+    using SteamGraphsWebApp.GraphCalls;
+    using Microsoft.Net.Http.Headers;
 
     public class ApiCalls
     {
-        private HttpClient httpClient = new HttpClient();
-        private string dailyCookie = "76561199704981720%7C%7CeyAidHlwIjogIkpXVCIsICJhbGciOiAiRWREU0EiIH0.eyAiaXNzIjogInI6MTcwQl8yNDkzRTBDMF80QkU4NSIsICJzdWIiOiAiNzY1NjExOTk3MDQ5ODE3MjAiLCAiYXVkIjogWyAid2ViOmNvbW11bml0eSIgXSwgImV4cCI6IDE3MjMwNDI3MzEsICJuYmYiOiAxNzE0MzE1NDMwLCAiaWF0IjogMTcyMjk1NTQzMCwgImp0aSI6ICIwRjdFXzI0RDMwQzQ5X0JGRkFEIiwgIm9hdCI6IDE3MTgzNjI3ODYsICJydF9leHAiOiAxNzM2NjE4ODA2LCAicGVyIjogMCwgImlwX3N1YmplY3QiOiAiODEuMTA1LjIwMS41NyIsICJpcF9jb25maXJtZXIiOiAiOTAuMTk3Ljc5LjEzMyIgfQ.NcsJRbWp-hwX3Um8XEwC6TUK2ayD7Iq1D1-8WZX122zSd4Fh_OOqgCBWYU93aqNFI2Ktu6FJA8wWEdoI_zTJCQ";
+        private HttpClient _httpClient;
+        private string cookie;
 
-        public ApiCalls()
+        public ApiCalls(HttpClient httpClient)
         {
-            // Assuming the cookie does not change frequently, set it once in the constructor
-            httpClient.DefaultRequestHeaders.Add("Cookie", $"steamLoginSecure={dailyCookie}");
+            _httpClient = httpClient;
+            cookie = GetCookieFromBlob().Result;
+            _httpClient.DefaultRequestHeaders.Add("Cookie", $"steamLoginSecure={cookie}");
+        }
+
+        public async Task<string> GetCookieFromBlob()
+        {
+            String blobUrl = "https://steamgraphsstorage.blob.core.windows.net/container-for-blob/cookie.txt?sp=r&st=2024-08-06T19:20:44Z&se=2024-08-07T03:20:44Z&spr=https&sv=2022-11-02&sr=c&sig=Csu5jI%2BbxXvLLBJMiV3KQWLEiFhp9uYDiUIoAUaKLoA%3D";
+
+            var response = await _httpClient.GetAsync(blobUrl);
+            response.EnsureSuccessStatusCode();
+            return await response.Content.ReadAsStringAsync();
         }
 
         public async Task<string?> FetchItemFromApi(SteamItemModel model)
@@ -34,9 +46,9 @@
                 {"market_hash_name", model.InputItemName}
             };
 
-            httpClient.DefaultRequestHeaders.Add("Cookie", $"steamLoginSecure={dailyCookie}");
+            _httpClient.DefaultRequestHeaders.Add("Cookie", $"steamLoginSecure={cookie}");
 
-            var response = await httpClient.GetAsync($"{url}?{await new FormUrlEncodedContent(queryParams).ReadAsStringAsync()}");
+            var response = await _httpClient.GetAsync($"{url}?{await new FormUrlEncodedContent(queryParams).ReadAsStringAsync()}");
 
             if (response.IsSuccessStatusCode)
             {
@@ -95,8 +107,6 @@
             //DataFrame df = GroupedPriceHistory.GroupBy("date").Sum("volume");
 
             return PriceHistory;
-
-
         }
 
         public async Task<DataFrame?> FetchItemToDataFrame(SteamItemModel model)
@@ -114,9 +124,6 @@
             //Pass JSON data to the view
         }
 
-
-
-        
     }
 
 }
