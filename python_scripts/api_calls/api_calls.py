@@ -25,14 +25,16 @@ import pandas as pd
 import os
 
 def get_cookie_from_blob():
-    blob_url = "https://steamgraphsstorage.blob.core.windows.net/container-for-blob/cookie.txt?sp=r&st=2024-08-06T19:20:44Z&se=2024-08-07T03:20:44Z&spr=https&sv=2022-11-02&sr=c&sig=Csu5jI%2BbxXvLLBJMiV3KQWLEiFhp9uYDiUIoAUaKLoA%3D"
+    blob_url = "https://steamgraphsstorage.blob.core.windows.net/container-for-blob/cookie.txt?sp=rwd&st=2024-08-06T20:45:18Z&se=2025-09-10T04:45:18Z&spr=https&sv=2022-11-02&sr=c&sig=MKticGz9P9HPI7iXp1a6yuErc5Sv6P9fY%2FfCbxL0PLg%3D"
     response = requests.get(blob_url)
     response.raise_for_status()
     return response.text
 
+
 def fetch_items():
     items = ["Glove Case Key", "Officer Jacques Beltram | Gendarmerie Nationale", "Kilowatt Case", "AK-47 | Blue Laminate (Factory New)", "Glove Case", "★ StatTrak™ Paracord Knife | Case Hardened (Field-Tested)"]
     return items
+
 
 #Gets the itemlist from 3rd party api
 def get_item_list():
@@ -46,7 +48,6 @@ def get_item_list():
     except requests.exceptions.RequestException as e:
         print(f"An error occurred: {e}")
         return None
-
 
 
 #Use for non-aggregated data
