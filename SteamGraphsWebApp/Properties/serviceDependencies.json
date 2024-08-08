@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "storage1": {
+      "type": "storage",
+      "connectionId": "steam-graphs-connection-string",
+      "dynamicId": null
+    }
+  }
+}

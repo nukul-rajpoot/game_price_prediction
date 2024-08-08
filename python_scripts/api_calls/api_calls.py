@@ -24,13 +24,11 @@ import requests
 import pandas as pd 
 import os
 
-
-def fetch_daily_cookie():
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    cookie_path = os.path.join(script_dir, '..', '..', 'data', 'Cookie.txt')
-    with open(cookie_path, 'r') as file:
-        dailyCookie = file.read()
-    return dailyCookie
+def get_cookie_from_blob():
+    blob_url = "https://steamgraphsstorage.blob.core.windows.net/container-for-blob/cookie.txt?sp=rwd&st=2024-08-06T20:45:18Z&se=2025-09-10T04:45:18Z&spr=https&sv=2022-11-02&sr=c&sig=MKticGz9P9HPI7iXp1a6yuErc5Sv6P9fY%2FfCbxL0PLg%3D"
+    response = requests.get(blob_url)
+    response.raise_for_status()
+    return response.text
 
 
 def fetch_items():
