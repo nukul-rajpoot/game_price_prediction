@@ -30,9 +30,11 @@ def get_cookie_from_blob():
     response.raise_for_status()
     return response.text
 
+
 def fetch_items():
     items = ["Glove Case Key", "Officer Jacques Beltram | Gendarmerie Nationale", "Kilowatt Case", "AK-47 | Blue Laminate (Factory New)", "Glove Case", "★ StatTrak™ Paracord Knife | Case Hardened (Field-Tested)"]
     return items
+
 
 #Gets the itemlist from 3rd party api
 def get_item_list():
@@ -46,7 +48,6 @@ def get_item_list():
     except requests.exceptions.RequestException as e:
         print(f"An error occurred: {e}")
         return None
-
 
 
 #Use for non-aggregated data
