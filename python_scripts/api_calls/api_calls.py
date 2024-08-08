@@ -22,16 +22,21 @@ True
 import re
 import requests
 import pandas as pd 
+import os
 
 
 def fetch_daily_cookie():
-    with open('cookie.txt', 'r') as file:
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    cookie_path = os.path.join(script_dir, '..', '..', 'data', 'Cookie.txt')
+    with open(cookie_path, 'r') as file:
         dailyCookie = file.read()
     return dailyCookie
+
 
 def fetch_items():
     items = ["Glove Case Key", "Officer Jacques Beltram | Gendarmerie Nationale", "Kilowatt Case", "AK-47 | Blue Laminate (Factory New)", "Glove Case", "★ StatTrak™ Paracord Knife | Case Hardened (Field-Tested)"]
     return items
+
 
 #Gets the itemlist from 3rd party api
 def get_item_list():
@@ -45,7 +50,6 @@ def get_item_list():
     except requests.exceptions.RequestException as e:
         print(f"An error occurred: {e}")
         return None
-
 
 
 #Use for non-aggregated data
