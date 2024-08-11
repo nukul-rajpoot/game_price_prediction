@@ -100,7 +100,7 @@
             return lnDf;
         }
 
-        public async Task<DataFrame> CalculateSma(DataFrame df, int period)
+        public async Task<DataFrame> CalculateSma(DataFrame df, int period = 50)
         {
             // Extract the date and price columns into a list of Quote
             var quotes = DataFrameToQuotes(df);
@@ -127,7 +127,7 @@
             return resultDataFrame;
         }
 
-        public async Task<DataFrame> CalculateEma(DataFrame df, int period)
+        public async Task<DataFrame> CalculateEma(DataFrame df, int period = 20)
         {
 
             var quotes = DataFrameToQuotes(df);
@@ -145,6 +145,7 @@
             }
 
             // Create the resulting DataFrame
+            // skip the null rows!
             var emaColumn = new DoubleDataFrameColumn("price_ema", emaValues.Skip(period).Select(v => v ?? double.NaN)); // Handle nulls
             var dateColumn = new PrimitiveDataFrameColumn<DateTime>("daily_date", emaDates.Skip(period));
 
@@ -152,6 +153,26 @@
 
             return resultDataFrame;
         }
+
+        public async Task<DataFrame> CalculateBollingerBands(DataFrame df, int period = 20, int k = 2)
+        {
+            var quotes = DataFrameToQuotes(df);
+
+            // Calculate Bollinger Bands
+            var bbResults = quotes.GetBollingerBands(period, k).ToList();
+
+            // Create the resulting DataFrame columns
+            var dateColumn = new PrimitiveDataFrameColumn<DateTime>("daily_date", bbResults.Skip(period).Select(r => r.Date));
+            var middleBandColumn = new DoubleDataFrameColumn("price_sma", bbResults.Skip(period).Select(r => r.Sma ?? double.NaN));
+            var upperBandColumn = new DoubleDataFrameColumn("price_bbl", bbResults.Skip(period).Select(r => r.UpperBand ?? double.NaN));
+            var lowerBandColumn = new DoubleDataFrameColumn("price_bbu", bbResults.Skip(period).Select(r => r.LowerBand ?? double.NaN));
+
+            // Create and return the DataFrame
+            var resultDataFrame = new DataFrame(dateColumn, middleBandColumn, upperBandColumn, lowerBandColumn);
+
+            return resultDataFrame;
+        }
+
 
         public List<Quote> DataFrameToQuotes(DataFrame df)
         {
