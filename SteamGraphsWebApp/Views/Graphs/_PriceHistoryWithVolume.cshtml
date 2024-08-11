@@ -77,10 +77,19 @@
                     TurboThreshold = 10000,
                     ShowInNavigator = true
                 }
-               }
+
+               },
+
+                Navigator = new Navigator()
+                {
+                    Series = new LineSeries()
+                    {
+                        Data = ViewBag.NavigatorData as List<LineSeriesData>
+                    }
+                }
            };
 
-    chartOptions.ID = "chart";
+    chartOptions.ID = "priceChart";
     var renderer = new HighstockRenderer(chartOptions);
 }
 

@@ -39,11 +39,15 @@ namespace SteamGraphsWebApp.Controllers
             ViewBag.jsonPriceHistoryDate = df["date"];
             ViewBag.jsonPriceHistoryPrice = df["price_usd"];
 
+            ViewBag.NavigatorData = await _makeGraphs.MakePriceHistoryLineGraph(df);
+
             ViewBag.PriceHistoryHighChart = await _makeGraphs.MakePriceHistoryGraph(df);
             ViewBag.LnPriceHistoryHighChart = await _makeGraphs.MakeLnPriceHistoryGraph(df);
             ViewBag.SmaHighChart = await _makeGraphs.MakeSmaGraph(df);
             ViewBag.EmaHighChart = await _makeGraphs.MakeEmaGraph(df);
 
+            ViewBag.BBHighChart = await _makeGraphs.MakeBollingerBandsGraph(df);
+            ViewBag.SmaLineHighChart = await _makeGraphs.MakeSmaLineGraph(df);
 
             ViewBag.VolumeData = await _makeGraphs.MakeVolumeGraph(df);
 
@@ -65,10 +69,15 @@ namespace SteamGraphsWebApp.Controllers
                     ViewBag.jsonPriceHistoryDate = df["date"];
                     ViewBag.jsonPriceHistoryPrice = df["price_usd"];
 
+                    ViewBag.NavigatorData = await _makeGraphs.MakePriceHistoryLineGraph(df);
+
                     ViewBag.PriceHistoryHighChart = await _makeGraphs.MakePriceHistoryGraph(df);
                     ViewBag.LnPriceHistoryHighChart = await _makeGraphs.MakeLnPriceHistoryGraph(df);
                     ViewBag.SmaHighChart = await _makeGraphs.MakeSmaGraph(df);
                     ViewBag.EmaHighChart = await _makeGraphs.MakeEmaGraph(df);
+
+                    ViewBag.BBHighChart = await _makeGraphs.MakeBollingerBandsGraph(df);
+                    ViewBag.SmaLineHighChart = await _makeGraphs.MakeSmaLineGraph(df);
 
                     ViewBag.VolumeData = await _makeGraphs.MakeVolumeGraph(df);
                 }
