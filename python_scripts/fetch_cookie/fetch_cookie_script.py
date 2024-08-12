@@ -5,7 +5,8 @@ from azure.storage.blob import BlobClient
 
 # Specify the path to your Firefox profile
 # profile_path = "C:/Users/Nukul/AppData/Roaming/Mozilla/Firefox/Profiles/nezbuhz8.default-release-1"
-profile_path = "C:/Users/Nukul/AppData/Roaming/Mozilla/Firefox/Profiles/9pr1ty3r.SteamCookieProfile"
+#profile_path = "C:/Users/Nukul/AppData/Roaming/Mozilla/Firefox/Profiles/9pr1ty3r.SteamCookieProfile"
+profile_path = "/Users/jyoutirraj/Library/Application Support/Firefox/Profiles/37tkq59q.SteamProfile"
 
 # Set up Firefox profile with Selenium
 firefox_options = Options()
@@ -29,11 +30,11 @@ cookies = driver.get_cookies()
 driver.quit()
 
 cookieDict = cookies[2]
-#print(cookieDict)
+# print(cookieDict)
 # for cookie in cookies:
 #     print(cookie)
 
-#print(cookieDict["value"])
+# print(cookieDict["value"])
 
 # Your blob URL and SAS token
 blob_url = 'https://steamgraphsstorage.blob.core.windows.net/container-for-blob/cookie.txt'
@@ -46,4 +47,4 @@ blob_client = BlobClient.from_blob_url(blob_url=blob_url, credential=sas_token)
 blob_client.upload_blob(cookieDict["value"], overwrite=True)
 sys.exit(0)
 
-#print("Cookie has been updated.")
+print("Cookie has been updated.")
