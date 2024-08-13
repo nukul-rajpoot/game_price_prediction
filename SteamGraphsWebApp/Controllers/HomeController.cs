@@ -49,6 +49,8 @@ namespace SteamGraphsWebApp.Controllers
             ViewBag.BBHighChart = await _makeGraphs.MakeBollingerBandsGraph(df);
             ViewBag.SmaLineHighChart = await _makeGraphs.MakeSmaLineGraph(df);
 
+            ViewBag.RsiHighChart = await _makeGraphs.MakeRsiGraph(df);
+
             ViewBag.VolumeData = await _makeGraphs.MakeVolumeGraph(df);
 
             return View(model);
@@ -78,6 +80,8 @@ namespace SteamGraphsWebApp.Controllers
 
                     ViewBag.BBHighChart = await _makeGraphs.MakeBollingerBandsGraph(df);
                     ViewBag.SmaLineHighChart = await _makeGraphs.MakeSmaLineGraph(df);
+
+                    ViewBag.RsiHighChart = await _makeGraphs.MakeRsiGraph(df);
 
                     ViewBag.VolumeData = await _makeGraphs.MakeVolumeGraph(df);
                 }
