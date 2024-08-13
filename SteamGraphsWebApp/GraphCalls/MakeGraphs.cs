@@ -188,5 +188,26 @@
             return smaLineList;
         }
 
+        public async Task<List<LineSeriesData>> MakeRsiGraph(DataFrame df)
+        {
+            List<LineSeriesData> RsiList = new List<LineSeriesData>();
+
+            DataFrame aggregatedPriceDf = await _calculateMetrics.AggregatePrice(df);
+
+            DataFrame RsiDf = await _calculateMetrics.CalculateRsi(aggregatedPriceDf, 7);
+
+            foreach (DataFrameRow row in RsiDf.Rows)
+            {
+                DateTime date = (DateTime)row["daily_date"];
+                RsiList.Add(new LineSeriesData
+                {
+                    //X = (data.Date.ToUniversalTime() - new DateTime(1970, 1, 1, DateTimeKind.Utc)).TotalMilliseconds,
+                    X = new DateTimeOffset(date).ToUnixTimeMilliseconds(),
+                    Y = Convert.ToDouble(row["price_rsi"])
+                });
+            }
+            return RsiList;
+        }
+
     }
 }
