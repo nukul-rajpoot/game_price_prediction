@@ -51,6 +51,8 @@ namespace SteamGraphsWebApp.Controllers
 
             ViewBag.RsiHighChart = await _makeGraphs.MakeRsiGraph(df);
 
+            //ViewBag.MfiHighChart = await _makeGraphs.MakeMfiGraph(df);
+
             ViewBag.VolumeData = await _makeGraphs.MakeVolumeGraph(df);
 
             return View(model);
@@ -82,6 +84,8 @@ namespace SteamGraphsWebApp.Controllers
                     ViewBag.SmaLineHighChart = await _makeGraphs.MakeSmaLineGraph(df);
 
                     ViewBag.RsiHighChart = await _makeGraphs.MakeRsiGraph(df);
+
+                    //ViewBag.MfiHighChart = await _makeGraphs.MakeMfiGraph(df);
 
                     ViewBag.VolumeData = await _makeGraphs.MakeVolumeGraph(df);
                 }

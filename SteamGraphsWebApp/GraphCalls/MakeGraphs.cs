@@ -194,7 +194,7 @@
 
             DataFrame aggregatedPriceDf = await _calculateMetrics.AggregatePrice(df);
 
-            DataFrame RsiDf = await _calculateMetrics.CalculateRsi(aggregatedPriceDf, 7);
+            DataFrame RsiDf = await _calculateMetrics.CalculateRsi(aggregatedPriceDf, 14);
 
             foreach (DataFrameRow row in RsiDf.Rows)
             {
@@ -207,6 +207,27 @@
                 });
             }
             return RsiList;
+        }
+
+        public async Task<List<LineSeriesData>> MakeMfiGraph(DataFrame df)
+        {
+            List<LineSeriesData> MfiList = new List<LineSeriesData>();
+
+            DataFrame aggregatedPriceDf = await _calculateMetrics.AggregatePrice(df);
+
+            DataFrame MfiDf = await _calculateMetrics.CalculateMfi(aggregatedPriceDf, 14);
+
+            foreach (DataFrameRow row in MfiDf.Rows)
+            {
+                DateTime date = (DateTime)row["daily_date"];
+                MfiList.Add(new LineSeriesData
+                {
+                    //X = (data.Date.ToUniversalTime() - new DateTime(1970, 1, 1, DateTimeKind.Utc)).TotalMilliseconds,
+                    X = new DateTimeOffset(date).ToUnixTimeMilliseconds(),
+                    Y = Convert.ToDouble(row["price_mfi"])
+                });
+            }
+            return MfiList;
         }
 
     }
