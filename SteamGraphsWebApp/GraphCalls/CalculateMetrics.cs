@@ -173,6 +173,32 @@
             return resultDataFrame;
         }
 
+        public async Task<DataFrame> CalculateRsi(DataFrame df, int period = 20)
+        {
+
+            var quotes = DataFrameToQuotes(df);
+            // Calculate EMA
+            IEnumerable<RsiResult> emaResults = quotes.GetRsi(period);
+
+            // Prepare new DataFrame columns
+            var rsiDates = new List<DateTime>();
+            var rsiValues = new List<double?>();
+
+            foreach (var result in emaResults)
+            {
+                rsiDates.Add(result.Date);
+                rsiValues.Add(result.Rsi);
+            }
+
+            // Create the resulting DataFrame
+            // skip the null rows!
+            var rsiColumn = new DoubleDataFrameColumn("price_rsi", rsiValues.Skip(period).Select(v => v ?? double.NaN)); // Handle nulls
+            var dateColumn = new PrimitiveDataFrameColumn<DateTime>("daily_date", rsiDates.Skip(period));
+
+            var resultDataFrame = new DataFrame(dateColumn, rsiColumn);
+
+            return resultDataFrame;
+        }
 
         public List<Quote> DataFrameToQuotes(DataFrame df)
         {
