@@ -19,15 +19,34 @@
     {
         private readonly CalculateMetrics _calculateMetrics = new CalculateMetrics();
 
-        public async Task<List<AreasplineSeriesData>> MakePriceHistoryGraph(DataFrame df)
+        public async Task<List<LineSeriesData>> MakePriceHistoryLineGraph(DataFrame df)
         {
-            List<AreasplineSeriesData> priceHistoryList= new List<AreasplineSeriesData>();
+            List<LineSeriesData> priceHistoryList = new List<LineSeriesData>();
 
             DataFrame aggregatedPriceDf = await _calculateMetrics.AggregatePrice(df);
 
             foreach (DataFrameRow row in aggregatedPriceDf.Rows)
             {
-                DateTime date = (DateTime) row["daily_date"];
+                DateTime date = (DateTime)row["daily_date"];
+                priceHistoryList.Add(new LineSeriesData
+                {
+                    //X = (data.Date.ToUniversalTime() - new DateTime(1970, 1, 1, DateTimeKind.Utc)).TotalMilliseconds,
+                    X = new DateTimeOffset(date).ToUnixTimeMilliseconds(),
+                    Y = Convert.ToDouble(row["price_usd"])
+                });
+            }
+            return priceHistoryList;
+        }
+
+        public async Task<List<AreasplineSeriesData>> MakePriceHistoryGraph(DataFrame df)
+        {
+            List<AreasplineSeriesData> priceHistoryList = new List<AreasplineSeriesData>();
+
+            DataFrame aggregatedPriceDf = await _calculateMetrics.AggregatePrice(df);
+
+            foreach (DataFrameRow row in aggregatedPriceDf.Rows)
+            {
+                DateTime date = (DateTime)row["daily_date"];
                 priceHistoryList.Add(new AreasplineSeriesData
                 {
                     //X = (data.Date.ToUniversalTime() - new DateTime(1970, 1, 1, DateTimeKind.Utc)).TotalMilliseconds,
@@ -46,7 +65,7 @@
 
             foreach (DataFrameRow row in aggregatedVolumeDf.Rows)
             {
-                DateTime date = (DateTime) row["daily_date"];
+                DateTime date = (DateTime)row["daily_date"];
                 volumeDataList.Add(new ColumnSeriesData
                 {
                     //X = (data.Date.ToUniversalTime() - new DateTime(1970, 1, 1, DateTimeKind.Utc)).TotalMilliseconds,
@@ -118,6 +137,97 @@
                 });
             }
             return LnPriceHistoryList;
+        }
+
+        public async Task<List<ArearangeSeriesData>> MakeBollingerBandsGraph(DataFrame df)
+        {
+            //List<AreasplineSeriesData> smaList = new List<AreasplineSeriesData>();
+            List<ArearangeSeriesData> bbList = new List<ArearangeSeriesData>();
+
+            DataFrame aggregatedPriceDf = await _calculateMetrics.AggregatePrice(df);
+
+            DataFrame bbDf = await _calculateMetrics.CalculateBollingerBands(aggregatedPriceDf);
+
+            foreach (DataFrameRow row in bbDf.Rows)
+            {
+                DateTime date = (DateTime)row["daily_date"];
+                //smaList.Add(new AreasplineSeriesData
+                //{
+                //    X = new DateTimeOffset(date).ToUnixTimeMilliseconds(),
+                //    Y = Convert.ToDouble(row["sma"]),
+                //});
+                bbList.Add(new ArearangeSeriesData
+                {
+                    X = new DateTimeOffset(date).ToUnixTimeMilliseconds(),
+                    Low = Convert.ToDouble(row["price_bbl"]),
+                    High = Convert.ToDouble(row["price_bbu"]),
+                });
+            }
+            //var fullList = new List<object> { smaList, bbList };
+            return bbList;
+        }
+
+        public async Task<List<LineSeriesData>> MakeSmaLineGraph(DataFrame df)
+        {
+            List<LineSeriesData> smaLineList = new List<LineSeriesData>();
+
+            DataFrame aggregatedPriceDf = await _calculateMetrics.AggregatePrice(df);
+
+            DataFrame smaLineDf = await _calculateMetrics.CalculateBollingerBands(aggregatedPriceDf);
+
+            foreach (DataFrameRow row in smaLineDf.Rows)
+            {
+                DateTime date = (DateTime)row["daily_date"];
+                smaLineList.Add(new LineSeriesData
+                {
+                    //X = (data.Date.ToUniversalTime() - new DateTime(1970, 1, 1, DateTimeKind.Utc)).TotalMilliseconds,
+                    X = new DateTimeOffset(date).ToUnixTimeMilliseconds(),
+                    Y = Convert.ToDouble(row["price_sma"])
+                });
+            }
+            return smaLineList;
+        }
+
+        public async Task<List<LineSeriesData>> MakeRsiGraph(DataFrame df)
+        {
+            List<LineSeriesData> RsiList = new List<LineSeriesData>();
+
+            DataFrame aggregatedPriceDf = await _calculateMetrics.AggregatePrice(df);
+
+            DataFrame RsiDf = await _calculateMetrics.CalculateRsi(aggregatedPriceDf, 14);
+
+            foreach (DataFrameRow row in RsiDf.Rows)
+            {
+                DateTime date = (DateTime)row["daily_date"];
+                RsiList.Add(new LineSeriesData
+                {
+                    //X = (data.Date.ToUniversalTime() - new DateTime(1970, 1, 1, DateTimeKind.Utc)).TotalMilliseconds,
+                    X = new DateTimeOffset(date).ToUnixTimeMilliseconds(),
+                    Y = Convert.ToDouble(row["price_rsi"])
+                });
+            }
+            return RsiList;
+        }
+
+        public async Task<List<LineSeriesData>> MakeMfiGraph(DataFrame df)
+        {
+            List<LineSeriesData> MfiList = new List<LineSeriesData>();
+
+            DataFrame aggregatedPriceDf = await _calculateMetrics.AggregatePrice(df);
+
+            DataFrame MfiDf = await _calculateMetrics.CalculateMfi(aggregatedPriceDf, 14);
+
+            foreach (DataFrameRow row in MfiDf.Rows)
+            {
+                DateTime date = (DateTime)row["daily_date"];
+                MfiList.Add(new LineSeriesData
+                {
+                    //X = (data.Date.ToUniversalTime() - new DateTime(1970, 1, 1, DateTimeKind.Utc)).TotalMilliseconds,
+                    X = new DateTimeOffset(date).ToUnixTimeMilliseconds(),
+                    Y = Convert.ToDouble(row["price_mfi"])
+                });
+            }
+            return MfiList;
         }
 
     }
