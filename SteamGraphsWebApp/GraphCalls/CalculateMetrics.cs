@@ -173,18 +173,18 @@
             return resultDataFrame;
         }
 
-        public async Task<DataFrame> CalculateRsi(DataFrame df, int period = 20)
+        public async Task<DataFrame> CalculateRsi(DataFrame df, int period = 14)
         {
 
             var quotes = DataFrameToQuotes(df);
             // Calculate EMA
-            IEnumerable<RsiResult> emaResults = quotes.GetRsi(period);
+            IEnumerable<RsiResult> rsiResults = quotes.GetRsi(period);
 
             // Prepare new DataFrame columns
             var rsiDates = new List<DateTime>();
             var rsiValues = new List<double?>();
 
-            foreach (var result in emaResults)
+            foreach (var result in rsiResults)
             {
                 rsiDates.Add(result.Date);
                 rsiValues.Add(result.Rsi);
@@ -196,6 +196,33 @@
             var dateColumn = new PrimitiveDataFrameColumn<DateTime>("daily_date", rsiDates.Skip(period));
 
             var resultDataFrame = new DataFrame(dateColumn, rsiColumn);
+
+            return resultDataFrame;
+        }
+
+        public async Task<DataFrame> CalculateMfi(DataFrame df, int period = 14)
+        {
+
+            var quotes = DataFrameToQuotes(df);
+            // Calculate EMA
+            IEnumerable<MfiResult> mfiResults = quotes.GetMfi(period);
+
+            // Prepare new DataFrame columns
+            var mfiDates = new List<DateTime>();
+            var mfiValues = new List<double?>();
+
+            foreach (var result in mfiResults)
+            {
+                mfiDates.Add(result.Date);
+                mfiValues.Add(result.Mfi);
+            }
+
+            // Create the resulting DataFrame
+            // skip the null rows!
+            var mfiColumn = new DoubleDataFrameColumn("price_mfi", mfiValues.Skip(period).Select(v => v ?? double.NaN)); // Handle nulls
+            var dateColumn = new PrimitiveDataFrameColumn<DateTime>("daily_date", mfiDates.Skip(period));
+
+            var resultDataFrame = new DataFrame(dateColumn, mfiColumn);
 
             return resultDataFrame;
         }
