@@ -100,7 +100,7 @@
             return lnDf;
         }
 
-        public async Task<DataFrame> CalculateSma(DataFrame df, int period)
+        public async Task<DataFrame> CalculateSma(DataFrame df, int period = 50)
         {
             // Extract the date and price columns into a list of Quote
             var quotes = DataFrameToQuotes(df);
@@ -127,7 +127,7 @@
             return resultDataFrame;
         }
 
-        public async Task<DataFrame> CalculateEma(DataFrame df, int period)
+        public async Task<DataFrame> CalculateEma(DataFrame df, int period = 20)
         {
 
             var quotes = DataFrameToQuotes(df);
@@ -145,10 +145,84 @@
             }
 
             // Create the resulting DataFrame
+            // skip the null rows!
             var emaColumn = new DoubleDataFrameColumn("price_ema", emaValues.Skip(period).Select(v => v ?? double.NaN)); // Handle nulls
             var dateColumn = new PrimitiveDataFrameColumn<DateTime>("daily_date", emaDates.Skip(period));
 
             var resultDataFrame = new DataFrame(dateColumn, emaColumn);
+
+            return resultDataFrame;
+        }
+
+        public async Task<DataFrame> CalculateBollingerBands(DataFrame df, int period = 20, int k = 2)
+        {
+            var quotes = DataFrameToQuotes(df);
+
+            // Calculate Bollinger Bands
+            var bbResults = quotes.GetBollingerBands(period, k).ToList();
+
+            // Create the resulting DataFrame columns
+            var dateColumn = new PrimitiveDataFrameColumn<DateTime>("daily_date", bbResults.Skip(period).Select(r => r.Date));
+            var middleBandColumn = new DoubleDataFrameColumn("price_sma", bbResults.Skip(period).Select(r => r.Sma ?? double.NaN));
+            var upperBandColumn = new DoubleDataFrameColumn("price_bbl", bbResults.Skip(period).Select(r => r.UpperBand ?? double.NaN));
+            var lowerBandColumn = new DoubleDataFrameColumn("price_bbu", bbResults.Skip(period).Select(r => r.LowerBand ?? double.NaN));
+
+            // Create and return the DataFrame
+            var resultDataFrame = new DataFrame(dateColumn, middleBandColumn, upperBandColumn, lowerBandColumn);
+
+            return resultDataFrame;
+        }
+
+        public async Task<DataFrame> CalculateRsi(DataFrame df, int period = 14)
+        {
+
+            var quotes = DataFrameToQuotes(df);
+            // Calculate EMA
+            IEnumerable<RsiResult> rsiResults = quotes.GetRsi(period);
+
+            // Prepare new DataFrame columns
+            var rsiDates = new List<DateTime>();
+            var rsiValues = new List<double?>();
+
+            foreach (var result in rsiResults)
+            {
+                rsiDates.Add(result.Date);
+                rsiValues.Add(result.Rsi);
+            }
+
+            // Create the resulting DataFrame
+            // skip the null rows!
+            var rsiColumn = new DoubleDataFrameColumn("price_rsi", rsiValues.Skip(period).Select(v => v ?? double.NaN)); // Handle nulls
+            var dateColumn = new PrimitiveDataFrameColumn<DateTime>("daily_date", rsiDates.Skip(period));
+
+            var resultDataFrame = new DataFrame(dateColumn, rsiColumn);
+
+            return resultDataFrame;
+        }
+
+        public async Task<DataFrame> CalculateMfi(DataFrame df, int period = 14)
+        {
+
+            var quotes = DataFrameToQuotes(df);
+            // Calculate EMA
+            IEnumerable<MfiResult> mfiResults = quotes.GetMfi(period);
+
+            // Prepare new DataFrame columns
+            var mfiDates = new List<DateTime>();
+            var mfiValues = new List<double?>();
+
+            foreach (var result in mfiResults)
+            {
+                mfiDates.Add(result.Date);
+                mfiValues.Add(result.Mfi);
+            }
+
+            // Create the resulting DataFrame
+            // skip the null rows!
+            var mfiColumn = new DoubleDataFrameColumn("price_mfi", mfiValues.Skip(period).Select(v => v ?? double.NaN)); // Handle nulls
+            var dateColumn = new PrimitiveDataFrameColumn<DateTime>("daily_date", mfiDates.Skip(period));
+
+            var resultDataFrame = new DataFrame(dateColumn, mfiColumn);
 
             return resultDataFrame;
         }

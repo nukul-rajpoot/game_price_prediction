@@ -1,4 +1,5 @@
-﻿@using Highsoft.Web.Mvc.Stocks
+﻿
+@using Highsoft.Web.Mvc.Stocks
 @using Highsoft.Web.Mvc.Stocks.Rendering
 
 <script src="https://code.highcharts.com/stock/highstock.js"></script>
@@ -18,7 +19,7 @@
                },
                Title = new Title
                {
-                    Text = $"{Model.InputItemName} SMA (7 day fixed)"
+                    Text = $"{Model.InputItemName} MFI (14 day fixed)"
                },
                YAxis = new List<YAxis>
                {
@@ -31,10 +32,35 @@
                     },
                     Title = new YAxisTitle
                     {
-                        Text = "Price"
+                        Text = "MFI"
                     },
                     Height = "60%",
-                    LineWidth = 2
+                    LineWidth = 2,
+                    PlotLines = new List<YAxisPlotLines> 
+                    {
+                        new YAxisPlotLines
+                        {
+                            Value = 80,
+                            Color = "red",
+                            Width = 2,
+                            ZIndex = 5, // Ensures the line is on top
+                            Label = new YAxisPlotLinesLabel
+                            {
+                                Text = "Overbought"
+                            }
+                        },
+                        new YAxisPlotLines
+                        {
+                            Value = 20,
+                            Color = "green",
+                            Width = 2,
+                            ZIndex = 5, // Ensures the line is on top
+                            Label = new YAxisPlotLinesLabel
+                            {
+                                Text = "Oversold"
+                            }
+                        }
+                    }
                 },
                 new YAxis
                 {
@@ -57,16 +83,15 @@
                                },
                Series = new List<Series>
                {
-                new AreasplineSeries
+                new LineSeries
                 {
-                    Data = ViewBag.SmaHighChart as List<AreasplineSeriesData>,
-                    Name = "Price",
+                    Data = ViewBag.MFIHighChart as List<LineSeriesData>,
+                    Name = "MFI",
                     TurboThreshold = 10000,
-                    Tooltip = new AreasplineSeriesTooltip
+                    Tooltip = new LineSeriesTooltip
                     {
                         ValueDecimals = 2
                     },
-                    FillColor = @ViewBag.fillColor
                 },
                 new ColumnSeries
                 {
@@ -87,7 +112,7 @@
                 }
            };
 
-    chartOptions.ID = "smaChart";
+    chartOptions.ID = "mfiChart";
     var renderer = new HighstockRenderer(chartOptions);
 }
 
