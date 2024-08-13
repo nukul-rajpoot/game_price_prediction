@@ -1,0 +1,119 @@
+﻿
+@using Highsoft.Web.Mvc.Stocks
+@using Highsoft.Web.Mvc.Stocks.Rendering
+
+<script src="https://code.highcharts.com/stock/highstock.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+@{ 
+    var chartOptions =
+        new Highstock
+           {
+               Chart = new Highsoft.Web.Mvc.Stocks.Chart
+               {
+
+               },
+               RangeSelector = new RangeSelector
+               {
+                   Selected = 1
+               },
+               Title = new Title
+               {
+                    Text = $"{Model.InputItemName} MFI (14 day fixed)"
+               },
+               YAxis = new List<YAxis>
+               {
+                new YAxis
+                {
+                    Labels = new YAxisLabels
+                    {
+                        Align = YAxisLabelsAlign.Right,
+                        X = -3
+                    },
+                    Title = new YAxisTitle
+                    {
+                        Text = "MFI"
+                    },
+                    Height = "60%",
+                    LineWidth = 2,
+                    PlotLines = new List<YAxisPlotLines> 
+                    {
+                        new YAxisPlotLines
+                        {
+                            Value = 80,
+                            Color = "red",
+                            Width = 2,
+                            ZIndex = 5, // Ensures the line is on top
+                            Label = new YAxisPlotLinesLabel
+                            {
+                                Text = "Overbought"
+                            }
+                        },
+                        new YAxisPlotLines
+                        {
+                            Value = 20,
+                            Color = "green",
+                            Width = 2,
+                            ZIndex = 5, // Ensures the line is on top
+                            Label = new YAxisPlotLinesLabel
+                            {
+                                Text = "Oversold"
+                            }
+                        }
+                    }
+                },
+                new YAxis
+                {
+                    Labels = new YAxisLabels
+                    {
+                        Align = YAxisLabelsAlign.Right,
+                        X = -3
+                    },
+                    Title = new YAxisTitle
+                    {
+                        Text = "Volume"
+                    },
+                    Top = "65%",
+                    Height = "35%",
+                    Offset = -1,
+                    LineWidth = 2,
+                    Id = "VolumeAxis"
+
+                }
+                               },
+               Series = new List<Series>
+               {
+                new LineSeries
+                {
+                    Data = ViewBag.MFIHighChart as List<LineSeriesData>,
+                    Name = "MFI",
+                    TurboThreshold = 10000,
+                    Tooltip = new LineSeriesTooltip
+                    {
+                        ValueDecimals = 2
+                    },
+                },
+                new ColumnSeries
+                {
+                    Name = "Volume",
+                    Data = ViewBag.VolumeData as List<ColumnSeriesData>,
+                    DataGrouping = new ColumnSeriesDataGrouping() {Enabled = true, Forced = true },
+                    YAxis = "VolumeAxis",
+                    TurboThreshold = 10000,
+                    ShowInNavigator = true
+                }
+               },
+                Navigator = new Navigator()
+                {
+                    Series = new LineSeries()
+                    {
+                        Data = ViewBag.NavigatorData as List<LineSeriesData>
+                    }
+                }
+           };
+
+    chartOptions.ID = "mfiChart";
+    var renderer = new HighstockRenderer(chartOptions);
+}
+
+@Html.Raw(renderer.RenderHtml())
