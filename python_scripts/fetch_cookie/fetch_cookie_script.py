@@ -29,12 +29,21 @@ cookies = driver.get_cookies()
 # Close the browser
 driver.quit()
 
-cookieDict = cookies[2]
 # print(cookieDict)
-# for cookie in cookies:
-#     print(cookie)
+cookie_pos = 0
+longest_cookie = 0
+for i, cookie in enumerate(cookies):
+    #print(cookie)
+    current_cookie_length = len(cookie['value'])
+    if current_cookie_length > longest_cookie:
+        cookie_pos = i
+        longest_cookie = current_cookie_length
 
-# print(cookieDict["value"])
+cookie_dict = cookies[cookie_pos]
+
+# print(cookie_dict)
+
+# print(cookie_dict["value"])
 
 # Your blob URL and SAS token
 blob_url = 'https://steamgraphsstorage.blob.core.windows.net/container-for-blob/cookie.txt'
@@ -44,7 +53,9 @@ sas_token = 'sp=rwd&st=2024-08-06T20:45:18Z&se=2025-09-10T04:45:18Z&spr=https&sv
 blob_client = BlobClient.from_blob_url(blob_url=blob_url, credential=sas_token)
 
 # Overwrite the existing blob or create a new one if it doesn't exist
-blob_client.upload_blob(cookieDict["value"], overwrite=True)
-sys.exit(0)
+blob_client.upload_blob(cookie_dict["value"], overwrite=True)
 
 print("Cookie has been updated.")
+
+sys.exit(0)
+
