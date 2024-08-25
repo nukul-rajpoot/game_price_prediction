@@ -13,12 +13,11 @@ dailyCookie = get_cookie_from_blob()
 items = fetch_items()
 df = fetch_item_to_df(items[1], dailyCookie)
 print(f"Data for {items[1]} in cache")
-¬
 
-""" 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 MODEL 1
 NOTE: Basic 2-state Discrete-Time Markov Chain (DTMC) model. Observed data split into “up” and “down” states based on price dif. 
-"""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 # calls the state-splitted df, Transition matrix (and current_state)
 dtmc_df, dtmc_transition_matrix, dtmc_current_state = dtmc_state_split(df)
