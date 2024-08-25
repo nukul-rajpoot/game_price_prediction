@@ -20,11 +20,15 @@ True
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+from hmmlearn import hmm
+from sklearn.mixture import GaussianMixture
+from sklearn.cluster import KMeans
 
 
-"""
-Model 2 functions. (Hidden Markov Model)
-"""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+model 2 functions. hidden markov model (HMM)
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 
 def discretize_data(data, num_points):
     edges = np.linspace(data.min(), data.max(), num_points + 1)
@@ -42,10 +46,48 @@ def map_1d_to_2d(n, x_max):
     return x, y
 
 
+def initialise_hmm(X, n_states, covariance_type="full", n_iter=100, random_state=42):
 
-"""
-Model 1 functions. (DTMC)
-"""
+    # Initialise Transition Matrix A (uniformly dist)
+    transition_matrix = np.ones((n_states, n_states)) / n_states
+    
+    # Emission Matrix: Use k-means for initial clustering and fit GMM
+    kmeans_labels = KMeans(n_clusters=n_states, random_state=random_state).fit_predict(X)
+    gmm = GaussianMixture(n_components=n_states, covariance_type=covariance_type, random_state=random_state).fit(X)
+    
+    # Initialize HMM
+    model = hmm.GaussianHMM(n_components=n_states, covariance_type=covariance_type, n_iter=n_iter, init_params="")
+    model.startprob_ = np.ones(n_states) / n_states
+    model.transmat_ = transition_matrix  
+    model.means_ = gmm.means_
+    model.covars_ = gmm.covariances_
+    
+    return model
+
+
+def fit_hmm(model, X):
+    model.fit(X)
+    return model
+
+
+def verify_setup(model, n_states, X):
+    print(f"HMM initialized with:\n"
+          f"Number of states: {n_states}\n"
+          f"Initial state distribution: {model.startprob_}\n"
+          f"Transition matrix shape: {model.transmat_.shape}\n")
+
+    print("\nEmission Means:")
+    print(model.means_)
+    print("\nEmission Covariances:")
+    for i, cov in enumerate(model.covars_):
+        print(f"State {i}:")
+        print(cov)
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+model 1 functions. discrete-time markov chain (DTMC)
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 
 def dtmc_state_split(df): 
     dtmc_df = df.copy()  
