@@ -51,6 +51,7 @@ namespace SteamGraphsWebApp.Controllers
 
             ViewBag.RsiHighChart = await _makeGraphs.MakeRsiGraph(df);
 
+            // need to use with data with multiple price values for a day
             //ViewBag.MfiHighChart = await _makeGraphs.MakeMfiGraph(df);
 
             ViewBag.VolumeData = await _makeGraphs.MakeVolumeGraph(df);
@@ -85,6 +86,7 @@ namespace SteamGraphsWebApp.Controllers
 
                     ViewBag.RsiHighChart = await _makeGraphs.MakeRsiGraph(df);
 
+                    // need to use with data with multiple price values for a day
                     //ViewBag.MfiHighChart = await _makeGraphs.MakeMfiGraph(df);
 
                     ViewBag.VolumeData = await _makeGraphs.MakeVolumeGraph(df);

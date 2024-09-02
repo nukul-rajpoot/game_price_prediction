@@ -41,32 +41,65 @@
             var groupingsByDay = df.Rows.GroupBy(row => row["daily_date"]);
             var newDateColumn = new PrimitiveDataFrameColumn<DateTime>("daily_date");
             var newPriceColumn = new PrimitiveDataFrameColumn<double>("price_usd");
+            var closePriceColumn = new PrimitiveDataFrameColumn<double>("close");
 
+            DataFrame lowDf = df.GroupBy("daily_date").Min("price_usd");
+            DataFrame highDf = df.GroupBy("daily_date").Max("price_usd");
+            DataFrame openDf = df.GroupBy("daily_date").First("price_usd");
+            //DataFrame closeDf = df.GroupBy("daily_date").Last("price_usd");
+
+            var lowPriceColumn = lowDf["price_usd"];
+            lowPriceColumn.SetName("low");
+
+            var highPriceColumn = highDf["price_usd"];
+            highPriceColumn.SetName("high");
+
+            var openPriceColumn = openDf["price_usd"];
+            openPriceColumn.SetName("open");
+
+            // calculate median for each day
             foreach (var group in groupingsByDay)
             {
                 int numberOfPrices = group.Count();
-                //if (numberOfPrices == 1) continue;
+
+                // only 1 daily value = add it to new
+                if (numberOfPrices == 1)
+                {
+                    var row = group.ElementAt(0);
+                    newDateColumn.Append((DateTime)row["daily_date"]);
+                    newPriceColumn.Append((double)row["price_usd"]);
+                    // add to close column
+                    closePriceColumn.Append((double)row["price_usd"]);
+                    continue;
+                }
+
+                // sort and calculate median value in group
+                var sortedGroup = group.OrderBy(row => (double)row["price_usd"]);
 
                 if (numberOfPrices % 2 == 0)
-                {   
-                    var row1 = group.ElementAt(numberOfPrices / 2 - 1);
-                    var row2 = group.ElementAt(numberOfPrices / 2);
+                {
+                    var row1 = sortedGroup.ElementAt(numberOfPrices / 2 - 1);
+                    var row2 = sortedGroup.ElementAt(numberOfPrices / 2);
                     double median = ((double)row1["price_usd"] + (double)row2["price_usd"]) / 2;
-                    row1["price_usd"] = median;
-                    newDateColumn.Append((DateTime) row1["daily_date"]);
+                    newDateColumn.Append((DateTime)row1["daily_date"]);
                     newPriceColumn.Append(median);
                 }
                 else if (numberOfPrices % 2 == 1)
                 {
-                    int middleIndex = numberOfPrices / 2;
-                    var row = group.ElementAt(middleIndex);
-                    newDateColumn.Append((DateTime) row["daily_date"]);
-                    newPriceColumn.Append((double) row["price_usd"]);
+                    var row = sortedGroup.ElementAt(numberOfPrices / 2);
+                    double median = (double)row["price_usd"];
+                    newDateColumn.Append((DateTime)row["daily_date"]);
+                    newPriceColumn.Append((double)row["price_usd"]);
                 }
+
+                // add close value of group to close price column
+                var closeValueRow = group.Last();
+                closePriceColumn.Append((double)closeValueRow["price_usd"]);
+
             }
 
-            DataFrame aggregatedPriceDF = new DataFrame(newDateColumn, newPriceColumn);
-
+            DataFrame aggregatedPriceDF = new DataFrame(newDateColumn, newPriceColumn, lowPriceColumn, highPriceColumn, openPriceColumn, closePriceColumn);
+            //var test = aggregatedPriceDF.Tail(5);
             return aggregatedPriceDF;
         }
 
@@ -204,8 +237,23 @@
         {
 
             var quotes = DataFrameToQuotes(df);
+
+            //var aggregatedQuotes = quotes
+            //.GroupBy(q => new { Year = q.Date.Year, Week = CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(q.Date, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday) })
+            //.Select(g => new Quote
+            //{
+            //    Date = g.Last().Date,
+            //    Open = g.First().Open,
+            //    High = g.Max(q => q.High),
+            //    Low = g.Min(q => q.Low),
+            //    Close = g.Last().Close,
+            //    Volume = g.Sum(q => q.Volume)
+            //})
+            //.ToList();
+
+
             // Calculate EMA
-            IEnumerable<MfiResult> mfiResults = quotes.GetMfi(period);
+            IEnumerable<MfiResult> mfiResults = quotes.GetMfi(2);
 
             // Prepare new DataFrame columns
             var mfiDates = new List<DateTime>();
@@ -233,13 +281,20 @@
             var quotes = new List<Quote>();
             DateTime[] dates = df.Columns["daily_date"].Cast<DateTime>().ToArray();
             double[] prices = df.Columns["price_usd"].Cast<double>().ToArray();
-
+            double[] low = df.Columns["low"].Cast<double>().ToArray();
+            double[] high = df.Columns["high"].Cast<double>().ToArray();
+            double[] open = df.Columns["open"].Cast<double>().ToArray();
+            double[] close = df.Columns["close"].Cast<double>().ToArray();
+            var test = df.Tail(100);
             for (int i = 0; i < df.Rows.Count; i++)
             {
                 quotes.Add(new Quote
                 {
                     Date = dates[i],
-                    Close = (decimal)prices[i]
+                    Low = (decimal)low[i],
+                    High = (decimal)high[i],
+                    Open = (decimal)open[i],
+                    Close = (decimal)close[i],
                 });
             }
             return quotes;
