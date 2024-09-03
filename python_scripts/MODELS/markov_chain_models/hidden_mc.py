@@ -4,11 +4,13 @@ import numpy as np
 from hmmlearn import hmm
 from sklearn.mixture import GaussianMixture
 from sklearn.cluster import KMeans
-from calculations_mc import discretize_data, map_2d_to_1d, map_1d_to_2d, initialise_hmm, fit_hmm, verify_setup
 import sys
 import os
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../../..')))
-from python_scripts.api_calls import get_cookie_from_blob, fetch_items, fetch_item_to_df
+
+sys.path.insert(0, os.path.abspath(''))
+from python_scripts.models.markov_chain_models.calculations_mc import discretize_data, map_2d_to_1d, map_1d_to_2d, initialise_hmm, fit_hmm, verify_setup
+from python_scripts.utilities.api_calls import get_cookie_from_blob, fetch_items, fetch_item_to_df
+
 
 # API request for the item we are modeling. 
 dailyCookie = get_cookie_from_blob()
