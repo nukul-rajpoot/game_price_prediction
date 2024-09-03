@@ -1,18 +1,15 @@
 import sys
 import os
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
 import pandas as pd
+sys.path.insert(0, os.path.abspath(''))
 
+from python_scripts.screening.screening_metrics import calculate_screening_metrics
+from python_scripts.utilities.api_calls import fetch_item_from_api, fetch_item_to_df, fetch_items, get_cookie_from_blob
+from python_scripts.calculate_metrics import create_ln_df, calculate_sma, calculate_ema, calculate_bollinger_bands, calculate_price_percentage_change, calculate_relative_strength_index, calculate_market_cap, calculate_money_flow_index, calculate_market_cap_jupyter
 
-from python_scripts.api_calls import fetch_item_from_api, fetch_daily_cookie, fetch_items
-from python_scripts.calculate_metrics import calculate_price_percentage_change, calculate_volume, calculate_market_cap, calculate_market_cap_jupyter
-from screening_metrics import calculate_screening_metrics
-
-dailyCookie = fetch_daily_cookie()
+dailyCookie = get_cookie_from_blob()
 items = fetch_items()
-
 hash_item_list = pd.read_csv('./data/Item_lists/hashed_items.csv')
-
 
 
 def screening_total_items():
@@ -58,7 +55,6 @@ def screening_total_items():
 # screening_total_items()
 
 
-
 def screening_judgement():
     items_data_df = './data/Item_lists/total_screened_items.csv'
     items_data_df = pd.read_csv(items_data_df)
@@ -91,6 +87,3 @@ def screening_judgement():
 
 # Call the screening_judgement function
 screening_judgement()
-
-
-

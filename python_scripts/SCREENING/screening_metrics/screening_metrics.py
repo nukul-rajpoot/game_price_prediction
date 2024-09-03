@@ -18,9 +18,6 @@ True
 3
 """
 
-
-
-
 import numpy as np
 import pandas as pd
 from python_scripts.calculate_metrics import calculate_price_percentage_change, calculate_volume, calculate_market_cap, calculate_market_cap_jupyter
