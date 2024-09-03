@@ -27,7 +27,6 @@ def create_ln_df(current_item):
     return ln_df
 
 
-
 # SMA calculation 
 def calculate_sma(df, window):
     # rolling = used to change period for average. (this case -> 2 days)
@@ -36,13 +35,11 @@ def calculate_sma(df, window):
     return df
 
 
-
 # EMA calculation 
 def calculate_ema(df, span):
     df['smoothened_price'] = df['price_usd'].ewm(span=span).mean()
 
     return df
-
 
 
 # Bollinger Bands calculation
@@ -58,8 +55,6 @@ def calculate_bollinger_bands(df, window):
     return df
 
 
-
-
 # Price Percentage Change calculation
 def calculate_price_percentage_change(df, start_date, end_date):
     filtered_data = df.loc[start_date:end_date]
@@ -68,16 +63,11 @@ def calculate_price_percentage_change(df, start_date, end_date):
     return percentage_change  
 
 
-
-
 # total volume calc 
 def calculate_volume(df, start_date, end_date): 
     filtered_data = df.loc[start_date:end_date]
     volume_metric = filtered_data['volume'].sum()
     return volume_metric
-
-
-
 
 
 def calculate_relative_strength_index(df, window):
@@ -110,7 +100,6 @@ def calculate_relative_strength_index(df, window):
     return rsi_data
     
     
-
 def calculate_money_flow_index(df, window):
     # Resample the data
     mfi_data = df.resample(window).agg({
@@ -142,7 +131,6 @@ def calculate_money_flow_index(df, window):
     return mfi_data
 
 
-
 def calculate_market_cap_jupyter(market_cap, start_date, end_date):
 
     # Market cap filtered data
@@ -150,7 +138,6 @@ def calculate_market_cap_jupyter(market_cap, start_date, end_date):
     mcfd_sum = (mcfd['close']* mcfd['volume']).sum()
     # print(f"Market cap from {start_date} to {end_date}: {mcfd_sum:.2f}")
     return mcfd_sum
-
 
 
 def calculate_market_cap(market_cap, date):
