@@ -3,17 +3,15 @@ import requests
 import pandas as pd
 import os
 import sys
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
+sys.path.insert(0, os.path.abspath(''))
 
 import hashlib
-from python_scripts.api_calls import get_item_list
+from python_scripts.utilities.api_calls import get_item_list
 
 """
 ------------------------------------
-
 Calls from SteamAPIs.com and provides full item list of CSGO items 
 (~ 22k items)
-
 NOTE: Uses ~20p to run
 ------------------------------------
 """
@@ -39,4 +37,4 @@ def generate_CSGO_item_list():
 
     market_hash_names.to_csv('./data/Item_lists/market_hash_names.csv', index=False, header=False)
 
-generate_CSGO_item_list()
+# generate_CSGO_item_list()
