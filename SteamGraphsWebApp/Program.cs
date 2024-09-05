@@ -6,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add python service
 builder.Services.AddScoped<PythonService>();
-builder.Services.AddScoped<NameService>();
+builder.Services.AddScoped<ItemFetchService>();
 builder.Services.AddScoped<MakeGraphs>();
 builder.Services.AddScoped<ApiCalls>();
 builder.Services.AddHttpClient<ApiCalls>();

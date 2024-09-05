@@ -19,13 +19,13 @@ namespace SteamGraphsWebApp.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly ApiCalls _apiCalls;
-        private readonly NameService _nameService;
+        private readonly ItemFetchService _itemFetchService;
         private readonly MakeGraphs _makeGraphs;
 
-        public HomeController(ILogger<HomeController> logger, NameService nameService, MakeGraphs makeGraphs, ApiCalls apiCalls)
+        public HomeController(ILogger<HomeController> logger, ItemFetchService itemFetchService, MakeGraphs makeGraphs, ApiCalls apiCalls)
         {
             _logger = logger;
-            _nameService = nameService;
+            _itemFetchService = itemFetchService;
             _makeGraphs = makeGraphs;
             _apiCalls = apiCalls;
         }
@@ -33,7 +33,7 @@ namespace SteamGraphsWebApp.Controllers
         public async Task<IActionResult> Index()
         {
             SteamItemModel model = new SteamItemModel();
-            model.ValidateName(_nameService.ReadFileToDict());
+            model.ValidateName(_itemFetchService.GetItemList());
             DataFrame? df = await _apiCalls.FetchItemToDataFrame(model);
             //Pass JSON data to the view
             ViewBag.jsonPriceHistoryDate = df["date"];
@@ -59,11 +59,11 @@ namespace SteamGraphsWebApp.Controllers
             return View(model);
         }
 
-        // POST: Home
-        [HttpPost]
+       //POST: Home
+       [HttpPost]
         public async Task<IActionResult> Index(SteamItemModel model)
         {
-            model.ValidateName(_nameService.ReadFileToDict());
+            model.ValidateName(_itemFetchService.GetItemList());
             if (model.IsValidName)
             {
                 DataFrame? df = await _apiCalls.FetchItemToDataFrame(model);
@@ -100,6 +100,24 @@ namespace SteamGraphsWebApp.Controllers
 
             return View(model);
         }
+
+        //[HttpGet]
+        //public ActionResult Index()
+        //{
+        //    return View();
+        //}
+
+        //[HttpPost]
+        //public JsonResult Index(string Prefix)
+        //{
+        //    HashSet<Item> ItemList = _itemFetchService.GetItemList();
+
+        //    //Searching records from list using LINQ query
+        //    var Name = (from N in ItemList
+        //                where N.MarketHashName.StartsWith(Prefix)
+        //                select new { N.MarketHashName });
+        //    return Json(Name);
+        //}
 
         public IActionResult Privacy()
         {
