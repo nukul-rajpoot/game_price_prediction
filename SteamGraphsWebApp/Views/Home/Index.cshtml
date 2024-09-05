@@ -4,6 +4,9 @@
 
 @model SteamItemModel
 
+
+
+
 <form asp-action="Index" method="post">
     <input asp-for="InputItemName" class="form-control" />
     <button type="submit">Submit</button>
@@ -21,9 +24,11 @@ else
 
 @* <partial name="~/Views/Graphs/_OldPlotly.cshtml" /> *@
 
-
+<!--old-->
 @* <partial name="~/Views/Graphs/_PriceHistoryGraph.cshtml" /> *@
 @* <partial name="~/Views/Graphs/_CandleStickWithVolume.cshtml" /> *@
+
+
 <div id="price-history-container">
     @await Html.PartialAsync("~/Views/Graphs/_PriceHistoryWithVolume.cshtml")
 </div>
@@ -46,10 +51,13 @@ else
 
 <div id="rsi-container">
     @await Html.PartialAsync("~/Views/Graphs/_RsiWithVolume.cshtml")
-</div>
+</div> 
+
+
 
 <!--need to use with data with multiple price values for a day-->
 @*
 <div id="mfi-container">
     @await Html.PartialAsync("~/Views/Graphs/_MfiWithVolume.cshtml")
-</div> *@
+</div>
+*@
