@@ -31,9 +31,12 @@ def get_cookie_from_blob():
     return response.text
 
 
-def fetch_items():
-    items = ["Glove Case Key", "Officer Jacques Beltram | Gendarmerie Nationale", "Kilowatt Case", "AK-47 | Blue Laminate (Factory New)", "Glove Case", "★ StatTrak™ Paracord Knife | Case Hardened (Field-Tested)"]
-    return items
+def fetch_items(custom_items=None):
+    if custom_items is not None:
+        return custom_items
+    else:
+        # Default items if no custom items are provided
+        return ["Glove Case Key", "Officer Jacques Beltram | Gendarmerie Nationale", "Kilowatt Case", "AK-47 | Blue Laminate (Factory New)", "Glove Case", "★ StatTrak™ Paracord Knife | Case Hardened (Field-Tested)"]
 
 
 #Gets the itemlist from 3rd party api
