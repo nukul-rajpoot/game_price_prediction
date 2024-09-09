@@ -4,13 +4,14 @@
 
 @model SteamItemModel
 
-
-
-
-<form asp-action="Index" method="post">
-    <input asp-for="InputItemName" class="form-control" />
-    <button type="submit">Submit</button>
+<form asp-action="Index" method="post" id="searchForm">
+    <div class="form-group">
+        <input asp-for="InputItemName" class="form-control" id="autocomplete" />
+        <button type="submit" class="btn btn-primary mt-2">Submit</button>
+    </div>
 </form>
+
+<div id="suggestions" class="list-group mt-2"></div>
 
 @if (Model != null && Model.IsValidName)
 {
@@ -21,6 +22,56 @@ else
     <h3>Invalid item name!</h3>
     <h3>Showing default graphs for: Glove Case Key</h3>
 }
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <script>
+        $(function () {
+            $("#autocomplete").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: "@Url.Action("AutoComplete", "Home")",
+                        type: "GET",
+                        data: { prefix: request.term },
+                        success: function (data) {
+                            response($.map(data, function(item) {
+                                return {
+                                    label: item,
+                                    value: item
+                                };
+                            }));
+                        }
+                    });
+                },
+                minLength: 2,
+                select: function (event, ui) {
+                    $("#autocomplete").val(ui.item.value);
+                    $("#searchForm").submit();
+                }
+            }).autocomplete("instance")._renderItem = function(ul, item) {
+                var newText = String(item.value).replace(
+                    new RegExp(this.term, "gi"),
+                    "<strong>$&</strong>");
+
+                return $("<li></li>")
+                    .data("item.autocomplete", item)
+                    .append("<div>" + newText + "</div>")
+                    .appendTo(ul);
+            };
+        });
+    </script>
+}
+
+
+
+
+
+
+
+
+
 
 @* <partial name="~/Views/Graphs/_OldPlotly.cshtml" /> *@
 
