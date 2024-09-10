@@ -3,6 +3,7 @@ import requests
 import pandas as pd
 import os
 import sys
+import csv
 sys.path.insert(0, os.path.abspath(''))
 
 import hashlib
@@ -29,12 +30,25 @@ def fetch_CSGO_item_list():
 def generate_CSGO_item_list():
     item_list = pd.read_csv('./data/Item_lists/CSGO_Item_List.csv')
 
-    # double "" in CSGO_Item_List.csv were manually replaced with '
-    # Regular expression pattern to get market_hash_name values
-    pattern = r"'market_hash_name': '(.*?)', 'border_color'"
-    market_hash_names = item_list['data'].str.extract(pattern, flags=re.DOTALL)
-    market_hash_names.sort_values(0, ascending=True, inplace=True)
+    # Regular expression patterns
+    market_hash_pattern = r"'market_hash_name': '(.*?)', 'border_color'"
+    image_pattern = r"'image': '(.*?)',"
 
-    market_hash_names.to_csv('./data/Item_lists/market_hash_names.csv', index=False, header=False)
+    # Extract market_hash_names and image URLs
+    market_hash_names = item_list['data'].str.extract(market_hash_pattern, flags=re.DOTALL)
+    image_urls = item_list['data'].str.extract(image_pattern, flags=re.DOTALL)
+
+    # Combine the extracted data
+    extracted_data = pd.concat([market_hash_names, image_urls], axis=1)
+    extracted_data.columns = ['market_hash_name', 'image_url']
+
+    # Remove only the outer single quotes, if present
+    extracted_data['market_hash_name'] = extracted_data['market_hash_name'].apply(lambda x: x[1:-1] if x.startswith("'") and x.endswith("'") else x)
+
+    # Sort by market_hash_name
+    extracted_data.sort_values('market_hash_name', ascending=True, inplace=True)
+
+    # Save to CSV with quotes
+    extracted_data.to_csv('./data/Item_lists/market_hash_names.csv', index=False, quoting=csv.QUOTE_ALL)
 
 # generate_CSGO_item_list()

@@ -36,12 +36,7 @@ else
                         type: "GET",
                         data: { prefix: request.term },
                         success: function (data) {
-                            response($.map(data, function(item) {
-                                return {
-                                    label: item,
-                                    value: item
-                                };
-                            }));
+                            response(data);
                         }
                     });
                 },
@@ -51,13 +46,13 @@ else
                     $("#searchForm").submit();
                 }
             }).autocomplete("instance")._renderItem = function(ul, item) {
-                var newText = String(item.value).replace(
+                var newText = String(item.label).replace(
                     new RegExp(this.term, "gi"),
                     "<strong>$&</strong>");
 
                 return $("<li></li>")
                     .data("item.autocomplete", item)
-                    .append("<div>" + newText + "</div>")
+                    .append("<div><img src='" + item.image + "' alt='" + item.label + "' style='width: 32px; height: 32px; margin-right: 10px;'>" + newText + "</div>")
                     .appendTo(ul);
             };
         });
