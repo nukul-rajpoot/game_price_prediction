@@ -36,7 +36,7 @@ namespace SteamGraphsWebApp.Controllers
         public async Task<IActionResult> Index()
         {
             SteamItemModel model = new SteamItemModel();
-            model.ValidateName(_itemFetchService.GetItemList());
+            model.ValidateName(_steamItemModel.ItemList);
             DataFrame? df = await _apiCalls.FetchItemToDataFrame(model);
             if (df != null)
             {
@@ -69,7 +69,7 @@ namespace SteamGraphsWebApp.Controllers
        [HttpPost]
         public async Task<IActionResult> Index(SteamItemModel model)
         {
-            model.ValidateName(_itemFetchService.GetItemList());
+            model.ValidateName(_steamItemModel.ItemList);
             if (model.IsValidName)
             {
                 DataFrame? df = await _apiCalls.FetchItemToDataFrame(model);
@@ -112,7 +112,7 @@ namespace SteamGraphsWebApp.Controllers
         {
             if (string.IsNullOrWhiteSpace(prefix) || prefix.Length < 2)
             {
-                return Json(new List<string>());
+                return Json(new List<object>());
             }
 
             var itemList = _steamItemModel.ItemList;
@@ -120,7 +120,7 @@ namespace SteamGraphsWebApp.Controllers
             var suggestions = itemList
                 .Where(item => item.MarketHashName.Split(' ')
                     .Any(word => word.StartsWith(lowercasePrefix, StringComparison.OrdinalIgnoreCase)))
-                .Select(item => item.MarketHashName)
+                .Select(item => new { label = item.MarketHashName, value = item.MarketHashName, image = item.ImageUrl })
                 .Take(5)
                 .ToList();
 
@@ -128,7 +128,7 @@ namespace SteamGraphsWebApp.Controllers
             {
                 suggestions = itemList
                     .Where(item => item.MarketHashName.Contains(lowercasePrefix, StringComparison.OrdinalIgnoreCase))
-                    .Select(item => item.MarketHashName)
+                    .Select(item => new { label = item.MarketHashName, value = item.MarketHashName, image = item.ImageUrl })
                     .Take(5)
                     .ToList();
             }

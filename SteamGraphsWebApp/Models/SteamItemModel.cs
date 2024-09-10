@@ -10,7 +10,9 @@ namespace SteamGraphsWebApp.Models
     {
         [Name("market_hash_name")]
         public string? MarketHashName { get; set; }
-
+        
+        [Name("image_url")]
+        public string? ImageUrl { get; set; }
         public override bool Equals(object? obj)
         {
             return obj is Item item &&
