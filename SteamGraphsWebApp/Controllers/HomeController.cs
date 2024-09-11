@@ -35,39 +35,11 @@ namespace SteamGraphsWebApp.Controllers
 
         public async Task<IActionResult> Index()
         {
-            SteamItemModel model = new SteamItemModel();
-            model.ValidateName(_steamItemModel.ItemList);
-            DataFrame? df = await _apiCalls.FetchItemToDataFrame(model);
-            if (df != null)
-            {
-                //Pass JSON data to the view
-                ViewBag.jsonPriceHistoryDate = df["date"];
-                ViewBag.jsonPriceHistoryPrice = df["price_usd"];
-
-                ViewBag.NavigatorData = await _makeGraphs.MakePriceHistoryLineGraph(df);
-
-                ViewBag.PriceHistoryHighChart = await _makeGraphs.MakePriceHistoryGraph(df);
-                ViewBag.LnPriceHistoryHighChart = await _makeGraphs.MakeLnPriceHistoryGraph(df);
-                ViewBag.SmaHighChart = await _makeGraphs.MakeSmaGraph(df);
-                ViewBag.EmaHighChart = await _makeGraphs.MakeEmaGraph(df);
-
-                ViewBag.BBHighChart = await _makeGraphs.MakeBollingerBandsGraph(df);
-                ViewBag.SmaLineHighChart = await _makeGraphs.MakeSmaLineGraph(df);
-
-                ViewBag.RsiHighChart = await _makeGraphs.MakeRsiGraph(df);
-
-                // need to use with data with multiple price values for a day
-                //ViewBag.MfiHighChart = await _makeGraphs.MakeMfiGraph(df);
-
-                ViewBag.VolumeData = await _makeGraphs.MakeVolumeGraph(df);
-            }
-
-            return View(model);
+            return View();
         }
 
-       //POST: Home
-       [HttpPost]
-        public async Task<IActionResult> Index(SteamItemModel model)
+        [HttpPost]
+        public async Task<IActionResult> Search(SteamItemModel model)
         {
             model.ValidateName(_steamItemModel.ItemList);
             if (model.IsValidName)
