@@ -16,11 +16,52 @@
 @if (Model != null && Model.IsValidName)
 {
     <h3>Graphs for: @Model.InputItemName</h3>
+
+    
+    @* <partial name="~/Views/Graphs/_OldPlotly.cshtml" /> *@
+
+    <!--old-->
+    @* <partial name="~/Views/Graphs/_PriceHistoryGraph.cshtml" /> *@
+    @* <partial name="~/Views/Graphs/_CandleStickWithVolume.cshtml" /> *@
+
+
+    <div id="price-history-container">
+        @await Html.PartialAsync("~/Views/Graphs/_PriceHistoryWithVolume.cshtml")
+    </div>
+
+    <div id="ln-price-history-container">
+        @await Html.PartialAsync("~/Views/Graphs/_LnPriceHistoryWithVolume.cshtml")
+    </div>
+
+    <div id="sma-container">
+        @await Html.PartialAsync("~/Views/Graphs/_SmaWithVolume.cshtml")
+    </div>
+
+    <div id="ema-container">
+        @await Html.PartialAsync("~/Views/Graphs/_EmaWithVolume.cshtml")
+    </div> 
+
+    <div id="bb-container">
+        @await Html.PartialAsync("~/Views/Graphs/_BBWithVolume.cshtml")
+    </div>
+
+    <div id="rsi-container">
+        @await Html.PartialAsync("~/Views/Graphs/_RsiWithVolume.cshtml")
+    </div> 
+
+
+
+    <!--need to use with data with multiple price values for a day-->
+    @*
+    <div id="mfi-container">
+        @await Html.PartialAsync("~/Views/Graphs/_MfiWithVolume.cshtml")
+    </div>
+    *@
+
 }
 else
 {
     <h3>Invalid item name!</h3>
-    <h3>Showing default graphs for: Glove Case Key</h3>
 }
 
 @section Scripts {
@@ -29,6 +70,13 @@ else
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
     <script>
         $(function () {
+            $("#searchForm").on("submit", function(e) {
+                if ($("#autocomplete").val().trim() === "") {
+                    e.preventDefault();
+                    return false;
+                }
+            });
+
             $("#autocomplete").autocomplete({
                 source: function (request, response) {
                     $.ajax({
@@ -58,52 +106,3 @@ else
         });
     </script>
 }
-
-
-
-
-
-
-
-
-
-
-@* <partial name="~/Views/Graphs/_OldPlotly.cshtml" /> *@
-
-<!--old-->
-@* <partial name="~/Views/Graphs/_PriceHistoryGraph.cshtml" /> *@
-@* <partial name="~/Views/Graphs/_CandleStickWithVolume.cshtml" /> *@
-
-
-<div id="price-history-container">
-    @await Html.PartialAsync("~/Views/Graphs/_PriceHistoryWithVolume.cshtml")
-</div>
-
-<div id="ln-price-history-container">
-    @await Html.PartialAsync("~/Views/Graphs/_LnPriceHistoryWithVolume.cshtml")
-</div>
-
-<div id="sma-container">
-    @await Html.PartialAsync("~/Views/Graphs/_SmaWithVolume.cshtml")
-</div>
-
-<div id="ema-container">
-    @await Html.PartialAsync("~/Views/Graphs/_EmaWithVolume.cshtml")
-</div> 
-
-<div id="bb-container">
-    @await Html.PartialAsync("~/Views/Graphs/_BBWithVolume.cshtml")
-</div>
-
-<div id="rsi-container">
-    @await Html.PartialAsync("~/Views/Graphs/_RsiWithVolume.cshtml")
-</div> 
-
-
-
-<!--need to use with data with multiple price values for a day-->
-@*
-<div id="mfi-container">
-    @await Html.PartialAsync("~/Views/Graphs/_MfiWithVolume.cshtml")
-</div>
-*@
