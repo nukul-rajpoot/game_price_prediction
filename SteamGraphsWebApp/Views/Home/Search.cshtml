@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Search";
 }
 
 @model SteamItemModel
@@ -12,6 +12,16 @@
 </form>
 
 <div id="suggestions" class="list-group mt-2"></div>
+
+@if (Model != null && Model.IsValidName)
+{
+    <h3>Graphs for: @Model.InputItemName</h3>
+}
+else
+{
+    <h3>Invalid item name!</h3>
+    <h3>Showing default graphs for: Glove Case Key</h3>
+}
 
 @section Scripts {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -48,3 +58,52 @@
         });
     </script>
 }
+
+
+
+
+
+
+
+
+
+
+@* <partial name="~/Views/Graphs/_OldPlotly.cshtml" /> *@
+
+<!--old-->
+@* <partial name="~/Views/Graphs/_PriceHistoryGraph.cshtml" /> *@
+@* <partial name="~/Views/Graphs/_CandleStickWithVolume.cshtml" /> *@
+
+
+<div id="price-history-container">
+    @await Html.PartialAsync("~/Views/Graphs/_PriceHistoryWithVolume.cshtml")
+</div>
+
+<div id="ln-price-history-container">
+    @await Html.PartialAsync("~/Views/Graphs/_LnPriceHistoryWithVolume.cshtml")
+</div>
+
+<div id="sma-container">
+    @await Html.PartialAsync("~/Views/Graphs/_SmaWithVolume.cshtml")
+</div>
+
+<div id="ema-container">
+    @await Html.PartialAsync("~/Views/Graphs/_EmaWithVolume.cshtml")
+</div> 
+
+<div id="bb-container">
+    @await Html.PartialAsync("~/Views/Graphs/_BBWithVolume.cshtml")
+</div>
+
+<div id="rsi-container">
+    @await Html.PartialAsync("~/Views/Graphs/_RsiWithVolume.cshtml")
+</div> 
+
+
+
+<!--need to use with data with multiple price values for a day-->
+@*
+<div id="mfi-container">
+    @await Html.PartialAsync("~/Views/Graphs/_MfiWithVolume.cshtml")
+</div>
+*@
