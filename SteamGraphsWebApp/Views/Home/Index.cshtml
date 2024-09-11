@@ -19,6 +19,13 @@
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
     <script>
         $(function () {
+            $("#searchForm").on("submit", function(e) {
+                if ($("#autocomplete").val().trim() === "") {
+                    e.preventDefault();
+                    return false;
+                }
+            });
+
             $("#autocomplete").autocomplete({
                 source: function (request, response) {
                     $.ajax({

@@ -73,7 +73,6 @@ namespace SteamGraphsWebApp.Controllers
             else
             {
                 ModelState.AddModelError("InputItemName", "Invalid item name");
-                await Index();
             }
 
             return View(model);
