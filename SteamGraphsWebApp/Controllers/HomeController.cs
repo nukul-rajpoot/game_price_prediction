@@ -48,10 +48,6 @@ namespace SteamGraphsWebApp.Controllers
 
                 if (df != null)
                 {
-                    //Pass JSON data to the view
-                    ViewBag.jsonPriceHistoryDate = df["date"];
-                    ViewBag.jsonPriceHistoryPrice = df["price_usd"];
-
                     ViewBag.NavigatorData = await _makeGraphs.MakePriceHistoryLineGraph(df);
 
                     ViewBag.PriceHistoryHighChart = await _makeGraphs.MakePriceHistoryGraph(df);
