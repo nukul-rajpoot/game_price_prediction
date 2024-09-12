@@ -15,11 +15,17 @@
     {
         public HashSet<Item> GetItemList()
         {
-            using (var reader = new StreamReader("Data/market_hash_names.csv"))
-            using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+            var config = new CsvConfiguration(CultureInfo.InvariantCulture)
             {
-                var ItemsList = csv.GetRecords<Item>().ToHashSet();
-                return ItemsList;
+                HasHeaderRecord = true,
+                TrimOptions = TrimOptions.Trim,
+            };
+
+            using (var reader = new StreamReader("Data/market_hash_names.csv"))
+            using (var csv = new CsvReader(reader, config))
+            {
+                var items = csv.GetRecords<Item>();
+                return new HashSet<Item>(items);
             }
         }
     }

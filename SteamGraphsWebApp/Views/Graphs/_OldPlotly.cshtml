@@ -1,9 +1,0 @@
-﻿<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-
-<script>
-    var dates = @Html.Raw(Json.Serialize(ViewBag.jsonPriceHistoryDate));
-    var prices = @Html.Raw(Json.Serialize(ViewBag.jsonPriceHistoryPrice));
-</script>
-
-<script src="~/js/example.js"></script>
-<div id="historicPriceChart" style="width:100%; height:500px;"></div>
