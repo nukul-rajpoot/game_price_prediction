@@ -21,6 +21,7 @@ namespace SteamGraphsWebApp.Controllers
         private readonly ApiCalls _apiCalls;
         private readonly ItemFetchService _itemFetchService;
         private readonly MakeGraphs _makeGraphs;
+        private readonly SteamItemModel _steamItemModel;
 
         public HomeController(ILogger<HomeController> logger, ItemFetchService itemFetchService, MakeGraphs makeGraphs, ApiCalls apiCalls)
         {
@@ -28,52 +29,25 @@ namespace SteamGraphsWebApp.Controllers
             _itemFetchService = itemFetchService;
             _makeGraphs = makeGraphs;
             _apiCalls = apiCalls;
+            _steamItemModel = new SteamItemModel();
+            _steamItemModel.ItemList = _itemFetchService.GetItemList();
         }
 
         public async Task<IActionResult> Index()
         {
-            SteamItemModel model = new SteamItemModel();
-            model.ValidateName(_itemFetchService.GetItemList());
-            DataFrame? df = await _apiCalls.FetchItemToDataFrame(model);
-            //Pass JSON data to the view
-            ViewBag.jsonPriceHistoryDate = df["date"];
-            ViewBag.jsonPriceHistoryPrice = df["price_usd"];
-
-            ViewBag.NavigatorData = await _makeGraphs.MakePriceHistoryLineGraph(df);
-
-            ViewBag.PriceHistoryHighChart = await _makeGraphs.MakePriceHistoryGraph(df);
-            ViewBag.LnPriceHistoryHighChart = await _makeGraphs.MakeLnPriceHistoryGraph(df);
-            ViewBag.SmaHighChart = await _makeGraphs.MakeSmaGraph(df);
-            ViewBag.EmaHighChart = await _makeGraphs.MakeEmaGraph(df);
-
-            ViewBag.BBHighChart = await _makeGraphs.MakeBollingerBandsGraph(df);
-            ViewBag.SmaLineHighChart = await _makeGraphs.MakeSmaLineGraph(df);
-
-            ViewBag.RsiHighChart = await _makeGraphs.MakeRsiGraph(df);
-
-            // need to use with data with multiple price values for a day
-            //ViewBag.MfiHighChart = await _makeGraphs.MakeMfiGraph(df);
-
-            ViewBag.VolumeData = await _makeGraphs.MakeVolumeGraph(df);
-
-            return View(model);
+            return View();
         }
 
-       //POST: Home
-       [HttpPost]
-        public async Task<IActionResult> Index(SteamItemModel model)
+        [HttpPost]
+        public async Task<IActionResult> Search(SteamItemModel model)
         {
-            model.ValidateName(_itemFetchService.GetItemList());
+            model.ValidateName(_steamItemModel.ItemList);
             if (model.IsValidName)
             {
                 DataFrame? df = await _apiCalls.FetchItemToDataFrame(model);
 
                 if (df != null)
                 {
-                    //Pass JSON data to the view
-                    ViewBag.jsonPriceHistoryDate = df["date"];
-                    ViewBag.jsonPriceHistoryPrice = df["price_usd"];
-
                     ViewBag.NavigatorData = await _makeGraphs.MakePriceHistoryLineGraph(df);
 
                     ViewBag.PriceHistoryHighChart = await _makeGraphs.MakePriceHistoryGraph(df);
@@ -95,29 +69,39 @@ namespace SteamGraphsWebApp.Controllers
             else
             {
                 ModelState.AddModelError("InputItemName", "Invalid item name");
-                await Index();
             }
 
             return View(model);
         }
 
-        //[HttpGet]
-        //public ActionResult Index()
-        //{
-        //    return View();
-        //}
+        [HttpGet]
+        public JsonResult AutoComplete(string prefix)
+        {
+            if (string.IsNullOrWhiteSpace(prefix) || prefix.Length < 2)
+            {
+                return Json(new List<object>());
+            }
 
-        //[HttpPost]
-        //public JsonResult Index(string Prefix)
-        //{
-        //    HashSet<Item> ItemList = _itemFetchService.GetItemList();
+            var itemList = _steamItemModel.ItemList;
+            var lowercasePrefix = prefix.ToLower();
+            var suggestions = itemList
+                .Where(item => item.MarketHashName.Split(' ')
+                    .Any(word => word.StartsWith(lowercasePrefix, StringComparison.OrdinalIgnoreCase)))
+                .Select(item => new { label = item.MarketHashName, value = item.MarketHashName, image = item.ImageUrl })
+                .Take(5)
+                .ToList();
 
-        //    //Searching records from list using LINQ query
-        //    var Name = (from N in ItemList
-        //                where N.MarketHashName.StartsWith(Prefix)
-        //                select new { N.MarketHashName });
-        //    return Json(Name);
-        //}
+            if (!suggestions.Any())
+            {
+                suggestions = itemList
+                    .Where(item => item.MarketHashName.Contains(lowercasePrefix, StringComparison.OrdinalIgnoreCase))
+                    .Select(item => new { label = item.MarketHashName, value = item.MarketHashName, image = item.ImageUrl })
+                    .Take(5)
+                    .ToList();
+            }
+
+            return Json(suggestions);
+        }
 
         public IActionResult Privacy()
         {
