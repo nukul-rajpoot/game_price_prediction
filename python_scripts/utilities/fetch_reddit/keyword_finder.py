@@ -4,6 +4,11 @@ import json
 import csv
 import pandas as pd
 
+"""
+NOTE: Mainly redundant. might be some useful stuff here.
+"""
+
+
 df = pd.read_csv('data/Item_lists/accepted_items.csv')
 df['item_name'].to_csv('output.csv',index=False)
 # # Load the json file
