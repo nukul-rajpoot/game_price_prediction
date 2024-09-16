@@ -4,6 +4,12 @@ import json
 from datetime import datetime
 import time
 
+"""
+NOTE: PRAW script to fetch recent data, directly from reddit api
+Saves to json
+"""
+
+
 # Initialize Reddit API client
 reddit = praw.Reddit(
     client_id="REDACTED",
