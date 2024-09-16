@@ -7,9 +7,9 @@ from datetime import datetime
 import logging.handlers
 
 # put the path to the input file, or a folder of files to process all of
-input_file = r"B:/GPP - Pear/game_price_prediction/data/Reddit_data/csgo_comments.zst"
+input_file = r"./data/Reddit_data/compressed_data/csgo_comments.zst"
 # put the name or path to the output file. The file extension from below will be added automatically. If the input file is a folder, the output will be treated as a folder as well
-output_file = r"B:/GPP - Pear/game_price_prediction/data/Reddit_data/output"
+output_file = r"./data/Reddit_data/output"
 # the format to output in, pick from the following options
 #   zst: same as the input, a zstandard compressed ndjson file. Can be read by the other scripts in the repo
 #   txt: an ndjson file, which is a text file with a separate json object on each line. Can be opened by any text editor

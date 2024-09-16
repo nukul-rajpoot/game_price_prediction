@@ -665,10 +665,6 @@ pyrightconfig.json
 
 # End of https://www.toptal.com/developers/gitignore/api/python
 fetch_cookie_script.exe
-python_scripts/fetch_cookie_script_jyo.py
-data/Reddit_data/csgo_comments.zst
-data/Reddit_data/csgo_trading_comments.zst
-data/Reddit_data/RAOfCSGO_comments
-data/Reddit_data/RAOfCSGO_comments.json
-data/Reddit_data/RAOfCSGO_comments
+# ignores all zst reddit files
+*.zst
 python_scripts/utilities/geckodriver.exe
