@@ -667,4 +667,7 @@ pyrightconfig.json
 fetch_cookie_script.exe
 # ignores all zst reddit files
 *.zst
+*txt
+
+data/Reddit_data/filtered_data
 python_scripts/utilities/geckodriver.exe
