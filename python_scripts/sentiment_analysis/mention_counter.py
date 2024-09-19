@@ -1,26 +1,69 @@
-import pandas as pd
+import zstandard
 import json
 from datetime import datetime
 import csv
+import os
+import logging
+import sys
 
-# Input file path
-input_file = './data/Reddit_data/filtered_data/hi_from_csgo_comments.txt'
+# Configuration settings
+input_file = './data/Reddit_data/filtered_data/key_from_csgo_comments.zst'
+output_file = './data/Reddit_data/mention_data/key_from_csgo_comments.csv'
+word_to_count = 'key'  # Specify the word to count here
 
-# Output file path
-output_file = './data/Reddit_data/mention_data/hi_from_csgo_comments.csv'
+# Set up logging
+log = logging.getLogger("bot")
+log.setLevel(logging.INFO)
+log_formatter = logging.Formatter('%(asctime)s - %(levelname)s: %(message)s')
+log_str_handler = logging.StreamHandler()
+log_str_handler.setFormatter(log_formatter)
+log.addHandler(log_str_handler)
 
-# Function to count mentions in a text
-def count_mentions(text):
-    return text.lower().count('hi')
+def read_and_decode(reader, chunk_size, max_window_size, previous_chunk=None, bytes_read=0):
+    chunk = reader.read(chunk_size)
+    bytes_read += chunk_size
+    if previous_chunk is not None:
+        chunk = previous_chunk + chunk
+    try:
+        return chunk.decode()
+    except UnicodeDecodeError:
+        if bytes_read > max_window_size:
+            raise UnicodeError(f"Unable to decode frame after reading {bytes_read:,} bytes")
+        log.info(f"Decoding error with {bytes_read:,} bytes, reading another chunk")
+        return read_and_decode(reader, chunk_size, max_window_size, chunk, bytes_read)
 
-# Read the input file and process each line
-data = {}
-with open(input_file, 'r') as file:
-    for line in file:
+def read_lines_zst(file_name):
+    with open(file_name, 'rb') as file_handle:
+        buffer = ''
+        reader = zstandard.ZstdDecompressor(max_window_size=2**31).stream_reader(file_handle)
+        while True:
+            chunk = read_and_decode(reader, 2**27, (2**29) * 2)
+            if not chunk:
+                break
+            lines = (buffer + chunk).split("\n")
+            for line in lines[:-1]:
+                yield line.strip(), file_handle.tell()
+            buffer = lines[-1]
+        reader.close()
+
+def count_mentions(text, word):
+    return text.lower().count(word.lower())
+
+def process_file(input_file, output_file, word):
+    data = {}
+    file_size = os.stat(input_file).st_size
+    total_lines = 0
+    bad_lines = 0
+
+    for line, file_bytes_processed in read_lines_zst(input_file):
+        total_lines += 1
+        if total_lines % 100000 == 0:
+            log.info(f"Processed {total_lines:,} lines : {bad_lines:,} bad lines : {file_bytes_processed:,}:{(file_bytes_processed / file_size) * 100:.0f}%")
+
         try:
             comment = json.loads(line)
             date = datetime.utcfromtimestamp(int(comment['created_utc'])).strftime('%Y-%m-%d')
-            mentions = count_mentions(comment['body'])
+            mentions = count_mentions(comment['body'], word)
             
             if date in data:
                 data[date] += mentions
@@ -28,17 +71,23 @@ with open(input_file, 'r') as file:
                 data[date] = mentions
                 
         except json.JSONDecodeError:
-            print(f"Error decoding JSON from line: {line}")
+            bad_lines += 1
+            log.warning(f"Error decoding JSON from line: {line}")
         except KeyError as e:
-            print(f"KeyError: {e} - Skipping this comment")
+            bad_lines += 1
+            log.warning(f"KeyError: {e} - Skipping this comment")
 
-# Convert the data to a DataFrame
-df = pd.DataFrame(list(data.items()), columns=['date', 'num_mentions'])
+    log.info(f"Complete : {total_lines:,} : {bad_lines:,}")
 
-# Sort by date
-df = df.sort_values('date')
+    # Write data to CSV
+    with open(output_file, 'w', newline='') as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerow(['date', 'num_mentions'])
+        for date, mentions in sorted(data.items()):
+            writer.writerow([date, mentions])
 
-# Save to CSV
-df.to_csv(output_file, index=False)
+    log.info(f"Mention counts for '{word}' have been saved to {output_file}")
 
-print(f"Mention counts have been saved to {output_file}")
+if __name__ == "__main__":
+    log.info(f"Counting mentions of the word: '{word_to_count}'")
+    process_file(input_file, output_file, word_to_count)
