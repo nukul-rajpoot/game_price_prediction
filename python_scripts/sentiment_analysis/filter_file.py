@@ -18,7 +18,7 @@ input_file_base = os.path.splitext(input_file_name)[0]
 #   txt: an ndjson file, which is a text file with a separate json object on each line. Can be opened by any text editor
 #   csv: a comma separated value file. Can be opened by a text editor or excel
 # WARNING READ THIS: if you use txt or csv output on a large input file without filtering out most of the rows, the resulting file will be extremely large. Usually about 7 times as large as the compressed input file
-output_format = "txt"
+# output_format = "zst"
 # override the above format and output only this field into a text file, one per line. Useful if you want to make a list of authors or ids. See the examples below
 # any field that's in the dump is supported, but useful ones are
 #   author: the username of the author
@@ -57,7 +57,7 @@ to_date = datetime.strptime("2030-12-31", "%Y-%m-%d")
 # add your submission filters and set the output file name to something unique
 # input_file = "redditdev_submissions.zst"
 # output_file = "filtered_submissions"
-# output_format = "csv"
+output_format = "zst"
 # field = "author"
 # values = ["watchful1"]
 #
@@ -80,7 +80,7 @@ to_date = datetime.strptime("2030-12-31", "%Y-%m-%d")
 
 # change this to field = None if you don't want to filter by anything
 field = "body"
-values = ['dragonlore']
+values = ['key']
 # if you have a long list of values, you can put them in a file and put the filename here. If set this overrides the value list above
 # if this list is very large, it could greatly slow down the process
 values_file = None
