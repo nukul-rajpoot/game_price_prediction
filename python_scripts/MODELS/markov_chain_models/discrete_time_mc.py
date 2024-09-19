@@ -4,8 +4,10 @@ import os
 import numpy as np
 import matplotlib.pyplot as plt
 
+sys.path.insert(0, os.path.abspath(os.path.join(os.getcwd(), '..', '..')))
 sys.path.insert(0, os.path.abspath(''))
-from python_scripts.models.markov_chain_models.calculations_mc import dtmc_state_split, dtmc_forecast, dtmc_plot_states
+from calculations_mc import dtmc_state_split, dtmc_forecast, dtmc_plot_states
+# from python_scripts.models.markov_chain_models.calculations_mc import dtmc_state_split, dtmc_forecast, dtmc_plot_states
 from python_scripts.utilities.api_calls import get_cookie_from_blob, fetch_items, fetch_item_to_df
 
 
