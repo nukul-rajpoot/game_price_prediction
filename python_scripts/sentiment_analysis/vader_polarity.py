@@ -10,10 +10,20 @@ import nltk
 import pandas as pd
 import re
 
-# Configuration settings
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
+!!! ONLY use filter_file for this !!!
+- custom VADER script 
+- takes filter_file
+- outputs polarity
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
+
+
+# config
 input_file = r"./data/Reddit_data/compressed_data/csgogambling_comments.zst"
 output_file = r"./data/Reddit_data/output"
 output_format = "csv"
+
+
 single_field = None
 write_bad_lines = False
 from_date = datetime.strptime("2005-01-01", "%Y-%m-%d")
