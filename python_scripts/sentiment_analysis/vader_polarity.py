@@ -9,6 +9,7 @@ from nltk.sentiment import SentimentIntensityAnalyzer
 import nltk
 import pandas as pd
 import re
+from datetime import datetime
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
 !!! ONLY use filter_file for this !!!
@@ -19,8 +20,8 @@ import re
 
 
 # config
-input_file = r"./data/Reddit_data/compressed_data/csgogambling_comments.zst"
-output_file = r"./data/Reddit_data/output"
+input_file = r"./data/Reddit_data/filtered_data/key_from_csgo_comments.zst"
+output_file = r"./data/Reddit_data/polarity_data/key_from_csgo_comments"
 output_format = "csv"
 
 
@@ -83,7 +84,16 @@ def write_line_single(handle, obj, field):
 
 def write_line_csv(writer, obj, is_submission):
     output_list = []
-    output_list.append(obj.get('created_utc', ''))
+    created_utc = obj.get('created_utc', '')
+    output_list.append(created_utc)
+    
+    # Convert UTC to date format
+    if created_utc:
+        date = datetime.utcfromtimestamp(int(created_utc)).strftime('%Y-%m-%d')
+    else:
+        date = ''
+    output_list.append(date)
+    
     # Sanitize the body text
     body = sanitize_text(obj.get('body', ''))
     output_list.append(body)
@@ -136,7 +146,7 @@ def process_file(input_file, output_file, output_format, field, values, from_dat
     elif output_format == "csv":
         handle = open(output_path, 'w', encoding='UTF-8', newline='')
         writer = csv.writer(handle)
-        writer.writerow(['created_utc', 'body', 'negative', 'neutral', 'positive', 'compound', 'score'])
+        writer.writerow(['created_utc', 'date', 'body', 'negative', 'neutral', 'positive', 'compound', 'score'])
     else:
         log.error(f"Unsupported output format {output_format}")
         sys.exit()
