@@ -6,6 +6,14 @@ import os
 import logging
 import sys
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
+!!! ONLY use filter_file for this !!!
+- Takes filtered_data 
+- Counts mentions (word_to_count)  
+- Saves as numeric for time-series plotting
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
+
+
 # Configuration settings
 input_file = './data/Reddit_data/filtered_data/key_from_csgo_comments.zst'
 output_file = './data/Reddit_data/mention_data/key_from_csgo_comments.csv'
