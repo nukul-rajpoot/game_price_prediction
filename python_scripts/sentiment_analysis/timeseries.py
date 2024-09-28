@@ -1,66 +1,58 @@
-
 import pandas as pd
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
-
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
 - Takes data from mention_data and polarity_data
 - Plots it sexily
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
 
+# Load data
+mentions_df = pd.read_csv('./data/Reddit_data/mention_data/key_from_csgo_comments.csv')
+polarity_df = pd.read_csv('./data/Reddit_data/polarity_data/key_from_csgo_comments.csv')
 
-def load_data(mention_file, polarity_file):
-    mentions = pd.read_csv(./data/Reddit_data/mention_data/key_from_csgo_comments.csv)
-    polarity = pd.read_csv()
-    return mentions, polarity
+# Preprocess data
+mentions_df['date'] = pd.to_datetime(mentions_df['date'])
+polarity_df['date'] = pd.to_datetime(polarity_df['date'])
 
-def process_data(mentions, polarity):
-    # Merge the data if necessary
-    # For this example, we'll assume the data is already in the correct format
-    return mentions, polarity
+# Calculate average polarity score for each day
+polarity_df['compound'] = polarity_df['compound'].astype(float)
+daily_polarity = polarity_df.groupby('date')['compound'].mean().reset_index()
 
-def create_plot(mentions, polarity):
-    # Create subplot with secondary y-axis
-    fig = make_subplots(specs=[[{"secondary_y": True}]])
+# Merge mentions and daily polarity data
+merged_df = pd.merge(mentions_df, daily_polarity, on='date', how='outer').sort_values('date')
+merged_df = merged_df.fillna(method='ffill')
 
-    # Add mentions trace
-    fig.add_trace(
-        go.Scatter(x=mentions['date'], y=mentions['num_mentions'], name="Mentions"),
-        secondary_y=False,
-    )
+# Create figure with secondary y-axis
+fig = make_subplots(specs=[[{"secondary_y": True}]])
 
-    # Add polarity trace
-    fig.add_trace(
-        go.Scatter(x=polarity['created_utc'], y=polarity['compound'], name="Polarity"),
-        secondary_y=True,
-    )
+# Add traces
+fig.add_trace(
+    go.Scatter(x=merged_df['date'], y=merged_df['num_mentions'], name="Mentions", line=dict(color='blue')),
+    secondary_y=False,
+)
 
-    # Set x-axis title
-    fig.update_xaxes(title_text="Date")
+fig.add_trace(
+    go.Scatter(x=merged_df['date'], y=merged_df['compound'], name="Average Polarity", line=dict(color='red')),
+    secondary_y=True,
+)
 
-    # Set y-axes titles
-    fig.update_yaxes(title_text="Number of Mentions", secondary_y=False)
-    fig.update_yaxes(title_text="Polarity Score", secondary_y=True)
+# Update layout for better readability
+fig.update_layout(
+    title_text="Mentions and Average Polarity Over Time for 'Key' in CS:GO Comments",
+    legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
+    margin=dict(l=50, r=50, t=80, b=50),
+)
 
-    # Set title
-    fig.update_layout(title_text="Item Mentions and Polarity Over Time")
+# Update y-axes
+fig.update_yaxes(title_text="Number of Mentions", secondary_y=False, gridcolor='lightgrey')
+fig.update_yaxes(title_text="Average Polarity (Compound Score)", secondary_y=True, gridcolor='lightgrey')
 
-    return fig
+# Update x-axis
+fig.update_xaxes(title_text="Date", gridcolor='lightgrey')
 
-def main():
-    mention_file = '../../data/Reddit_data/mention_data/key_from_csgo_comments.csv'
-    polarity_file = '../../data/Reddit_data/polarity_data/output.csv'
+# Show the figure
+fig.show()
 
-    mentions, polarity = load_data(mention_file, polarity_file)
-    mentions, polarity = process_data(mentions, polarity)
-    fig = create_plot(mentions, polarity)
-
-    # Save the plot as an interactive HTML file
-    fig.write_html("item_mentions_and_polarity.html")
-
-    # Alternatively, show the plot in a browser
-    # fig.show()
-
-if __name__ == "__main__":
-    main()
+# Save as HTML
+fig.write_html("mentions_and_polarity_chart.html")
