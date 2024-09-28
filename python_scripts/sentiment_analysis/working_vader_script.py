@@ -3,6 +3,13 @@ import pandas as pd
 from nltk.sentiment import SentimentIntensityAnalyzer
 import nltk
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
+- Original VADER script
+- Basis for creating filter_sentiment
+- Outputs polarity_data
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
+
+
 def process_comments(input_strings):
     # Download VADER lexicon if not already downloaded
     nltk.download('vader_lexicon', quiet=True)
@@ -64,4 +71,4 @@ if __name__ == "__main__":
     print(result_df)
 
     # Optionally, save to CSV
-    # result_df.to_csv('sentiment_analysis_results.csv', index=False)
+    result_df.to_csv('sentiment_analysis_results.csv', index=False)

@@ -6,8 +6,21 @@ import csv
 from datetime import datetime
 import logging.handlers
 
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+!!! THIS IS THE ONLY FILE TO DEAL WITH compressed_data !!!
+- Saves from compressed_data to filtered_data based on keyword
+- filter for keyword:  values = ['Dragonlore']
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
+
+
 # put the path to the input file, or a folder of files to process all of
 input_file = r"./data/Reddit_data/compressed_data/csgo_comments.zst"
+
+# FILTERING
+field = "body"
+values = ['key']
+
 # put the name or path to the output file. The file extension from below will be added automatically. If the input file is a folder, the output will be treated as a folder as well
 
 input_file_name = os.path.basename(input_file)
@@ -78,9 +91,6 @@ output_format = "zst"
 # run the script one last time and now you have a file called "filtered_comments.csv" that only has comments from your submissions above
 # if you want only top level comments instead of all comments, you can set field to "parent_id" instead of "link_id"
 
-# change this to field = None if you don't want to filter by anything
-field = "body"
-values = ['key']
 # if you have a long list of values, you can put them in a file and put the filename here. If set this overrides the value list above
 # if this list is very large, it could greatly slow down the process
 values_file = None
