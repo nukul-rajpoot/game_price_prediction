@@ -671,3 +671,4 @@ fetch_cookie_script.exe
 
 data/Reddit_data/filtered_data
 python_scripts/utilities/geckodriver.exe
+data/Reddit_data/mention_data
