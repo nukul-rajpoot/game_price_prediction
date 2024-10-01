@@ -15,16 +15,16 @@ import logging.handlers
 
 
 # put the path to the input file, or a folder of files to process all of
-input_file = r"./data/Reddit_data/compressed_data/csgo_comments.zst"
-
+input_file = r"./data/Reddit_data/compressed_data"
 # FILTERING
 field = "body"
-values = ['key']
-
-# put the name or path to the output file. The file extension from below will be added automatically. If the input file is a folder, the output will be treated as a folder as well
+values = ['redline']
 
 input_file_name = os.path.basename(input_file)
 input_file_base = os.path.splitext(input_file_name)[0]  
+
+# for saving 
+output_file = f"./data/Reddit_data/filtered_data/{values[0]}_from_{input_file_base}"
 
 # the format to output in, pick from the following options
 #   zst: same as the input, a zstandard compressed ndjson file. Can be read by the other scripts in the repo
@@ -96,7 +96,6 @@ output_format = "zst"
 values_file = None
 exact_match = False
 
-output_file = f"./data/Reddit_data/filtered_data/{values[0]}_from_{input_file_base}"
 
 # sets up logging to the console as well as a file
 log = logging.getLogger("bot")

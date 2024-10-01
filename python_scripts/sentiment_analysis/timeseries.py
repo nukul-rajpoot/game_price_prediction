@@ -8,7 +8,7 @@ from plotly.subplots import make_subplots
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
 
 # Load data
-mentions_df = pd.read_csv('./data/Reddit_data/mention_data/key_from_csgo_comments.csv')
+mentions_df = pd.read_csv('./data/Reddit_data/mention_ALL/key_from_ALL.csv')
 polarity_df = pd.read_csv('./data/Reddit_data/polarity_data/key_from_csgo_comments.csv')
 
 # Preprocess data
