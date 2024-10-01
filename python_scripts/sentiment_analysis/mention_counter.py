@@ -15,9 +15,9 @@ import sys
 
 
 # Configuration settings
-input_file = './data/Reddit_data/filtered_data/key_from_csgo_comments.zst'
-output_file = './data/Reddit_data/mention_data/key_from_csgo_comments.csv'
-word_to_count = 'key'  # Specify the word to count here
+input_directory = './data/Reddit_data/filtered_data/redline_from_compressed_data'
+output_directory = './data/Reddit_data/mention_data/redline_from_compressed_data'
+word_to_count = 'redline'  # Specify the word to count here
 
 # Set up logging
 log = logging.getLogger("bot")
@@ -98,4 +98,13 @@ def process_file(input_file, output_file, word):
 
 if __name__ == "__main__":
     log.info(f"Counting mentions of the word: '{word_to_count}'")
-    process_file(input_file, output_file, word_to_count)
+    if not os.path.exists(output_directory):
+        os.makedirs(output_directory)
+
+    for file_name in os.listdir(input_directory):
+        if file_name.endswith('.zst'):
+            input_file = os.path.join(input_directory, file_name)
+            output_file_name = os.path.splitext(file_name)[0] + '.csv'
+            output_file = os.path.join(output_directory, output_file_name)
+            log.info(f"Processing file: {input_file}")
+            process_file(input_file, output_file, word_to_count)
