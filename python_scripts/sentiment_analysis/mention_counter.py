@@ -5,19 +5,20 @@ import csv
 import os
 import logging
 import sys
+from config import ITEM, FILTERED_DATA_DIRECTORY, MENTION_DATA_DIRECTORY
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
 !!! ONLY use filter_file for this !!!
-- Takes filtered_data 
-- Counts mentions (word_to_count)  
-- Saves as numeric for time-series plotting
+- Takes ./data/Reddit_data/filtered_data 
+- Counts mentions of ITEM  
+- Saves as numeric for time-series plotting in ./data/Reddit_data/mention_data
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
 
 
 # Configuration settings
-input_directory = './data/Reddit_data/filtered_data/redline_from_compressed_data'
-output_directory = './data/Reddit_data/mention_data/redline_from_compressed_data'
-word_to_count = 'redline'  # Specify the word to count here
+input_directory = FILTERED_DATA_DIRECTORY
+output_directory = MENTION_DATA_DIRECTORY
+word_to_count = ITEM
 
 # Set up logging
 log = logging.getLogger("bot")

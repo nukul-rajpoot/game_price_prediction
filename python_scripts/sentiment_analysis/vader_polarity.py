@@ -10,6 +10,7 @@ import nltk
 import pandas as pd
 import re
 from datetime import datetime
+from config import FILTERED_DATA_DIRECTORY, POLARITY_DATA_DIRECTORY
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
 !!! ONLY use filter_file for this !!!
@@ -20,8 +21,8 @@ from datetime import datetime
 
 
 # config
-input_file = r"./data/Reddit_data/filtered_data/key_from_csgo_comments.zst"
-output_file = r"./data/Reddit_data/polarity_data/key_from_csgo_comments"
+input_file = FILTERED_DATA_DIRECTORY
+output_file = POLARITY_DATA_DIRECTORY
 output_format = "csv"
 
 
