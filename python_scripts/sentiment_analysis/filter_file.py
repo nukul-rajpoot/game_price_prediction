@@ -5,26 +5,26 @@ import sys
 import csv
 from datetime import datetime
 import logging.handlers
-
+from config import ITEM, INPUT_COMPRESSED, FILTERED_DATA_DIRECTORY
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 !!! THIS IS THE ONLY FILE TO DEAL WITH compressed_data !!!
-- Saves from compressed_data to filtered_data based on keyword
-- filter for keyword:  values = ['Dragonlore']
+- reads ALL compressed_data, saves to filtered_data based on [ITEM]
+- i.e. filters for keyword: [ITEM] from config
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
 
 
 # put the path to the input file, or a folder of files to process all of
-input_file = r"./data/Reddit_data/compressed_data"
+input_file = INPUT_COMPRESSED
 # FILTERING
 field = "body"
-values = ['redline']
+values = [ITEM]
 
 input_file_name = os.path.basename(input_file)
 input_file_base = os.path.splitext(input_file_name)[0]  
 
 # for saving 
-output_file = f"./data/Reddit_data/filtered_data/{values[0]}_from_{input_file_base}"
+output_file = FILTERED_DATA_DIRECTORY
 
 # the format to output in, pick from the following options
 #   zst: same as the input, a zstandard compressed ndjson file. Can be read by the other scripts in the repo

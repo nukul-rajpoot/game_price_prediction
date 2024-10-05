@@ -1,8 +1,9 @@
 import os
 import pandas as pd
+from config import ITEM, MENTION_DATA_DIRECTORY
 
 # Directory containing the mention data CSV files
-mention_data_directory = './data/Reddit_data/mention_data/redline_from_compressed_data'
+mention_data_directory = MENTION_DATA_DIRECTORY
 
 # List to store individual dataframes
 dataframes = []
@@ -26,8 +27,7 @@ summed_df = combined_df.groupby('date', as_index=False)['num_mentions'].sum()
 # Sort the summed dataframe by date
 summed_df = summed_df.sort_values(by='date')
 
-# Display the summed dataframe
-print(summed_df)
-
-# Save the summed dataframe to a new CSV file if needed
-summed_df.to_csv('./data/Reddit_data/mention_ALL/redline_from_ALL.csv', index=False)
+# Skibbity sigma rizz
+output_file = f'./data/Reddit_data/mention_all/{ITEM}_from_all.csv'
+summed_df.to_csv(output_file, index=False)
+print(f"ALL available mention_data FOR {ITEM} has been combined into {output_file}")
