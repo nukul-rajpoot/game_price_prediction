@@ -5,7 +5,7 @@ import sys
 import csv
 from datetime import datetime
 import logging.handlers
-from config import ITEM, INPUT_COMPRESSED, FILTERED_DATA_DIRECTORY
+from config import ITEM, ITEMS, INPUT_COMPRESSED, FILTERED_DATA_DIRECTORY
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 !!! THIS IS THE ONLY FILE TO DEAL WITH compressed_data !!!
@@ -18,7 +18,7 @@ from config import ITEM, INPUT_COMPRESSED, FILTERED_DATA_DIRECTORY
 input_file = INPUT_COMPRESSED
 # FILTERING
 field = "body"
-values = [ITEM]
+values = ITEMS
 
 input_file_name = os.path.basename(input_file)
 input_file_base = os.path.splitext(input_file_name)[0]  

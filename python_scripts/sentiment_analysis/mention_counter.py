@@ -5,7 +5,7 @@ import csv
 import os
 import logging
 import sys
-from config import ITEM, FILTERED_DATA_DIRECTORY, MENTION_DATA_DIRECTORY
+from config import ITEMS, FILTERED_DATA_DIRECTORY, MENTION_DATA_DIRECTORY
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
 !!! ONLY use filter_file for this !!!
@@ -18,7 +18,6 @@ from config import ITEM, FILTERED_DATA_DIRECTORY, MENTION_DATA_DIRECTORY
 # Configuration settings
 input_directory = FILTERED_DATA_DIRECTORY
 output_directory = MENTION_DATA_DIRECTORY
-word_to_count = ITEM
 
 # Set up logging
 log = logging.getLogger("bot")
@@ -55,10 +54,10 @@ def read_lines_zst(file_name):
             buffer = lines[-1]
         reader.close()
 
-def count_mentions(text, word):
-    return text.lower().count(word.lower())
+def count_mentions(text, words):
+    return sum(text.lower().count(word.lower()) for word in words)
 
-def process_file(input_file, output_file, word):
+def process_file(input_file, output_file, words):
     data = {}
     file_size = os.stat(input_file).st_size
     total_lines = 0
@@ -72,7 +71,7 @@ def process_file(input_file, output_file, word):
         try:
             comment = json.loads(line)
             date = datetime.utcfromtimestamp(int(comment['created_utc'])).strftime('%Y-%m-%d')
-            mentions = count_mentions(comment['body'], word)
+            mentions = count_mentions(comment['body'], words)
             
             if date in data:
                 data[date] += mentions
@@ -95,10 +94,10 @@ def process_file(input_file, output_file, word):
         for date, mentions in sorted(data.items()):
             writer.writerow([date, mentions])
 
-    log.info(f"Mention counts for '{word}' have been saved to {output_file}")
+    log.info(f"Mention counts have been saved to {output_file}")
 
 if __name__ == "__main__":
-    log.info(f"Counting mentions of the word: '{word_to_count}'")
+    log.info(f"Counting mentions of the words: {', '.join(ITEMS)}")
     if not os.path.exists(output_directory):
         os.makedirs(output_directory)
 
@@ -108,4 +107,4 @@ if __name__ == "__main__":
             output_file_name = os.path.splitext(file_name)[0] + '.csv'
             output_file = os.path.join(output_directory, output_file_name)
             log.info(f"Processing file: {input_file}")
-            process_file(input_file, output_file, word_to_count)
+            process_file(input_file, output_file, ITEMS)
