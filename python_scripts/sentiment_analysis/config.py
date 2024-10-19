@@ -12,10 +12,10 @@ cwd = os.getcwd()
 print(cwd)
 
 # # for windowpros
-#game_price_prediction_path = os.path.abspath(os.path.join(cwd, '..', '..'))
+GAME_PRICE_PREDICTION_PATH = os.path.abspath(os.path.join(cwd, '..', '..'))
 
 # # for ma:c
-GAME_PRICE_PREDICTION_PATH = os.path.abspath(os.path.join(cwd))
+#GAME_PRICE_PREDICTION_PATH = os.path.abspath(os.path.join(cwd))
 
 sys.path.insert(0, os.path.abspath(GAME_PRICE_PREDICTION_PATH))
 
