@@ -18,7 +18,7 @@ params_to_keep = ['body', 'created_utc', 'link_id', 'parent_id', 'retrieved_on',
 
 # Read data, clean data, write to df 
 cleaned_data = []
-with open('./data/Reddit_data/RAOfCSGO_comments', 'r') as file:
+with open('./data/reddit_data/RAOfCSGO_comments', 'r') as file:
     for line in file:
         comment = json.loads(line)
         cleaned_comment = {param: comment[param] for param in params_to_keep}
@@ -27,5 +27,5 @@ with open('./data/Reddit_data/RAOfCSGO_comments', 'r') as file:
 df = pd.DataFrame(cleaned_data)
 
 ## save to either CSV or JSON
-# df.to_csv('./data/Reddit_data/CLEANED_RAOfCSGO_comments.csv', index=False)
-df.to_json('./data/Reddit_data/CLEANED_RAOfCSGO_comments.json', orient='records', lines=True)
+# df.to_csv('./data/reddit_data/CLEANED_RAOfCSGO_comments.csv', index=False)
+df.to_json('./data/reddit_data/CLEANED_RAOfCSGO_comments.json', orient='records', lines=True)

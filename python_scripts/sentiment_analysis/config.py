@@ -34,19 +34,19 @@ ITEMS = [
 ]
 
 # For filter_file               |    NOTE: (input: compressed -> output: filtered_data (MS) )
-INPUT_COMPRESSED = os.path.join(GAME_PRICE_PREDICTION_PATH, 'data', 'Reddit_data', 'compressed_data')
-FILTERED_DATA_DIRECTORY = os.path.join(GAME_PRICE_PREDICTION_PATH, 'data', 'Reddit_data', 'filtered_data', f'{ITEM_SANITIZED}_filtered')
+INPUT_COMPRESSED = os.path.join(GAME_PRICE_PREDICTION_PATH, 'data', 'reddit_data', 'compressed_data')
+FILTERED_DATA_DIRECTORY = os.path.join(GAME_PRICE_PREDICTION_PATH, 'data', 'reddit_data', 'filtered_data', f'{ITEM_SANITIZED}_filtered')
 
 # for mention_counter           |   NOTE:  (input: filtered_data (MS) -> output: mention_data (MS))
-MENTION_DATA_DIRECTORY = os.path.join(GAME_PRICE_PREDICTION_PATH, 'data', 'Reddit_data', 'mention_data', f'{ITEM_SANITIZED}_mentions')
+MENTION_DATA_DIRECTORY = os.path.join(GAME_PRICE_PREDICTION_PATH, 'data', 'reddit_data', 'mention_data', f'{ITEM_SANITIZED}_mentions')
 
 # mention_data_combiner         |   NOTE:  (input: mention_data (MS) -> output: mention_ALL)  - directories N/A for this.
 ALL_MENTIONS_FILENAME = f'{ITEM_SANITIZED}_all_mentions.csv'
-ALL_MENTIONS_DATA = os.path.join(GAME_PRICE_PREDICTION_PATH, 'data', 'Reddit_data', 'mention_all', ALL_MENTIONS_FILENAME)
+ALL_MENTIONS_DATA = os.path.join(GAME_PRICE_PREDICTION_PATH, 'data', 'reddit_data', 'mention_all', ALL_MENTIONS_FILENAME)
 
 # For vader_polarity            |    NOTE: (input: filtered -> output: polarity_data)
 POLARITY_FOLDER_NAME = f'{ITEM_SANITIZED}_polarity'
-POLARITY_DATA_DIRECTORY = os.path.join(GAME_PRICE_PREDICTION_PATH, 'data', 'Reddit_data', 'polarity_data', POLARITY_FOLDER_NAME)
+POLARITY_DATA_DIRECTORY = os.path.join(GAME_PRICE_PREDICTION_PATH, 'data', 'reddit_data', 'polarity_data', POLARITY_FOLDER_NAME)
 OUTPUT_POLARITY_FORMAT = "csv"
 
 # note: if it handles mispelled ITEMS=[], then denoted as MS
