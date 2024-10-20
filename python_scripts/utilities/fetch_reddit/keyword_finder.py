@@ -12,7 +12,7 @@ NOTE: Mainly redundant. might be some useful stuff here.
 df = pd.read_csv('data/Item_lists/accepted_items.csv')
 df['item_name'].to_csv('output.csv',index=False)
 # # Load the json file
-# with open('data/Reddit_data/RAOfCSGO_comments.json') as f:
+# with open('data/reddit_data/RAOfCSGO_comments.json') as f:
 #     data = json.load(f)
 
 # # Extract the comment bodies
