@@ -89,9 +89,12 @@ def fetch_item_to_df(item, dailyCookie):
 
 
 def sanitize_filename(filename):
-    """Sanitizes the filename to ensure it is valid for most operating systems."""
-    filename = re.sub(r'[\\/*?:"<>|]', '_', filename)  # Replace disallowed characters with underscore
-    filename = re.sub(r'\s+', '_', filename)  # Replace spaces with underscores
+    # Replace disallowed characters with underscores
+    filename = re.sub(r'[\\/*?:"<>|]', '_', filename)
+    # Replace spaces with underscores
+    filename = re.sub(r'\s+', '_', filename)
+    # Convert filename to lowercase
+    filename = filename.lower()
     return filename
 
     
