@@ -45,7 +45,7 @@ df['disc_combined'] = map_2d_to_1d(df['disc_frac_price'], df['disc_frac_volume']
 
 # NOTE: For saving dicretized item dataframe. 
 # discrete_df = df[['frac_price', 'frac_volume', 'disc_frac_price', 'disc_frac_volume', 'disc_combined']]
-# discrete_df.to_csv('./data/HMM_train/Discrete_df.csv', index=False)
+# discrete_df.to_csv('./data/hmm_train/Discrete_df.csv', index=False)
 
 # Prepare the data for HMM
 X = df[['disc_combined']].values
