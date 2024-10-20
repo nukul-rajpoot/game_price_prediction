@@ -22,15 +22,15 @@ sys.path.insert(0, os.path.abspath(GAME_PRICE_PREDICTION_PATH))
 from python_scripts.utilities.api_calls import sanitize_filename
 
 # input the skibbity item's name here :P  NOTE: ITEMS = [] for mispelled items
-ITEM = "Redline"
+ITEM = "M4A1-S | Golden Coil (Factory New)"
 ITEM_SANITIZED = sanitize_filename(ITEM)
 ITEMS = [
-    "Redline", "Redlne", "Redlien", "Redlin", "Radline", "Ridline", "Redliine", "Redliin", "Redlline", "Reddline", "Redine",
-    "Reedline", "Reldine", "Redliene", "Redliune", "Redeln", "Redlene", "Reeline", "Redln", "Reddln", "Redilne",
-    "Redlien", "Redliune", "Redlienn", "Redeline", "Redllinne", "Redlinne", "Radlien", "Ridelin", "Redllin", "Reeliene",
-    "Ak47 Redline", "Ak-47 Redline", "Ak47 Redlne", "Ak-47 Redlne", "Ak-47 Redlin", "Ak47 Radline", "Ak-47 Ridline", "Ak-47 Redliine", "Ak47 Redlline", "Ak47 Reddline",
-    "Ak-47 Redine", "Ak47 Reedline", "Ak-47 Reldine", "Ak-47 Redliene", "Ak47 Redeln", "Ak-47 Redlene", "Ak47 Redliun", "Ak-47 Redillne", "Ak47 Redelne", "Ak-47 Redlline",
-    "AK Redline", "AK Redlne", "AK Redlin", "AK Radline", "AK Ridline", "AK Redine", "AK Reedline", "AK Redlline", "AK Reddline", "AK Redln"
+    "M4A1-S | Golden Coil", "Golden Coil", "GoldenCoil", "M4A1-S", "M4A1S", 
+    "M4A1 S", "M4A1-S Golden Coil", "M4A1S GoldenCoil", 
+    "Golden Coil M4A1-S", "GoldenCoil M4A1-S", "Golden Coil M4A1S", 
+    "GoldenCoil M4A1S", "M4A1S Golden Coil", "GoldenCoil M4A1 S",
+    "M4AI-S", "M4AIS", "Golden Coi", "Golden Cool", "GoldenCoil M4AIS", 
+    "M4A1-S Golden Coi", "M4A1-S Goldon Coil", "M4A1S Goldon Coil"
 ]
 
 # For filter_file               |    NOTE: (input: compressed -> output: filtered_data (MS) )
