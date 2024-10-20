@@ -669,6 +669,8 @@ fetch_cookie_script.exe
 *.zst
 *txt
 
-data/Reddit_data/filtered_data
+data/reddit_data/filtered_data
 python_scripts/utilities/geckodriver.exe
-data/Reddit_data/mention_data
+data/reddit_data/mention_data
+data/reddit_data/mention_data
+data/reddit_data/polarity_data

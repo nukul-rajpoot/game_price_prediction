@@ -9,9 +9,9 @@ from config import ITEMS, FILTERED_DATA_DIRECTORY, MENTION_DATA_DIRECTORY
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
 !!! ONLY use filter_file for this !!!
-- Takes ./data/Reddit_data/filtered_data 
+- Takes ./data/reddit_data/filtered_data 
 - Counts mentions of ITEM  
-- Saves as numeric for time-series plotting in ./data/Reddit_data/mention_data
+- Saves as numeric for time-series plotting in ./data/reddit_data/mention_data
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
 
 
