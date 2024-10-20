@@ -9,12 +9,12 @@ from python_scripts.calculate_metrics import create_ln_df, calculate_sma, calcul
 
 dailyCookie = get_cookie_from_blob()
 items = fetch_items()
-hash_item_list = pd.read_csv('./data/Item_lists/hashed_items.csv')
+hash_item_list = pd.read_csv('./data/item_lists/hashed_items.csv')
 
 
 def screening_total_items():
     # Load existing screened items if the file exists
-    screened_items_file = './data/Item_lists/total_screened_items.csv'
+    screened_items_file = './data/item_lists/total_screened_items.csv'
     screened_items_df = pd.read_csv(screened_items_file) if os.path.exists(screened_items_file) else pd.DataFrame()
     screened_item_names = set(screened_items_df['item_name']) if not screened_items_df.empty else set()
 
@@ -56,7 +56,7 @@ def screening_total_items():
 
 
 def screening_judgement():
-    items_data_df = './data/Item_lists/total_screened_items.csv'
+    items_data_df = './data/item_lists/total_screened_items.csv'
     items_data_df = pd.read_csv(items_data_df)
 
     # Define the conditions for filtering
@@ -78,12 +78,12 @@ def screening_judgement():
     rejected_data_df = rejected_data_df[['item_name', 'rejection_reason']]
 
     # Save rejected items to a new CSV
-    rejected_data_df.to_csv('./data/Item_lists/rejected-items.csv', index=False)
+    rejected_data_df.to_csv('./data/item_lists/rejected-items.csv', index=False)
 
     filtered_data_df = filtered_data_df.sort_values(by='30d_price_%_change', ascending=False)
     
     # Save filtered data to a CSV
-    filtered_data_df.to_csv('./data/Item_lists/accepted_items.csv', index=False)
+    filtered_data_df.to_csv('./data/item_lists/accepted_items.csv', index=False)
 
 # Call the screening_judgement function
 screening_judgement()
