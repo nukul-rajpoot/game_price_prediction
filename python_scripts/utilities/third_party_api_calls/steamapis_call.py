@@ -21,14 +21,14 @@ def fetch_CSGO_item_list():
     api_item_list = get_item_list()
     if api_item_list:
         get_item_list_df = pd.DataFrame(api_item_list)
-        get_item_list_df.to_csv('./data/Item_lists/CSGO_Item_List.csv', index=True)
+        get_item_list_df.to_csv('./data/item_lists/CSGO_Item_List.csv', index=True)
     else:
         print("Failed to retrieve data")
 
 # fetch_CSGO_item_list():
 
 def generate_CSGO_item_list():
-    item_list = pd.read_csv('./data/Item_lists/CSGO_Item_List.csv')
+    item_list = pd.read_csv('./data/item_lists/CSGO_Item_List.csv')
 
     # Regular expression patterns
     market_hash_pattern = r"'market_hash_name': '(.*?)', 'border_color'"
@@ -49,6 +49,6 @@ def generate_CSGO_item_list():
     extracted_data.sort_values('market_hash_name', ascending=True, inplace=True)
 
     # Save to CSV with quotes
-    extracted_data.to_csv('./data/Item_lists/market_hash_names.csv', index=False, quoting=csv.QUOTE_ALL)
+    extracted_data.to_csv('./data/item_lists/market_hash_names.csv', index=False, quoting=csv.QUOTE_ALL)
 
 # generate_CSGO_item_list()
