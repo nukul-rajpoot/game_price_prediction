@@ -674,3 +674,4 @@ python_scripts/utilities/geckodriver.exe
 data/reddit_data/mention_data
 data/reddit_data/mention_data
 data/reddit_data/polarity_data
+data/reddit_data/compressed_data/
