@@ -12,10 +12,12 @@ cwd = os.getcwd()
 print(cwd)
 
 # # for windowpros
-GAME_PRICE_PREDICTION_PATH = os.path.abspath(os.path.join(cwd, '..', '..'))
+#GAME_PRICE_PREDICTION_PATH = os.path.abspath(os.path.join(cwd, '..', '..'))
 
 # # for ma:c
 #GAME_PRICE_PREDICTION_PATH = os.path.abspath(os.path.join(cwd))
+
+GAME_PRICE_PREDICTION_PATH = os.environ.get('GAME_PRICE_PREDICTION_PATH', '')
 
 sys.path.insert(0, os.path.abspath(GAME_PRICE_PREDICTION_PATH))
 
@@ -47,7 +49,8 @@ ALL_MENTIONS_DATA = os.path.join(GAME_PRICE_PREDICTION_PATH, 'data', 'reddit_dat
 # For vader_polarity            |    NOTE: (input: filtered -> output: polarity_data)
 POLARITY_FOLDER_NAME = f'{ITEM_SANITIZED}_polarity'
 POLARITY_DATA_DIRECTORY = os.path.join(GAME_PRICE_PREDICTION_PATH, 'data', 'reddit_data', 'polarity_data', POLARITY_FOLDER_NAME)
-OUTPUT_POLARITY_FORMAT = "csv"
 
+ALL_POLARITY_FILENAME = f'{ITEM_SANITIZED}_all_polarity.csv'
+ALL_POLARITY_DATA = os.path.join(GAME_PRICE_PREDICTION_PATH, 'data', 'reddit_data', 'polarity_all', ALL_POLARITY_FILENAME)
 # note: if it handles mispelled ITEMS=[], then denoted as MS
 # print(ITEMS)
