@@ -70,7 +70,7 @@ def process_file(input_file, output_file, words):
 
         try:
             comment = json.loads(line)
-            date = datetime.utcfromtimestamp(int(comment['created_utc'])).strftime('%Y-%m-%d')
+            date = datetime.fromtimestamp(int(comment['created_utc'])).strftime('%Y-%m-%d')
             mentions = count_mentions(comment['body'], words)
             
             if date in data:
