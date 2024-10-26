@@ -1,3 +1,3 @@
-created_utc,date,body,negative,neutral,positive,compound,score
-1472815285,2016-09-02,"yesterday at the morning i won a m4a1s varicamo, and i could withdraw it, but after that all is going worse, fucking ruskis scamming all day. sorry.",0.193,0.725,0.081,-0.5023,1
-1484168428,2017-01-11,"I got 5k xp i said, took out a m4a1-s hyperbeast and didnt get it. And my trade link is right.",0.0,0.867,0.133,0.3818,1
+date,compound,pos,neu,neg
+2016-09-02,-0.5023,0.074,0.751,0.175
+2017-01-11,0.3818,0.115,0.885,0.0
