@@ -29,6 +29,7 @@ def screening_total_items():
         
         item_name = item["market_hash_name"]
         if item_name in screened_item_names:
+            print(f"{item_name} already processed. Skipping...")
             continue  # Skip if the item is already screened
 
         # Add retry logic and rate limiting
