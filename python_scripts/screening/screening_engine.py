@@ -1,15 +1,17 @@
 import sys
 import os
 import pandas as pd
-sys.path.insert(0, os.path.abspath(''))
+import time  # Add this import
+
+GAME_PRICE_PREDICTION_PATH = os.environ.get('GAME_PRICE_PREDICTION_PATH', '')
+sys.path.insert(0, os.path.abspath(GAME_PRICE_PREDICTION_PATH))
 
 from python_scripts.screening.screening_metrics import calculate_screening_metrics
 from python_scripts.utilities.api_calls import fetch_item_from_api, fetch_item_to_df, fetch_items, get_cookie_from_blob
 from python_scripts.calculate_metrics import create_ln_df, calculate_sma, calculate_ema, calculate_bollinger_bands, calculate_price_percentage_change, calculate_relative_strength_index, calculate_market_cap, calculate_money_flow_index, calculate_market_cap_jupyter
 
 dailyCookie = get_cookie_from_blob()
-items = fetch_items()
-hash_item_list = pd.read_csv('./data/item_lists/hashed_items.csv')
+item_list = pd.read_csv('./data/item_lists/market_hash_names.csv')
 
 
 def screening_total_items():
@@ -21,23 +23,36 @@ def screening_total_items():
     item_data = []
 
     # Iterate through each item
-    for index, item in hash_item_list.iterrows():
+    for index, item in item_list.iterrows():
         if index == 23000:
             break
         
         item_name = item["market_hash_name"]
         if item_name in screened_item_names:
+            print(f"{item_name} already processed. Skipping...")
             continue  # Skip if the item is already screened
 
-        substring = item_name.split("'")[1]
-        data = fetch_item_from_api(substring, dailyCookie)
-        if data is not None:  # Check if data fetching was successful
-            df = pd.DataFrame(data)
-            metrics_row = calculate_screening_metrics(df, item_name)
-            item_data.append(metrics_row)
-            print(f"Item {item_name} processed successfully.")
-        else:
-            print(f"Error fetching data for item {item_name}.")
+        # Add retry logic and rate limiting
+        max_retries = 3
+        retry_delay = 5  # seconds
+        
+        for attempt in range(max_retries):
+            data = fetch_item_from_api(item_name, dailyCookie)
+            if data is not None:
+                df = pd.DataFrame(data)
+                metrics_row = calculate_screening_metrics(df, item_name)
+                item_data.append(metrics_row)
+                print(f"Item {item_name} processed successfully.")
+                break
+            else:
+                if attempt < max_retries - 1:  # Don't sleep on the last attempt
+                    print(f"Attempt {attempt + 1} failed for {item_name}. Retrying after {retry_delay} seconds...")
+                    time.sleep(retry_delay)
+                else:
+                    print(f"Failed to fetch data for {item_name} after {max_retries} attempts.")
+        
+        # Add rate limiting between items
+        time.sleep(0.5)  # Wait 1 second between requests
 
         # Append data every 10 items
         if len(item_data) >= 10:
@@ -52,7 +67,7 @@ def screening_total_items():
         screened_items_df = pd.concat([screened_items_df, item_data_df], ignore_index=True) if not screened_items_df.empty else item_data_df
         screened_items_df.to_csv(screened_items_file, index=False)
 
-# screening_total_items()
+screening_total_items()
 
 
 def screening_judgement():
