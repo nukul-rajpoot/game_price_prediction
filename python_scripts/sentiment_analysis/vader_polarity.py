@@ -67,12 +67,12 @@ def get_text_content(item):
             text += '\n' + item['selftext']
         return text
 
-def get_sentiment_scores(text):
+def get_sentiment_scores(text, analyzer):
     """Calculate VADER sentiment scores for the given text."""
-    analyzer = SentimentIntensityAnalyzer()
     return analyzer.polarity_scores(text)
 
 def process_file(input_file, output_file):
+    analyzer = SentimentIntensityAnalyzer()  # Create once per file
     total_lines = 0
     bad_lines = 0
     file_size = os.stat(input_file).st_size
@@ -93,7 +93,7 @@ def process_file(input_file, output_file):
                 
                 # Get text content and sentiment scores
                 text = get_text_content(item)
-                scores = get_sentiment_scores(text)
+                scores = get_sentiment_scores(text, analyzer)
                 
                 # Write the scores immediately
                 writer.writerow([
