@@ -5,6 +5,9 @@ import csv
 import os
 import logging
 import sys
+import multiprocessing
+from functools import partial
+import pickle
 from config import ITEMS, FILTERED_DATA_DIRECTORY, POLARITY_DATA_DIRECTORY, INPUT_COMPRESSED
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
@@ -71,51 +74,124 @@ def get_sentiment_scores(text, analyzer):
     """Calculate VADER sentiment scores for the given text."""
     return analyzer.polarity_scores(text)
 
-def process_file(input_file, output_file):
-    analyzer = SentimentIntensityAnalyzer()  # Create once per file
+def get_file_position_map(checkpoint_file):
+    """Load or create a map of processed file positions."""
+    try:
+        with open(checkpoint_file, 'rb') as f:
+            return pickle.load(f)
+    except FileNotFoundError:
+        return {}
+
+def save_checkpoint(checkpoint_file, position_map):
+    """Save the current processing position."""
+    # Write to temporary file first, then rename for atomic operation
+    temp_file = checkpoint_file + '.tmp'
+    with open(temp_file, 'wb') as f:
+        pickle.dump(position_map, f)
+    os.replace(temp_file, checkpoint_file)  # atomic operation
+
+def process_chunk(chunk_info, output_file):
+    """Process a specific chunk of the input file."""
+    start_pos, end_pos, input_file = chunk_info
+    analyzer = SentimentIntensityAnalyzer()
+    results = []  # Store results in memory instead of writing directly
     total_lines = 0
     bad_lines = 0
+    
+    for line, file_pos in read_lines_zst(input_file):
+        if file_pos < start_pos:
+            continue
+        if file_pos >= end_pos:
+            break
+            
+        total_lines += 1
+        if total_lines % 10000 == 0:
+            log.info(f"Chunk {start_pos}-{end_pos}: Processed {total_lines:,} lines")
+
+        try:
+            item = json.loads(line)
+            if item.get('body') == '[deleted]' or item.get('selftext') == '[deleted]':
+                continue
+                
+            date = datetime.fromtimestamp(int(item['created_utc'])).strftime('%Y-%m-%d')
+            text = get_text_content(item)
+            scores = get_sentiment_scores(text, analyzer)
+            
+            results.append([
+                date,
+                scores['compound'],
+                scores['pos'],
+                scores['neu'],
+                scores['neg']
+            ])
+                
+        except (json.JSONDecodeError, KeyError) as e:
+            bad_lines += 1
+            log.warning(f"Error processing line ({type(e).__name__}): {str(e)}")
+            continue
+
+    return total_lines, bad_lines, results
+
+def process_file(input_file, output_file):
+    checkpoint_file = f"{output_file}.checkpoint"
+    position_map = get_file_position_map(checkpoint_file)
+    
+    # Skip if file is already completed
+    if position_map.get(input_file, {}).get('completed', False):
+        log.info(f"Skipping completed file: {input_file}")
+        return
+    
     file_size = os.stat(input_file).st_size
-
-    # Open output file immediately to write as we go
-    with open(output_file, 'w', newline='') as csvfile:
-        writer = csv.writer(csvfile)
-        writer.writerow(['date', 'compound', 'pos', 'neu', 'neg'])  # Header row
-
-        for line, file_bytes_processed in read_lines_zst(input_file):
-            total_lines += 1
-            if total_lines % 100000 == 0:
-                log.info(f"Processed {total_lines:,} lines : {bad_lines:,} bad lines : {file_bytes_processed:,}:{(file_bytes_processed / file_size) * 100:.0f}%")
-
-            try:
-                item = json.loads(line)
-                date = datetime.fromtimestamp(int(item['created_utc'])).strftime('%Y-%m-%d')
-                
-                # Get text content and sentiment scores
-                text = get_text_content(item)
-                scores = get_sentiment_scores(text, analyzer)
-                
-                # Write the scores immediately
-                writer.writerow([
-                    date,
-                    scores['compound'],
-                    scores['pos'],
-                    scores['neu'],
-                    scores['neg']
-                ])
-                    
-            except json.JSONDecodeError:
-                bad_lines += 1
-                log.warning(f"Error decoding JSON from line: {line}")
-            except KeyError as e:
-                bad_lines += 1
-                log.warning(f"KeyError: {e} - Skipping this comment")
-
-    log.info(f"Complete : {total_lines:,} : {bad_lines:,}")
-    log.info(f"Sentiment scores have been saved to {output_file}")
+    num_cores = multiprocessing.cpu_count()
+    chunk_size = file_size // num_cores
+    
+    # Create chunks
+    chunks = []
+    for i in range(num_cores):
+        start_pos = i * chunk_size
+        end_pos = start_pos + chunk_size if i < num_cores - 1 else file_size
+        chunks.append((start_pos, end_pos, input_file))
+    
+    # Initialize output file if starting fresh
+    if input_file not in position_map:
+        output_dir = os.path.dirname(output_file)
+        os.makedirs(output_dir, exist_ok=True)  # Ensure directory exists
+        with open(output_file, 'w', newline='') as csvfile:
+            writer = csv.writer(csvfile)
+            writer.writerow(['date', 'compound', 'pos', 'neu', 'neg'])
+    
+    # Process chunks in parallel
+    try:
+        with multiprocessing.Pool(num_cores) as pool:
+            process_chunk_partial = partial(process_chunk, output_file=output_file)
+            results = pool.map(process_chunk_partial, chunks)
+            
+        # Aggregate results
+        total_lines = sum(r[0] for r in results)
+        total_bad_lines = sum(r[1] for r in results)
+        
+        # Write all results to file after processing is complete
+        with open(output_file, 'a', newline='') as csvfile:
+            writer = csv.writer(csvfile)
+            for _, _, chunk_results in results:
+                for row in chunk_results:
+                    writer.writerow(row)
+        
+        # Mark file as completed
+        position_map[input_file] = {'completed': True}
+        save_checkpoint(checkpoint_file, position_map)
+        
+        log.info(f"Complete : {total_lines:,} : {total_bad_lines:,}")
+        log.info(f"Sentiment scores have been saved to {output_file}")
+        
+    except Exception as e:
+        log.error(f"Error processing file {input_file}: {str(e)}")
+        # Save progress even if there's an error
+        save_checkpoint(checkpoint_file, position_map)
+        raise
 
 if __name__ == "__main__":
-    log.info(f"Counting mentions of the words: {', '.join(ITEMS)}")
+    log.info(f"Calculating sentiment scores for: {', '.join(ITEMS)}")
     if not os.path.exists(output_directory):
         os.makedirs(output_directory)
 
