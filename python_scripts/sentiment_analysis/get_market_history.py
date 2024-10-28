@@ -2,17 +2,15 @@ import sys
 import os
 import pandas as pd
 import time  # Add this import
+import requests
 
 GAME_PRICE_PREDICTION_PATH = os.environ.get('GAME_PRICE_PREDICTION_PATH', '')
 sys.path.insert(0, os.path.abspath(GAME_PRICE_PREDICTION_PATH))
 
-from python_scripts.screening.screening_metrics import calculate_screening_metrics
-from python_scripts.utilities.api_calls import fetch_item_from_api, fetch_item_to_df, fetch_items, get_cookie_from_blob
-from python_scripts.calculate_metrics import create_ln_df, calculate_sma, calculate_ema, calculate_bollinger_bands, calculate_price_percentage_change, calculate_relative_strength_index, calculate_market_cap, calculate_money_flow_index, calculate_market_cap_jupyter
+from python_scripts.utilities.api_calls import fetch_item_to_df, get_cookie_from_blob
 
 dailyCookie = get_cookie_from_blob()
 item_list = pd.read_csv('./data/item_lists/market_hash_names.csv')
-
 
 def collect_market_history():
     # Load existing processed items if the file exists
@@ -55,28 +53,39 @@ def collect_market_history():
         retry_delay = 5  # seconds
         
         for attempt in range(max_retries):
-            df = fetch_item_to_df(item_name, dailyCookie)
-            if df is not None:
-                if total_history_df.empty:
-                    total_history_df = df.copy()
-                else:
-                    all_dates = total_history_df.index.union(df.index)
-                    total_history_df = total_history_df.reindex(all_dates)
-                    df_reindexed = df.reindex(all_dates)
+            try:
+                df = fetch_item_to_df(item_name, dailyCookie)
+                if df is not None:
+                    if total_history_df.empty:
+                        total_history_df = df.copy()
+                    else:
+                        all_dates = total_history_df.index.union(df.index)
+                        total_history_df = total_history_df.reindex(all_dates)
+                        df_reindexed = df.reindex(all_dates)
+                        
+                        total_history_df['price_usd'] = total_history_df['price_usd'].fillna(0) + df_reindexed['price_usd'].fillna(0)
+                        total_history_df['volume'] = total_history_df['volume'].fillna(0) + df_reindexed['volume'].fillna(0)
                     
-                    total_history_df['price_usd'] = total_history_df['price_usd'].fillna(0) + df_reindexed['price_usd'].fillna(0)
-                    total_history_df['volume'] = total_history_df['volume'].fillna(0) + df_reindexed['volume'].fillna(0)
-                
-                processed_items_df = pd.concat([processed_items_df, pd.DataFrame({'item_name': [item_name]})], ignore_index=True)
-                processed_items.append(item_name)
-                print(f"History for {item_name} added to totals successfully.")
-                break
-            else:
-                if attempt < max_retries - 1:
-                    print(f"Attempt {attempt + 1} failed for {item_name}. Retrying after {retry_delay} seconds...")
-                    time.sleep(retry_delay)
+                    processed_items_df = pd.concat([processed_items_df, pd.DataFrame({'item_name': [item_name]})], ignore_index=True)
+                    processed_items.append(item_name)
+                    print(f"History for {item_name} added to totals successfully.")
+                    break
                 else:
-                    print(f"Failed to fetch data for {item_name} after {max_retries} attempts.")
+                    if attempt < max_retries - 1:
+                        print(f"Attempt {attempt + 1} failed for {item_name}. Retrying after {retry_delay} seconds...")
+                        time.sleep(retry_delay * (attempt + 1))  # Exponential backoff
+                    else:
+                        print(f"Failed to fetch data for {item_name} after {max_retries} attempts.")
+            except requests.exceptions.HTTPError as e:
+                if e.response.status_code == 500:
+                    if attempt < max_retries - 1:
+                        print(f"HTTP 500 error for {item_name}. Attempt {attempt + 1}. Retrying after {retry_delay} seconds...")
+                        time.sleep(retry_delay * (attempt + 1))  # Exponential backoff
+                        continue
+                    else:
+                        print(f"Failed to fetch data for {item_name} after {max_retries} attempts due to HTTP 500 errors.")
+                else:
+                    raise  # Re-raise other HTTP errors
         
         time.sleep(0.5)  # Rate limiting between requests
 
@@ -92,5 +101,4 @@ def collect_market_history():
     total_history_df.to_csv(history_file)
     processed_items_df.to_csv(processed_items_file, index=False)
 
-# Change the function call
 collect_market_history()
