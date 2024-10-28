@@ -60,15 +60,27 @@ def read_lines_zst(file_name):
             buffer = lines[-1]
         reader.close()
 
-def get_text_content(item):
-    """Extract text content from either a comment or post."""
-    if 'body' in item:  # It's a comment
-        return item['body']
-    else:  # It's a post
-        text = item['title']  # Title is always present
-        if item['selftext']:  # Add selftext if not empty
-            text += '\n' + item['selftext']
-        return text
+def get_text_content(entry):
+    """
+    Extract text content from either a comment or post.
+    Comments have: body
+    Link posts have: title
+    Self posts have: title + selftext
+    """
+    # Return body for comments
+    if 'body' in entry:
+        return entry['body']
+    
+    # For posts, combine title and selftext
+    title = entry.get('title', '')
+    selftext = entry.get('selftext', '')
+    
+    # Combine title and selftext, ensuring both are strings
+    if not isinstance(selftext, str):
+        selftext = ''
+    if not isinstance(title, str):
+        title = ''
+    return f"{title}\n{selftext}"
 
 def get_sentiment_scores(text, analyzer):
     """Calculate VADER sentiment scores for the given text."""
@@ -92,29 +104,25 @@ def save_checkpoint(checkpoint_file, position_map):
 
 def process_chunk(chunk_info, output_file):
     """Process a specific chunk of the input file."""
-    start_pos, end_pos, input_file = chunk_info
+    chunk_id, total_chunks, input_file = chunk_info
     analyzer = SentimentIntensityAnalyzer()
-    results = []  # Store results in memory instead of writing directly
+    results = []
     total_lines = 0
     bad_lines = 0
     
-    for line, file_pos in read_lines_zst(input_file):
-        if file_pos < start_pos:
+    for line_num, (line, _) in enumerate(read_lines_zst(input_file)):
+        # Distribute lines across chunks
+        if line_num % total_chunks != chunk_id:
             continue
-        if file_pos >= end_pos:
-            break
             
         total_lines += 1
         if total_lines % 10000 == 0:
-            log.info(f"Chunk {start_pos}-{end_pos}: Processed {total_lines:,} lines")
+            log.info(f"Chunk {chunk_id}: Processed {total_lines:,} lines")
 
         try:
-            item = json.loads(line)
-            if item.get('body') == '[deleted]' or item.get('selftext') == '[deleted]':
-                continue
-                
-            date = datetime.fromtimestamp(int(item['created_utc'])).strftime('%Y-%m-%d')
-            text = get_text_content(item)
+            entry = json.loads(line)
+            date = datetime.fromtimestamp(int(entry['created_utc'])).strftime('%Y-%m-%d')
+            text = get_text_content(entry)
             scores = get_sentiment_scores(text, analyzer)
             
             results.append([
@@ -143,14 +151,9 @@ def process_file(input_file, output_file):
     
     file_size = os.stat(input_file).st_size
     num_cores = multiprocessing.cpu_count()
-    chunk_size = file_size // num_cores
     
-    # Create chunks
-    chunks = []
-    for i in range(num_cores):
-        start_pos = i * chunk_size
-        end_pos = start_pos + chunk_size if i < num_cores - 1 else file_size
-        chunks.append((start_pos, end_pos, input_file))
+    # Create chunks based on core count instead of file size
+    chunks = [(i, num_cores, input_file) for i in range(num_cores)]
     
     # Initialize output file if starting fresh
     if input_file not in position_map:
