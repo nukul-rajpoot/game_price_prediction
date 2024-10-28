@@ -5,7 +5,7 @@ import csv
 import os
 import logging
 import sys
-from config import ITEMS, FILTERED_DATA_DIRECTORY, POLARITY_DATA_DIRECTORY
+from config import ITEMS, FILTERED_DATA_DIRECTORY, POLARITY_DATA_DIRECTORY, INPUT_COMPRESSED
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
@@ -17,6 +17,8 @@ from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
 
 # Configuration settings
+# Set input to INPUT_COMPRESSED to use full reddit data
+# input_directory = INPUT_COMPRESSED
 input_directory = FILTERED_DATA_DIRECTORY
 output_directory = POLARITY_DATA_DIRECTORY
 
@@ -55,6 +57,16 @@ def read_lines_zst(file_name):
             buffer = lines[-1]
         reader.close()
 
+def get_text_content(item):
+    """Extract text content from either a comment or post."""
+    if 'body' in item:  # It's a comment
+        return item['body']
+    else:  # It's a post
+        text = item['title']  # Title is always present
+        if item['selftext']:  # Add selftext if not empty
+            text += '\n' + item['selftext']
+        return text
+
 def get_sentiment_scores(text):
     """Calculate VADER sentiment scores for the given text."""
     analyzer = SentimentIntensityAnalyzer()
@@ -76,11 +88,12 @@ def process_file(input_file, output_file):
                 log.info(f"Processed {total_lines:,} lines : {bad_lines:,} bad lines : {file_bytes_processed:,}:{(file_bytes_processed / file_size) * 100:.0f}%")
 
             try:
-                comment = json.loads(line)
-                date = datetime.fromtimestamp(int(comment['created_utc'])).strftime('%Y-%m-%d')
+                item = json.loads(line)
+                date = datetime.fromtimestamp(int(item['created_utc'])).strftime('%Y-%m-%d')
                 
-                # Get sentiment scores
-                scores = get_sentiment_scores(comment['body'])
+                # Get text content and sentiment scores
+                text = get_text_content(item)
+                scores = get_sentiment_scores(text)
                 
                 # Write the scores immediately
                 writer.writerow([
