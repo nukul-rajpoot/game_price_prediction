@@ -48,14 +48,11 @@ def collect_market_history():
             print(f"{item_name} already processed. Skipping...")
             continue
 
-        # Add retry logic and rate limiting
-        max_retries = 3
-        retry_delay = 5  # seconds
-        
-        for attempt in range(max_retries):
+        # Simplified retry logic
+        for attempt in range(3):  # 3 attempts
             try:
                 df = fetch_item_to_df(item_name, dailyCookie)
-                if df is not None:
+                if df is not None and not df.empty:
                     if total_history_df.empty:
                         total_history_df = df.copy()
                     else:
@@ -71,22 +68,22 @@ def collect_market_history():
                     print(f"History for {item_name} added to totals successfully.")
                     break
                 else:
-                    if attempt < max_retries - 1:
-                        print(f"Attempt {attempt + 1} failed for {item_name}. Retrying after {retry_delay} seconds...")
-                        time.sleep(retry_delay * (attempt + 1))  # Exponential backoff
+                    print(f"Attempt {attempt + 1}/3 failed for {item_name}")
+                    if attempt < 2:  # If not the last attempt
+                        print("Retrying in 5 seconds...")
+                        time.sleep(5)
                     else:
-                        print(f"Failed to fetch data for {item_name} after {max_retries} attempts.")
-            except requests.exceptions.HTTPError as e:
-                if e.response.status_code == 500:
-                    if attempt < max_retries - 1:
-                        print(f"HTTP 500 error for {item_name}. Attempt {attempt + 1}. Retrying after {retry_delay} seconds...")
-                        time.sleep(retry_delay * (attempt + 1))  # Exponential backoff
-                        continue
-                    else:
-                        print(f"Failed to fetch data for {item_name} after {max_retries} attempts due to HTTP 500 errors.")
+                        print("All attempts failed. Stopping script.")
+                        sys.exit(1)  # Stop the script
+            except Exception as e:
+                print(f"Error on attempt {attempt + 1}/3: {str(e)}")
+                if attempt < 2:  # If not the last attempt
+                    print("Retrying in 5 seconds...")
+                    time.sleep(5)
                 else:
-                    raise  # Re-raise other HTTP errors
-        
+                    print("All attempts failed. Stopping script.")
+                    sys.exit(1)  # Stop the script
+
         time.sleep(0.5)  # Rate limiting between requests
 
         # Save progress every 10 items
