@@ -17,7 +17,10 @@ from config import ITEM, ITEMS, INPUT_COMPRESSED, FILTERED_DATA_DIRECTORY
 # put the path to the input file, or a folder of files to process all of
 input_file = INPUT_COMPRESSED
 # FILTERING
-field = "body"
+### !!! DO NOT CHANGE field -
+# set to author because we handle the text content in get_text_content()
+### !!! DO NOT CHANGE field -
+field = "author"  # This can be any non-None value since we're using get_text_content
 values = ITEMS
 
 input_file_name = os.path.basename(input_file)
@@ -176,6 +179,28 @@ def read_lines_zst(file_name):
 
         reader.close()
 
+def get_text_content(obj):
+    """
+    Extract text content from either a comment or post.
+    Comments have: body
+    Link posts have: title
+    Self posts have: title + selftext
+    """
+    # Return body for comments
+    if 'body' in obj:
+        return obj['body']
+    
+    # For posts, combine title and selftext
+    title = obj.get('title', '')
+    selftext = obj.get('selftext', '')
+    
+    # Combine title and selftext, ensuring both are strings
+    if not isinstance(selftext, str):
+        selftext = ''
+    if not isinstance(title, str):
+        title = ''
+    return f"{title}\n{selftext}"
+
 def process_file(input_file, output_file, output_format, field, values, from_date, to_date, single_field, exact_match):
     output_path = f"{output_file}.{output_format}"
     is_submission = "submission" in input_file
@@ -216,15 +241,15 @@ def process_file(input_file, output_file, output_format, field, values, from_dat
                 continue
 
             if field is not None:
-                field_value = obj[field].lower()
+                text_content = get_text_content(obj).lower()
                 matched = False
                 for value in values:
                     if exact_match:
-                        if value == field_value:
+                        if value == text_content:
                             matched = True
                             break
                     else:
-                        if value in field_value:
+                        if value in text_content:
                             matched = True
                             break
                 if not matched:
