@@ -57,7 +57,7 @@ def read_lines_zst(file_name):
 def count_mentions(text, words):
     return sum(text.lower().count(word.lower()) for word in words)
 
-def get_text_content(item):
+def get_text_content(entry):
     """
     Extract text content from either a comment or post.
     Comments have: body
@@ -65,13 +65,12 @@ def get_text_content(item):
     Self posts have: title + selftext
     """
     # Return body for comments
-    if 'body' in item:
-        print(item['body'])
-        return item['body']
+    if 'body' in entry:
+        return entry['body']
     
     # For posts, combine title and selftext
-    title = item.get('title', '')
-    selftext = item.get('selftext', '')
+    title = entry.get('title', '')
+    selftext = entry.get('selftext', '')
     
     # Combine title and selftext, ensuring both are strings
     if not isinstance(selftext, str):

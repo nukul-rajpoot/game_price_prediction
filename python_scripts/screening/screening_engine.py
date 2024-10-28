@@ -52,7 +52,7 @@ def screening_total_items():
                     print(f"Failed to fetch data for {item_name} after {max_retries} attempts.")
         
         # Add rate limiting between items
-        time.sleep(0.5)  # Wait 1 second between requests
+        time.sleep(0.2)  # Wait 1 second between requests
 
         # Append data every 10 items
         if len(item_data) >= 10:
