@@ -57,6 +57,28 @@ def read_lines_zst(file_name):
 def count_mentions(text, words):
     return sum(text.lower().count(word.lower()) for word in words)
 
+def get_text_content(entry):
+    """
+    Extract text content from either a comment or post.
+    Comments have: body
+    Link posts have: title
+    Self posts have: title + selftext
+    """
+    # Return body for comments
+    if 'body' in entry:
+        return entry['body']
+    
+    # For posts, combine title and selftext
+    title = entry.get('title', '')
+    selftext = entry.get('selftext', '')
+    
+    # Combine title and selftext, ensuring both are strings
+    if not isinstance(selftext, str):
+        selftext = ''
+    if not isinstance(title, str):
+        title = ''
+    return f"{title}\n{selftext}"
+
 def process_file(input_file, output_file, words):
     data = {}
     file_size = os.stat(input_file).st_size
@@ -69,10 +91,10 @@ def process_file(input_file, output_file, words):
             log.info(f"Processed {total_lines:,} lines : {bad_lines:,} bad lines : {file_bytes_processed:,}:{(file_bytes_processed / file_size) * 100:.0f}%")
 
         try:
-            comment = json.loads(line)
-            date = datetime.fromtimestamp(int(comment['created_utc'])).strftime('%Y-%m-%d')
-            mentions = count_mentions(comment['body'], words)
-            
+            entry = json.loads(line)
+            date = datetime.fromtimestamp(int(entry['created_utc'])).strftime('%Y-%m-%d')
+            text = get_text_content(entry)
+            mentions = count_mentions(text, words)
             if date in data:
                 data[date] += mentions
             else:
@@ -83,7 +105,7 @@ def process_file(input_file, output_file, words):
             log.warning(f"Error decoding JSON from line: {line}")
         except KeyError as e:
             bad_lines += 1
-            log.warning(f"KeyError: {e} - Skipping this comment")
+            log.warning(f"KeyError: {e} - Skipping this entry")
 
     log.info(f"Complete : {total_lines:,} : {bad_lines:,}")
 
