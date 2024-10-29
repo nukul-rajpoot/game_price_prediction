@@ -233,7 +233,7 @@ def process_file(input_file, output_file, output_format, field, values, from_dat
 
         try:
             obj = json.loads(line)
-            created = datetime.utcfromtimestamp(int(obj['created_utc']))
+            created = datetime.fromtimestamp(int(obj['created_utc']))
 
             if created < from_date:
                 continue
