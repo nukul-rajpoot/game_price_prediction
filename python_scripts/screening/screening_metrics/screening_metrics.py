@@ -36,14 +36,14 @@ def calculate_screening_metrics(df,item):
     
     # Calculate the lifetime volume traded (lt, 30d)
     lifetime_volume = calculate_volume(df, start_date, end_date)
-    last_30d_volume = calculate_volume(df.loc[last_30d_start:end_date], last_30d_start, end_date)
+    last_30d_volume = calculate_volume(df, last_30d_start, end_date)
     
     # Add the 'close' column for market cap calculation
     df['close'] = df['price_usd']
     
     # Calculate market cap (lt, 30d)
     lifetime_market_cap = calculate_market_cap_jupyter(df, start_date, end_date)
-    last_30d_market_cap = calculate_market_cap_jupyter(df.loc[last_30d_start:end_date], last_30d_start, end_date)
+    last_30d_market_cap = calculate_market_cap_jupyter(df, last_30d_start, end_date)
     
     # Calculate average price (lt, 30d)
     lifetime_average_price = df['price_usd'].mean()
