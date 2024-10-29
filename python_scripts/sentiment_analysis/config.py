@@ -18,17 +18,18 @@ sys.path.insert(0, os.path.abspath(GAME_PRICE_PREDICTION_PATH))
 from python_scripts.utilities.api_calls import sanitize_filename
 
 # input the skibbity item's name here :P  NOTE: ITEMS = [] for mispelled items
-#ITEM = "ALL DATA"
-ITEM = "M4A1-S | Golden Coil (Factory New)"
+ITEM = "test3polarity"
+# ITEM = "M4A1-S | Golden Coil (Factory New)"
 ITEM_SANITIZED = sanitize_filename(ITEM)
 ITEMS = [
     "M4A1-S | Golden Coil", "Golden Coil", "GoldenCoil", "M4A1-S", "M4A1S", 
     "M4A1 S", "M4A1-S Golden Coil", "M4A1S GoldenCoil", 
     "Golden Coil M4A1-S", "GoldenCoil M4A1-S", "Golden Coil M4A1S", 
     "GoldenCoil M4A1S", "M4A1S Golden Coil", "GoldenCoil M4A1 S",
-    "M4AI-S", "M4AIS", "Golden Coi", "Golden Cool", "GoldenCoil M4AIS", 
+    "M4AI-S", "M4AIS", "Golden Cool", "GoldenCoil M4AIS", 
     "M4A1-S Golden Coi", "M4A1-S Goldon Coil", "M4A1S Goldon Coil"
 ]
+#ITEMS = ["atomic"]
 
 # For filter_file               |    NOTE: (input: compressed -> output: filtered_data (MS) )
 INPUT_COMPRESSED = os.path.join(GAME_PRICE_PREDICTION_PATH, 'data', 'reddit_data', 'compressed_data')
