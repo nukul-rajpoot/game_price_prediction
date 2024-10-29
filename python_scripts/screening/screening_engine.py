@@ -67,7 +67,7 @@ def screening_total_items():
         screened_items_df = pd.concat([screened_items_df, item_data_df], ignore_index=True) if not screened_items_df.empty else item_data_df
         screened_items_df.to_csv(screened_items_file, index=False)
 
-screening_total_items()
+#screening_total_items()
 
 
 def screening_judgement():
@@ -75,7 +75,7 @@ def screening_judgement():
     items_data_df = pd.read_csv(items_data_df)
 
     # Define the conditions for filtering
-    volume_condition = items_data_df['30d_volume_metric'] > 1000
+    volume_condition = items_data_df['30d_volume_metric'] > 3000
     price_condition = items_data_df['last_30d_average_price'] > 0.5
     
     # Filtered data that meets the criteria
@@ -84,8 +84,10 @@ def screening_judgement():
     # Data that does not meet the criteria
     rejected_data_df = items_data_df[~(volume_condition & price_condition)].copy()
     
-    # Add reasons for rejection
-    rejected_data_df.loc[:, 'rejection_reason'] = ''
+    # Initialize the rejection_reason column first
+    rejected_data_df['rejection_reason'] = ''
+    
+    # Then update the reasons
     rejected_data_df.loc[~volume_condition, 'rejection_reason'] = 'low_volume'
     rejected_data_df.loc[~price_condition, 'rejection_reason'] += ' low_price'
     

@@ -132,7 +132,6 @@ def calculate_money_flow_index(df, window):
 
 
 def calculate_market_cap_jupyter(market_cap, start_date, end_date):
-
     # Market cap filtered data
     mcfd = market_cap.loc[start_date:end_date]
     mcfd_sum = (mcfd['close']* mcfd['volume']).sum()
