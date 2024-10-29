@@ -19,7 +19,6 @@ from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 - Saves as numeric for time-series plotting in ./data/reddit_data/polarity_data
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
 
-
 # Configuration settings
 # Set input to INPUT_COMPRESSED to use full reddit data
 input_directory = INPUT_COMPRESSED
@@ -33,6 +32,14 @@ log_formatter = logging.Formatter('%(asctime)s - %(levelname)s: %(message)s')
 log_str_handler = logging.StreamHandler()
 log_str_handler.setFormatter(log_formatter)
 log.addHandler(log_str_handler)
+
+# Initialize global analyzer for multiprocessing
+global_analyzer = None
+
+def init_worker():
+    """Initializer for each worker process to set up SentimentIntensityAnalyzer once."""
+    global global_analyzer
+    global_analyzer = SentimentIntensityAnalyzer()
 
 def read_and_decode(reader, chunk_size, max_window_size, previous_chunk=None, bytes_read=0):
     chunk = reader.read(chunk_size)
@@ -106,7 +113,8 @@ def save_checkpoint(checkpoint_file, position_map):
 def process_chunk(chunk_info, output_file):
     """Process a specific chunk of the input file."""
     chunk_id, total_chunks, input_file = chunk_info
-    analyzer = SentimentIntensityAnalyzer()
+    global global_analyzer
+    analyzer = global_analyzer  # Use the globally initialized analyzer
     results = []
     total_lines = 0
     bad_lines = 0
@@ -166,7 +174,7 @@ def process_file(input_file, output_file):
     
     # Process chunks in parallel
     try:
-        with multiprocessing.Pool(num_cores) as pool:
+        with multiprocessing.Pool(num_cores, initializer=init_worker) as pool:
             process_chunk_partial = partial(process_chunk, output_file=output_file)
             results = pool.map(process_chunk_partial, chunks)
             
