@@ -1,3 +1,4 @@
+import time
 import zstandard
 import json
 from datetime import datetime
@@ -194,6 +195,7 @@ def process_file(input_file, output_file):
         raise
 
 if __name__ == "__main__":
+    start_time = time.time()
     log.info(f"Calculating sentiment scores for: {', '.join(ITEMS)}")
     if not os.path.exists(output_directory):
         os.makedirs(output_directory)
@@ -205,3 +207,6 @@ if __name__ == "__main__":
             output_file = os.path.join(output_directory, output_file_name)
             log.info(f"Processing file: {input_file}")
             process_file(input_file, output_file)
+    end_time = time.time()
+    print(f"Total time taken: {(end_time - start_time)/60:.2f} minutes")
+
