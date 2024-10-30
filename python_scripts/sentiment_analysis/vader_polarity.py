@@ -1,3 +1,4 @@
+import time
 import zstandard
 import json
 from datetime import datetime
@@ -18,10 +19,9 @@ from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 - Saves as numeric for time-series plotting in ./data/reddit_data/polarity_data
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
 
-
 # Configuration settings
 # Set input to INPUT_COMPRESSED to use full reddit data
-# input_directory = INPUT_COMPRESSED
+#input_directory = INPUT_COMPRESSED
 input_directory = FILTERED_DATA_DIRECTORY
 output_directory = POLARITY_DATA_DIRECTORY
 
@@ -32,6 +32,14 @@ log_formatter = logging.Formatter('%(asctime)s - %(levelname)s: %(message)s')
 log_str_handler = logging.StreamHandler()
 log_str_handler.setFormatter(log_formatter)
 log.addHandler(log_str_handler)
+
+# Initialize global analyzer for multiprocessing
+global_analyzer = None
+
+def init_worker():
+    """Initializer for each worker process to set up SentimentIntensityAnalyzer once."""
+    global global_analyzer
+    global_analyzer = SentimentIntensityAnalyzer()
 
 def read_and_decode(reader, chunk_size, max_window_size, previous_chunk=None, bytes_read=0):
     chunk = reader.read(chunk_size)
@@ -102,43 +110,48 @@ def save_checkpoint(checkpoint_file, position_map):
         pickle.dump(position_map, f)
     os.replace(temp_file, checkpoint_file)  # atomic operation
 
-def process_chunk(chunk_info, output_file):
-    """Process a specific chunk of the input file."""
-    chunk_id, total_chunks, input_file = chunk_info
-    analyzer = SentimentIntensityAnalyzer()
-    results = []
-    total_lines = 0
-    bad_lines = 0
-    
-    for line_num, (line, _) in enumerate(read_lines_zst(input_file)):
-        # Distribute lines across chunks
-        if line_num % total_chunks != chunk_id:
-            continue
-            
-        total_lines += 1
-        if total_lines % 10000 == 0:
-            log.info(f"Chunk {chunk_id}: Processed {total_lines:,} lines")
+def producer(input_file, lines_queue, num_workers):
+    """Read and decompress the input file, enqueue lines for processing."""
+    try:
+        for line, _ in read_lines_zst(input_file):
+            lines_queue.put(line)
+    finally:
+        # Send sentinel values to indicate completion
+        for _ in range(num_workers):
+            lines_queue.put(None)
 
+def consumer(lines_queue, results_queue):
+    """Process lines from the queue and enqueue the results."""
+    analyzer = SentimentIntensityAnalyzer()
+    while True:
+        line = lines_queue.get()
+        if line is None:
+            break  # No more data
         try:
             entry = json.loads(line)
             date = datetime.fromtimestamp(int(entry['created_utc'])).strftime('%Y-%m-%d')
             text = get_text_content(entry)
             scores = get_sentiment_scores(text, analyzer)
-            
-            results.append([
+            results_queue.put([
                 date,
                 scores['compound'],
                 scores['pos'],
                 scores['neu'],
                 scores['neg']
             ])
-                
         except (json.JSONDecodeError, KeyError) as e:
-            bad_lines += 1
             log.warning(f"Error processing line ({type(e).__name__}): {str(e)}")
             continue
 
-    return total_lines, bad_lines, results
+def saver(output_file, results_queue, num_workers):
+    """Write processed results from the queue to the CSV file."""
+    with open(output_file, 'a', newline='') as csvfile:
+        writer = csv.writer(csvfile)
+        while True:
+            result = results_queue.get()
+            if result == 'DONE':
+                break
+            writer.writerow(result)
 
 def process_file(input_file, output_file):
     checkpoint_file = f"{output_file}.checkpoint"
@@ -150,10 +163,7 @@ def process_file(input_file, output_file):
         return
     
     file_size = os.stat(input_file).st_size
-    num_cores = multiprocessing.cpu_count()
-    
-    # Create chunks based on core count instead of file size
-    chunks = [(i, num_cores, input_file) for i in range(num_cores)]
+    num_workers = multiprocessing.cpu_count()
     
     # Initialize output file if starting fresh
     if input_file not in position_map:
@@ -163,37 +173,43 @@ def process_file(input_file, output_file):
             writer = csv.writer(csvfile)
             writer.writerow(['date', 'compound', 'pos', 'neu', 'neg'])
     
-    # Process chunks in parallel
-    try:
-        with multiprocessing.Pool(num_cores) as pool:
-            process_chunk_partial = partial(process_chunk, output_file=output_file)
-            results = pool.map(process_chunk_partial, chunks)
-            
-        # Aggregate results
-        total_lines = sum(r[0] for r in results)
-        total_bad_lines = sum(r[1] for r in results)
-        
-        # Write all results to file after processing is complete
-        with open(output_file, 'a', newline='') as csvfile:
-            writer = csv.writer(csvfile)
-            for _, _, chunk_results in results:
-                for row in chunk_results:
-                    writer.writerow(row)
-        
-        # Mark file as completed
-        position_map[input_file] = {'completed': True}
-        save_checkpoint(checkpoint_file, position_map)
-        
-        log.info(f"Complete : {total_lines:,} : {total_bad_lines:,}")
-        log.info(f"Sentiment scores have been saved to {output_file}")
-        
-    except Exception as e:
-        log.error(f"Error processing file {input_file}: {str(e)}")
-        # Save progress even if there's an error
-        save_checkpoint(checkpoint_file, position_map)
-        raise
+    lines_queue = multiprocessing.Queue(maxsize=10000)
+    results_queue = multiprocessing.Queue(maxsize=10000)
+    
+    # Start saver process
+    saver_process = multiprocessing.Process(target=saver, args=(output_file, results_queue, num_workers))
+    saver_process.start()
+    
+    # Start consumer processes
+    consumers = []
+    for _ in range(num_workers):
+        p = multiprocessing.Process(target=consumer, args=(lines_queue, results_queue))
+        p.start()
+        consumers.append(p)
+    
+    # Start producer
+    producer_process = multiprocessing.Process(target=producer, args=(input_file, lines_queue, num_workers))
+    producer_process.start()
+    
+    # Wait for producer to finish
+    producer_process.join()
+    
+    # Wait for consumers to finish
+    for p in consumers:
+        p.join()
+    
+    # Signal saver to finish
+    results_queue.put('DONE')
+    saver_process.join()
+    
+    # Mark file as completed
+    position_map[input_file] = {'completed': True}
+    save_checkpoint(checkpoint_file, position_map)
+    
+    log.info(f"Sentiment scores have been saved to {output_file}")
 
 if __name__ == "__main__":
+    start_time = time.time()
     log.info(f"Calculating sentiment scores for: {', '.join(ITEMS)}")
     if not os.path.exists(output_directory):
         os.makedirs(output_directory)
@@ -205,3 +221,6 @@ if __name__ == "__main__":
             output_file = os.path.join(output_directory, output_file_name)
             log.info(f"Processing file: {input_file}")
             process_file(input_file, output_file)
+    end_time = time.time()
+    print(f"Total time taken: {(end_time - start_time)/60:.2f} minutes")
+
