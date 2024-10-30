@@ -1,3 +1,4 @@
+import time
 import zstandard
 import os
 import json
@@ -280,6 +281,8 @@ def process_file(input_file, output_file, output_format, field, values, from_dat
     log.info(f"Complete : {total_lines:,} : {matched_lines:,} : {bad_lines:,}")
 
 if __name__ == "__main__":
+    start_time = time.time()
+
     if single_field is not None:
         log.info("Single field output mode, changing output file format to txt")
         output_format = "txt"
@@ -317,3 +320,5 @@ if __name__ == "__main__":
     log.info(f"Processing {len(input_files)} files")
     for file_in, file_out in input_files:
         process_file(file_in, file_out, output_format, field, values, from_date, to_date, single_field, exact_match)
+    end_time = time.time()
+    print(f"Total time taken: {(end_time - start_time)/60:.2f} minutes")
