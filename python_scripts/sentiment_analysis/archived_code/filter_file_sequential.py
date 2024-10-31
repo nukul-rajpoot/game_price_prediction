@@ -7,7 +7,6 @@ import csv
 from datetime import datetime
 import logging.handlers
 from config import ITEM, ITEMS, INPUT_COMPRESSED, FILTERED_DATA_DIRECTORY
-from multiprocessing import Pool
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 !!! THIS IS THE ONLY FILE TO DEAL WITH compressed_data !!!
@@ -241,7 +240,7 @@ def process_file(input_file, output_file, output_format, field, values, from_dat
                 continue
             if created > to_date:
                 continue
-            
+
             if field is not None:
                 text_content = get_text_content(obj).lower()
                 matched = False
@@ -281,42 +280,6 @@ def process_file(input_file, output_file, output_format, field, values, from_dat
     handle.close()
     log.info(f"Complete : {total_lines:,} : {matched_lines:,} : {bad_lines:,}")
 
-def parallel_process_files(input_files):
-    """
-    Processes files in parallel by sorting them in descending order of size,
-    ensuring that the largest files are processed first.
-    """
-    # Sort input_files by descending size
-    input_files_sorted = sorted(
-        input_files, key=lambda x: os.path.getsize(x[0]), reverse=True
-    )
-
-    log.info(
-        f"Processing {len(input_files_sorted)} files sorted by size (largest first)."
-    )
-
-    # Create a multiprocessing pool with a number of processes equal to the CPU count
-    with Pool(processes=os.cpu_count()) as pool:
-        pool.starmap(
-            process_file,
-            [
-                (
-                    f[0],
-                    f[1],
-                    output_format,
-                    field,
-                    values,
-                    from_date,
-                    to_date,
-                    single_field,
-                    exact_match,
-                )
-                for f in input_files_sorted
-            ],
-        )
-
-    log.info("All files have been processed.")
-
 if __name__ == "__main__":
     start_time = time.time()
 
@@ -355,7 +318,7 @@ if __name__ == "__main__":
     else:
         input_files.append((input_file, output_file))
     log.info(f"Processing {len(input_files)} files")
-    parallel_process_files(input_files)
-    
+    for file_in, file_out in input_files:
+        process_file(file_in, file_out, output_format, field, values, from_date, to_date, single_field, exact_match)
     end_time = time.time()
     print(f"Total time taken: {(end_time - start_time)/60:.2f} minutes")
