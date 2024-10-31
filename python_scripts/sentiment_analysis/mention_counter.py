@@ -1,3 +1,4 @@
+import time
 import zstandard
 import json
 from datetime import datetime
@@ -119,6 +120,8 @@ def process_file(input_file, output_file, words):
     log.info(f"Mention counts have been saved to {output_file}")
 
 if __name__ == "__main__":
+    start_time = time.time()
+
     log.info(f"Counting mentions of the words: {', '.join(ITEMS)}")
     if not os.path.exists(output_directory):
         os.makedirs(output_directory)
@@ -130,3 +133,5 @@ if __name__ == "__main__":
             output_file = os.path.join(output_directory, output_file_name)
             log.info(f"Processing file: {input_file}")
             process_file(input_file, output_file, ITEMS)
+    end_time = time.time()
+    print(f"Total time taken: {(end_time - start_time)/60:.2f} minutes")
