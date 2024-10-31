@@ -7,7 +7,6 @@ import os
 import logging
 import sys
 from config import ITEMS, FILTERED_DATA_DIRECTORY, MENTION_DATA_DIRECTORY
-from multiprocessing import Pool
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
 !!! ONLY use filter_file for this !!!
@@ -47,7 +46,7 @@ def read_lines_zst(file_name):
         buffer = ''
         reader = zstandard.ZstdDecompressor(max_window_size=2**31).stream_reader(file_handle)
         while True:
-            chunk = read_and_decode(reader, 2**25, (2**27) * 2)
+            chunk = read_and_decode(reader, 2**27, (2**29) * 2)
             if not chunk:
                 break
             lines = (buffer + chunk).split("\n")
@@ -120,53 +119,19 @@ def process_file(input_file, output_file, words):
 
     log.info(f"Mention counts have been saved to {output_file}")
 
-def parallel_process_files(input_files):
-    """
-    Processes files in parallel by sorting them in descending order of size,
-    ensuring that the largest files are processed first.
-    """
-    # Sort input_files by descending size
-    input_files_sorted = sorted(
-        input_files, key=lambda x: os.path.getsize(x[0]), reverse=True
-    )
-
-    log.info(
-        f"Processing {len(input_files_sorted)} files sorted by size (largest first)."
-    )
-
-    # Create a multiprocessing pool with a number of processes equal to the CPU count
-    with Pool(8) as pool:
-        pool.starmap(
-            process_file,
-            [
-                (
-                    f[0],
-                    f[1],
-                    ITEMS,
-                )
-                for f in input_files_sorted
-            ],
-        )
-
-    log.info("All files have been processed.")
-
 if __name__ == "__main__":
     start_time = time.time()
-    
+
     log.info(f"Counting mentions of the words: {', '.join(ITEMS)}")
     if not os.path.exists(output_directory):
         os.makedirs(output_directory)
 
-    input_files = []
     for file_name in os.listdir(input_directory):
         if file_name.endswith('.zst'):
             input_file = os.path.join(input_directory, file_name)
             output_file_name = os.path.splitext(file_name)[0] + '.csv'
             output_file = os.path.join(output_directory, output_file_name)
-            input_files.append((input_file, output_file))
-    
-    log.info(f"Processing {len(input_files)} files")
-    parallel_process_files(input_files)
-
+            log.info(f"Processing file: {input_file}")
+            process_file(input_file, output_file, ITEMS)
     end_time = time.time()
     print(f"Total time taken: {(end_time - start_time)/60:.2f} minutes")
