@@ -168,7 +168,7 @@ def read_lines_zst(file_name):
         buffer = ''
         reader = zstandard.ZstdDecompressor(max_window_size=2**31).stream_reader(file_handle)
         while True:
-            chunk = read_and_decode(reader, 2**27, (2**29) * 2)
+            chunk = read_and_decode(reader, 2**25, (2**27) * 2)
 
             if not chunk:
                 break
