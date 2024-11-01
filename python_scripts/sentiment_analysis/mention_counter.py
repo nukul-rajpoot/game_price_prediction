@@ -1,6 +1,6 @@
 import time
 import zstandard
-import json
+import orjson
 from datetime import datetime
 import csv
 import os
@@ -93,7 +93,7 @@ def process_file(input_file, output_file, words):
             log.info(f"Processed {total_lines:,} lines : {bad_lines:,} bad lines : {file_bytes_processed:,}:{(file_bytes_processed / file_size) * 100:.0f}%")
 
         try:
-            entry = json.loads(line)
+            entry = orjson.loads(line)
             date = datetime.fromtimestamp(int(entry['created_utc'])).strftime('%Y-%m-%d')
             text = get_text_content(entry)
             mentions = count_mentions(text, words)
@@ -102,7 +102,7 @@ def process_file(input_file, output_file, words):
             else:
                 data[date] = mentions
                 
-        except json.JSONDecodeError:
+        except orjson.JSONDecodeError:
             bad_lines += 1
             log.warning(f"Error decoding JSON from line: {line}")
         except KeyError as e:
