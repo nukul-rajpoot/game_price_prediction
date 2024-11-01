@@ -9,6 +9,7 @@ import sys
 from config import ITEMS, FILTERED_DATA_DIRECTORY, POLARITY_DATA_DIRECTORY, INPUT_COMPRESSED
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 from multiprocessing import Pool
+import orjson
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
 Parallel version of vader_polarity.py using file-level parallelization
@@ -20,7 +21,8 @@ Parallel version of vader_polarity.py using file-level parallelization
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
 
 # Configuration settings
-input_directory = INPUT_COMPRESSED
+# input_directory = INPUT_COMPRESSED
+input_directory = FILTERED_DATA_DIRECTORY
 output_directory = POLARITY_DATA_DIRECTORY
 
 # Set up logging
@@ -105,7 +107,7 @@ def process_file(input_file, output_file):
                 log.info(f"Processed {total_lines:,} lines : {bad_lines:,} bad lines : {file_bytes_processed:,}:{(file_bytes_processed / file_size) * 100:.0f}%")
 
             try:
-                comment = json.loads(line)
+                comment = orjson.loads(line)
                 date = datetime.fromtimestamp(int(comment['created_utc'])).strftime('%Y-%m-%d')
                 text = get_text_content(comment)
                 # Get sentiment scores
