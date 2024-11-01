@@ -18,7 +18,7 @@ sys.path.insert(0, os.path.abspath(GAME_PRICE_PREDICTION_PATH))
 from python_scripts.utilities.api_calls import sanitize_filename
 
 # input the skibbity item's name here :P  NOTE: ITEMS = [] for mispelled items
-#ITEM = "test3polarity"
+# ITEM = "all items"
 ITEM = "M4A1-S | Golden Coil (Factory New)"
 ITEM_SANITIZED = sanitize_filename(ITEM)
 ITEMS = [
