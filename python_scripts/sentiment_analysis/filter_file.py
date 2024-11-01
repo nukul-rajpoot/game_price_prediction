@@ -8,6 +8,7 @@ from datetime import datetime
 import logging.handlers
 from config import ITEM, ITEMS, INPUT_COMPRESSED, FILTERED_DATA_DIRECTORY
 from multiprocessing import Pool
+import orjson
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 !!! THIS IS THE ONLY FILE TO DEAL WITH compressed_data !!!
@@ -120,7 +121,7 @@ def write_line_zst(handle, line):
     handle.write("\n".encode('utf-8'))
 
 def write_line_json(handle, obj):
-    handle.write(json.dumps(obj))
+    handle.write(orjson.dumps(obj).decode('utf-8'))
     handle.write("\n")
 
 def write_line_single(handle, obj, field):
@@ -234,7 +235,7 @@ def process_file(input_file, output_file, output_format, field, values, from_dat
             log.info(f"{created.strftime('%Y-%m-%d %H:%M:%S')} : {total_lines:,} : {matched_lines:,} : {bad_lines:,} : {file_bytes_processed:,}:{(file_bytes_processed / file_size) * 100:.0f}%")
 
         try:
-            obj = json.loads(line)
+            obj = orjson.loads(line)
             created = datetime.fromtimestamp(int(obj['created_utc']))
 
             if created < from_date:
