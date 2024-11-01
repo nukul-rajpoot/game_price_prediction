@@ -6,13 +6,13 @@ import csv
 import os
 import logging
 import sys
-import multiprocessing
-from functools import partial
-import pickle
 from config import ITEMS, FILTERED_DATA_DIRECTORY, POLARITY_DATA_DIRECTORY, INPUT_COMPRESSED
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
+from multiprocessing import Pool
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
+Parallel version of vader_polarity.py using file-level parallelization
+
 !!! ONLY use filter_file for this !!!
 - Takes ./data/reddit_data/filtered_data 
 - Calculates polarity scores for each post/comment
@@ -20,9 +20,7 @@ from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
 
 # Configuration settings
-# Set input to INPUT_COMPRESSED to use full reddit data
-#input_directory = INPUT_COMPRESSED
-input_directory = FILTERED_DATA_DIRECTORY
+input_directory = INPUT_COMPRESSED
 output_directory = POLARITY_DATA_DIRECTORY
 
 # Set up logging
@@ -33,13 +31,27 @@ log_str_handler = logging.StreamHandler()
 log_str_handler.setFormatter(log_formatter)
 log.addHandler(log_str_handler)
 
-# Initialize global analyzer for multiprocessing
-global_analyzer = None
-
-def init_worker():
-    """Initializer for each worker process to set up SentimentIntensityAnalyzer once."""
-    global global_analyzer
-    global_analyzer = SentimentIntensityAnalyzer()
+def get_text_content(obj):
+    """
+    Extract text content from either a comment or post.
+    Comments have: body
+    Link posts have: title
+    Self posts have: title + selftext
+    """
+    # Return body for comments
+    if 'body' in obj:
+        return obj['body']
+    
+    # For posts, combine title and selftext
+    title = obj.get('title', '')
+    selftext = obj.get('selftext', '')
+    
+    # Combine title and selftext, ensuring both are strings
+    if not isinstance(selftext, str):
+        selftext = ''
+    if not isinstance(title, str):
+        title = ''
+    return f"{title}\n{selftext}"
 
 def read_and_decode(reader, chunk_size, max_window_size, previous_chunk=None, bytes_read=0):
     chunk = reader.read(chunk_size)
@@ -59,7 +71,7 @@ def read_lines_zst(file_name):
         buffer = ''
         reader = zstandard.ZstdDecompressor(max_window_size=2**31).stream_reader(file_handle)
         while True:
-            chunk = read_and_decode(reader, 2**27, (2**29) * 2)
+            chunk = read_and_decode(reader, 2**25, (2**27) * 2)
             if not chunk:
                 break
             lines = (buffer + chunk).split("\n")
@@ -68,159 +80,97 @@ def read_lines_zst(file_name):
             buffer = lines[-1]
         reader.close()
 
-def get_text_content(entry):
-    """
-    Extract text content from either a comment or post.
-    Comments have: body
-    Link posts have: title
-    Self posts have: title + selftext
-    """
-    # Return body for comments
-    if 'body' in entry:
-        return entry['body']
-    
-    # For posts, combine title and selftext
-    title = entry.get('title', '')
-    selftext = entry.get('selftext', '')
-    
-    # Combine title and selftext, ensuring both are strings
-    if not isinstance(selftext, str):
-        selftext = ''
-    if not isinstance(title, str):
-        title = ''
-    return f"{title}\n{selftext}"
-
 def get_sentiment_scores(text, analyzer):
     """Calculate VADER sentiment scores for the given text."""
     return analyzer.polarity_scores(text)
 
-def get_file_position_map(checkpoint_file):
-    """Load or create a map of processed file positions."""
-    try:
-        with open(checkpoint_file, 'rb') as f:
-            return pickle.load(f)
-    except FileNotFoundError:
-        return {}
-
-def save_checkpoint(checkpoint_file, position_map):
-    """Save the current processing position."""
-    # Write to temporary file first, then rename for atomic operation
-    temp_file = checkpoint_file + '.tmp'
-    with open(temp_file, 'wb') as f:
-        pickle.dump(position_map, f)
-    os.replace(temp_file, checkpoint_file)  # atomic operation
-
-def producer(input_file, lines_queue, num_workers):
-    """Read and decompress the input file, enqueue lines for processing."""
-    try:
-        for line, _ in read_lines_zst(input_file):
-            lines_queue.put(line)
-    finally:
-        # Send sentinel values to indicate completion
-        for _ in range(num_workers):
-            lines_queue.put(None)
-
-def consumer(lines_queue, results_queue):
-    """Process lines from the queue and enqueue the results."""
-    analyzer = SentimentIntensityAnalyzer()
-    while True:
-        line = lines_queue.get()
-        if line is None:
-            break  # No more data
-        try:
-            entry = json.loads(line)
-            date = datetime.fromtimestamp(int(entry['created_utc'])).strftime('%Y-%m-%d')
-            text = get_text_content(entry)
-            scores = get_sentiment_scores(text, analyzer)
-            results_queue.put([
-                date,
-                scores['compound'],
-                scores['pos'],
-                scores['neu'],
-                scores['neg']
-            ])
-        except (json.JSONDecodeError, KeyError) as e:
-            log.warning(f"Error processing line ({type(e).__name__}): {str(e)}")
-            continue
-
-def saver(output_file, results_queue, num_workers):
-    """Write processed results from the queue to the CSV file."""
-    with open(output_file, 'a', newline='') as csvfile:
-        writer = csv.writer(csvfile)
-        while True:
-            result = results_queue.get()
-            if result == 'DONE':
-                break
-            writer.writerow(result)
-
 def process_file(input_file, output_file):
-    checkpoint_file = f"{output_file}.checkpoint"
-    position_map = get_file_position_map(checkpoint_file)
+    """Process a single file with sentiment analysis."""
+    # Create output directory if it doesn't exist
+    os.makedirs(os.path.dirname(output_file), exist_ok=True)
     
-    # Skip if file is already completed
-    if position_map.get(input_file, {}).get('completed', False):
-        log.info(f"Skipping completed file: {input_file}")
-        return
-    
+    total_lines = 0
+    bad_lines = 0
     file_size = os.stat(input_file).st_size
-    num_workers = multiprocessing.cpu_count()
-    
-    # Initialize output file if starting fresh
-    if input_file not in position_map:
-        output_dir = os.path.dirname(output_file)
-        os.makedirs(output_dir, exist_ok=True)  # Ensure directory exists
-        with open(output_file, 'w', newline='') as csvfile:
-            writer = csv.writer(csvfile)
-            writer.writerow(['date', 'compound', 'pos', 'neu', 'neg'])
-    
-    lines_queue = multiprocessing.Queue(maxsize=10000)
-    results_queue = multiprocessing.Queue(maxsize=10000)
-    
-    # Start saver process
-    saver_process = multiprocessing.Process(target=saver, args=(output_file, results_queue, num_workers))
-    saver_process.start()
-    
-    # Start consumer processes
-    consumers = []
-    for _ in range(num_workers):
-        p = multiprocessing.Process(target=consumer, args=(lines_queue, results_queue))
-        p.start()
-        consumers.append(p)
-    
-    # Start producer
-    producer_process = multiprocessing.Process(target=producer, args=(input_file, lines_queue, num_workers))
-    producer_process.start()
-    
-    # Wait for producer to finish
-    producer_process.join()
-    
-    # Wait for consumers to finish
-    for p in consumers:
-        p.join()
-    
-    # Signal saver to finish
-    results_queue.put('DONE')
-    saver_process.join()
-    
-    # Mark file as completed
-    position_map[input_file] = {'completed': True}
-    save_checkpoint(checkpoint_file, position_map)
-    
+
+    # Open output file immediately to write as we go
+    with open(output_file, 'w', newline='') as csvfile:
+        analyzer = SentimentIntensityAnalyzer()
+        writer = csv.writer(csvfile)
+        writer.writerow(['date', 'compound', 'pos', 'neu', 'neg'])  # Header row
+
+        for line, file_bytes_processed in read_lines_zst(input_file):
+            total_lines += 1
+            if total_lines % 100000 == 0:
+                log.info(f"Processed {total_lines:,} lines : {bad_lines:,} bad lines : {file_bytes_processed:,}:{(file_bytes_processed / file_size) * 100:.0f}%")
+
+            try:
+                comment = json.loads(line)
+                date = datetime.fromtimestamp(int(comment['created_utc'])).strftime('%Y-%m-%d')
+                text = get_text_content(comment)
+                # Get sentiment scores
+                scores = get_sentiment_scores(text, analyzer)
+                
+                # Write the scores immediately
+                writer.writerow([
+                    date,
+                    scores['compound'],
+                    scores['pos'],
+                    scores['neu'],
+                    scores['neg']
+                ])
+                    
+            except json.JSONDecodeError:
+                bad_lines += 1
+                log.warning(f"Error decoding JSON from line: {line}")
+            except KeyError as e:
+                bad_lines += 1
+                log.warning(f"KeyError: {e} - Skipping this comment")
+
+    log.info(f"Complete : {total_lines:,} : {bad_lines:,}")
     log.info(f"Sentiment scores have been saved to {output_file}")
+
+def parallel_process_files(input_files):
+    """
+    Processes files in parallel by sorting them in descending order of size,
+    ensuring that the largest files are processed first.
+    """
+    # Sort input_files by descending size
+    input_files_sorted = sorted(
+        input_files, key=lambda x: os.path.getsize(x[0]), reverse=True
+    )
+
+    log.info(
+        f"Processing {len(input_files_sorted)} files sorted by size (largest first)."
+    )
+
+    # Create a multiprocessing pool with a number of processes equal to the CPU count
+    with Pool(processes=os.cpu_count()) as pool:
+        pool.starmap(
+            process_file,
+            [
+                (f[0], f[1])
+                for f in input_files_sorted
+            ],
+        )
+
+    log.info("All files have been processed.")
 
 if __name__ == "__main__":
     start_time = time.time()
-    log.info(f"Calculating sentiment scores for: {', '.join(ITEMS)}")
-    if not os.path.exists(output_directory):
-        os.makedirs(output_directory)
-
+    log.info(f"Processing sentiment for mentions of: {', '.join(ITEMS)}")
+    
+    # Prepare list of input/output file pairs
+    input_files = []
     for file_name in os.listdir(input_directory):
         if file_name.endswith('.zst'):
             input_file = os.path.join(input_directory, file_name)
             output_file_name = os.path.splitext(file_name)[0] + '.csv'
             output_file = os.path.join(output_directory, output_file_name)
-            log.info(f"Processing file: {input_file}")
-            process_file(input_file, output_file)
+            input_files.append((input_file, output_file))
+    
+    log.info(f"Processing {len(input_files)} files")
+    parallel_process_files(input_files)
+    
     end_time = time.time()
-    print(f"Total time taken: {(end_time - start_time)/60:.2f} minutes")
-
+    print(f"Total processing time: {(end_time - start_time)/60:.2f} minutes")
