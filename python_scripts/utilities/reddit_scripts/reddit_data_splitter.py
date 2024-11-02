@@ -89,4 +89,4 @@ def process_all_files(compressed_data_dir, min_size_mb, max_chunk_size_mb):
 
 if __name__ == "__main__":
     compressed_data_directory = os.path.join(GAME_PRICE_PREDICTION_PATH, "data/reddit_data/compressed_data")
-    process_all_files(compressed_data_dir=compressed_data_directory, min_size_mb=700, max_chunk_size_mb=3000)
+    process_all_files(compressed_data_dir=compressed_data_directory, min_size_mb=200, max_chunk_size_mb=1000)
