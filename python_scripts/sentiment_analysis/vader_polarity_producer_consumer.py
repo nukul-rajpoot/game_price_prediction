@@ -21,8 +21,8 @@ from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
 # Configuration settings
 # Set input to INPUT_COMPRESSED to use full reddit data
-input_directory = INPUT_COMPRESSED
-#input_directory = FILTERED_DATA_DIRECTORY
+# input_directory = INPUT_COMPRESSED
+input_directory = FILTERED_DATA_DIRECTORY
 output_directory = POLARITY_DATA_DIRECTORY
 
 # Set up logging
