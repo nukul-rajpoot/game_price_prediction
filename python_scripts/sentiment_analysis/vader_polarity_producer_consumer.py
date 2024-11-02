@@ -131,9 +131,11 @@ def consumer(lines_queue, results_queue):
             entry = json.loads(line)
             date = datetime.fromtimestamp(int(entry['created_utc'])).strftime('%Y-%m-%d')
             text = get_text_content(entry)
+            score = entry.get('score', 1)  # Get score, default to 0 if not present
             scores = get_sentiment_scores(text, analyzer)
             results_queue.put([
                 date,
+                score,  # Added score
                 scores['compound'],
                 scores['pos'],
                 scores['neu'],
@@ -171,7 +173,7 @@ def process_file(input_file, output_file):
         os.makedirs(output_dir, exist_ok=True)  # Ensure directory exists
         with open(output_file, 'w', newline='') as csvfile:
             writer = csv.writer(csvfile)
-            writer.writerow(['date', 'compound', 'pos', 'neu', 'neg'])
+            writer.writerow(['date', 'score', 'compound', 'pos', 'neu', 'neg'])  # Added 'score' to header
     
     lines_queue = multiprocessing.Queue(maxsize=10000)
     results_queue = multiprocessing.Queue(maxsize=10000)

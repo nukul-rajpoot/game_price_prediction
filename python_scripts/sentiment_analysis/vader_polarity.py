@@ -99,7 +99,7 @@ def process_file(input_file, output_file):
     with open(output_file, 'w', newline='') as csvfile:
         analyzer = SentimentIntensityAnalyzer()
         writer = csv.writer(csvfile)
-        writer.writerow(['date', 'compound', 'pos', 'neu', 'neg'])  # Header row
+        writer.writerow(['date', 'score', 'compound', 'pos', 'neu', 'neg'])  # Added 'score' to header
 
         for line, file_bytes_processed in read_lines_zst(input_file):
             total_lines += 1
@@ -110,12 +110,14 @@ def process_file(input_file, output_file):
                 comment = orjson.loads(line)
                 date = datetime.fromtimestamp(int(comment['created_utc'])).strftime('%Y-%m-%d')
                 text = get_text_content(comment)
+                score = comment.get('score', 1)  # Get score, default to 0 if not present
                 # Get sentiment scores
                 scores = get_sentiment_scores(text, analyzer)
                 
                 # Write the scores immediately
                 writer.writerow([
                     date,
+                    score,
                     scores['compound'],
                     scores['pos'],
                     scores['neu'],
