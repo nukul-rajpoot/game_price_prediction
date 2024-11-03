@@ -7,6 +7,12 @@ from config import ITEM, POLARITY_DATA_DIRECTORY, ALL_POLARITY_DATA
 input_file = POLARITY_DATA_DIRECTORY
 output_file = ALL_POLARITY_DATA
 
+# Add this flag at the top with the imports
+USE_WEIGHTING = True  # Set to False to disable weighting
+
+# Define sentiment metrics list before the if/else block
+sentiment_metrics = ['compound', 'pos', 'neu', 'neg']
+
 # 1. Combine all CSV files
 dataframes = []
 
@@ -25,25 +31,35 @@ combined_df = pd.concat(dataframes, ignore_index=True)
 combined_df['date'] = pd.to_datetime(combined_df['date'])
 
 # 2. Calculate weighted sentiment for each individual post/comment
-combined_df['weight'] = np.where(combined_df['score'] <= 0, 0.1, np.log1p(combined_df['score']))
+if USE_WEIGHTING:
+    combined_df['weight'] = np.where(combined_df['score'] <= 0, 0.1, np.log1p(combined_df['score']))
+    
+    # Calculate weighted sentiment scores
+    for metric in sentiment_metrics:
+        combined_df[f'weighted_{metric}'] = combined_df[metric] * combined_df['weight']
 
-# Calculate weighted sentiment scores
-sentiment_metrics = ['compound', 'pos', 'neu', 'neg']
-for metric in sentiment_metrics:
-    combined_df[f'weighted_{metric}'] = combined_df[metric] * combined_df['weight']
+    # 3. Aggregate all posts/comments by day
+    daily_df = combined_df.groupby('date').agg({
+        'weight': 'sum',
+        'weighted_compound': 'sum',
+        'weighted_pos': 'sum',
+        'weighted_neu': 'sum',
+        'weighted_neg': 'sum'
+    }).reset_index()
 
-# 3. Aggregate all posts/comments by day
-daily_df = combined_df.groupby('date').agg({
-    'weight': 'sum',
-    'weighted_compound': 'sum',
-    'weighted_pos': 'sum',
-    'weighted_neu': 'sum',
-    'weighted_neg': 'sum'
-}).reset_index()
+    # 4. Calculate final daily weighted averages
+    for metric in sentiment_metrics:
+        daily_df[metric] = daily_df[f'weighted_{metric}'] / daily_df['weight']
 
-# 4. Calculate final daily weighted averages
-for metric in sentiment_metrics:
-    daily_df[metric] = daily_df[f'weighted_{metric}'] / daily_df['weight']
+else:
+    # Simple mean without weighting
+    daily_df = combined_df.groupby('date', as_index=False).agg({
+        'compound': 'mean',
+        'pos': 'mean',
+        'neu': 'mean',
+        'neg': 'mean'
+    })
+    daily_df = daily_df.sort_values('date')
 
 # 5. Save results
 final_df = daily_df[['date'] + sentiment_metrics].sort_values('date')
