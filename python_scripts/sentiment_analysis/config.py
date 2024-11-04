@@ -19,15 +19,14 @@ from python_scripts.utilities.api_calls import sanitize_filename
 
 # input the skibbity item's name here :P  NOTE: ITEMS = [] for mispelled items
 # ITEM = "all items"
-ITEM = "MAC-10 | Disco Tech (Field-Tested)"
+ITEM = "M4A1-S | Golden Coil (Factory New)"
 ITEM_SANITIZED = sanitize_filename(ITEM)
 ITEMS = [
-    "MAC-10 | Disco Tech", "mac-10 | Disco Tech", "mac10 | Disco Tech",
-    "MAC-10 Disco Tech", "mac-10 Disco Tech", "MAC10 Disco Tech",
-    "Disco Tech MAC-10", "Disco Tech MAC10", "MAC Disco Tech",
-    "Disco MAC-10", "Disco MAC10", "MAC-10 Disco", "MAC Disco",
-    "mac10 disco tech", "mac-10 disco tech", "mac disco tech",
-    "Disco Tech (MAC-10)", "Disco Tech MAC", "mac10 disco",
+    "M4A1-S | Golden Coil", "Golden Coil", "GoldenCoil", "M4A1-S Golden Coil", "M4A1S GoldenCoil", 
+    "Golden Coil M4A1-S", "GoldenCoil M4A1-S", "Golden Coil M4A1S", 
+    "GoldenCoil M4A1S", "M4A1S Golden Coil", "GoldenCoil M4A1 S",
+    "Golden Cool", "GoldenCoil M4AIS", 
+    "M4A1-S Golden Coi", "M4A1-S Goldon Coil", "M4A1S Goldon Coil"
 ]
 
 # For filter_file               |    NOTE: (input: compressed -> output: filtered_data (MS) )
