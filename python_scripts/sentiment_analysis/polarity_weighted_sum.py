@@ -29,6 +29,9 @@ combined_df = pd.concat(dataframes, ignore_index=True)
 # Convert the 'date' column to datetime
 combined_df['date'] = pd.to_datetime(combined_df['date'])
 
+# Ensure 'score' column is numeric and handle non-numeric values
+combined_df['score'] = pd.to_numeric(combined_df['score'], errors='coerce').fillna(0)
+
 # 2. Calculate weighted sentiment for each individual post/comment
 if USE_WEIGHTING:
     # Calculate weights
