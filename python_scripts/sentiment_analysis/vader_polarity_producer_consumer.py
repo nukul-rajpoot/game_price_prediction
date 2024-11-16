@@ -165,7 +165,8 @@ def process_file(input_file, output_file):
         return
     
     file_size = os.stat(input_file).st_size
-    num_workers = multiprocessing.cpu_count()
+    # Leave one CPU thread free
+    num_workers = max(1, multiprocessing.cpu_count() - 1)
     
     # Initialize output file if starting fresh
     if input_file not in position_map:
