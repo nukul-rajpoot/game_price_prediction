@@ -134,8 +134,8 @@ def parallel_process_files(input_files):
         f"Processing {len(input_files_sorted)} files sorted by size (largest first)."
     )
 
-    # Create a multiprocessing pool with a number of processes equal to the CPU count
-    with Pool(8) as pool:
+    # Create a multiprocessing pool with one less process than CPU count
+    with Pool(processes=max(1, os.cpu_count() - 1)) as pool:
         pool.starmap(
             process_file,
             [
