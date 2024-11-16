@@ -677,3 +677,4 @@ data/reddit_data/polarity_data
 data/reddit_data/compressed_data/
 data/reddit_data/compressed_data_test/cheapcsgotrading_comments
 data/reddit_data/compressed_data_test/cheapcsgotrading_submissions
+.aider*
