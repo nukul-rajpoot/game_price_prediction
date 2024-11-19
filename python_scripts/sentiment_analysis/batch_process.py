@@ -1,33 +1,39 @@
-# batch_process.py
 import os
 import subprocess
 import shutil
 from datetime import datetime
+import csv
+
+"""
+automating batch proccessong of CS:GO item analysis
+using config -> updates and backups
+and iterates over @accepted_item_raw.csv which contains ITEM 
+"""
 
 # Define paths
 GAME_PRICE_PREDICTION_PATH = os.environ.get('GAME_PRICE_PREDICTION_PATH', '')
 config_path = os.path.join(GAME_PRICE_PREDICTION_PATH, 'python_scripts/sentiment_analysis/config.py')
+csv_path = os.path.join(GAME_PRICE_PREDICTION_PATH, 'data/item_lists/accepted_item_raw.csv')
 
-# List of items to process
-items_to_process = [
-    {
-        'ITEM': "M4A1-S | Golden Coil (Factory New)",
-        'ITEMS': [
-            "M4A1-S | Golden Coil", "Golden Coil", "GoldenCoil", "M4A1-S Golden Coil", "M4A1S GoldenCoil",
-            "Golden Coil M4A1-S", "GoldenCoil M4A1-S", "Golden Coil M4A1S",
-            "GoldenCoil M4A1S", "M4A1S Golden Coil", "GoldenCoil M4A1 S",
-            "Golden Cool", "GoldenCoil M4AIS",
-            "M4A1-S Golden Coi", "M4A1-S Goldon Coil", "M4A1S Goldon Coil"
-        ]
-    },
-    {
-        'ITEM': "AK-47 | Redline (Field-Tested)",
-        'ITEMS': [
-            "AK-47 | Redline", "Redline", "Red line", "AK47 Redline", "AK-47 Red line",
-            "Redline AK-47", "Red line AK-47", "AK47 Red line", "AK 47 Redline", "AK 47 Red line"
-        ]
-    }
-]
+# Read items from CSV
+def load_items_from_csv():
+    items_to_process = []
+    with open(csv_path, 'r', encoding='utf-8') as file:
+        csv_reader = csv.reader(file)
+        next(csv_reader)  # Skip header row
+        for row in csv_reader:
+            if len(row) >= 2:  # Ensure row has both ITEM and ITEMS
+                item = row[0].strip('"')
+                # Split ITEMS string and clean up each item
+                items = [item.strip() for item in row[1].strip('"').split(',')]
+                items_to_process.append({
+                    'ITEM': item,
+                    'ITEMS': items
+                })
+    return items_to_process
+
+# Replace the hardcoded items_to_process with the function call
+items_to_process = load_items_from_csv()
 
 def format_items_list(items):
     """Format the ITEMS list with proper indentation"""
