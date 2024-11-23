@@ -1,0 +1,59 @@
+import csv
+import os
+
+def extract_main_name(item_name):
+    """
+    Extracts the main_name from the item_name.
+    Assumes item_name format: 'Weapon | Main Name (Condition)'
+    or 'Sticker | Team Name (Effect) | Tournament'
+    """
+    try:
+        # Split on '|' and get relevant parts
+        parts = item_name.split('|')
+        
+        if len(parts) == 2:  # Regular weapon skin format
+            main_part = parts[1]
+        elif len(parts) == 3 and "Sticker" in parts[0]:  # Sticker format
+            main_part = parts[1]  # Take team name as main name for stickers
+        else:
+            main_part = parts[0]  # If no '|', take the whole name
+            
+        # Remove text within parentheses and clean
+        main_name = main_part.split('(')[0].strip()
+        return main_name
+    except Exception as e:
+        print(f"Error processing {item_name}: {e}")
+        return item_name
+
+def main():
+    # Define file paths relative to project root
+    base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
+    input_file = os.path.join(base_dir, 'data', 'item_lists', 'accepted_items.csv')
+    output_file = os.path.join(base_dir, 'data', 'item_lists', 'item_main_names.csv')
+
+    try:
+        # Read input CSV and create output CSV
+        with open(input_file, 'r', encoding='utf-8') as csvfile_in, \
+             open(output_file, 'w', encoding='utf-8', newline='') as csvfile_out:
+            
+            # Set up CSV reader and writer
+            reader = csv.DictReader(csvfile_in)
+            writer = csv.writer(csvfile_out)
+            
+            # Write header
+            writer.writerow(['ITEM', 'MAIN_NAME'])
+            
+            # Process each row
+            for row in reader:
+                item_name = row['item_name']
+                main_name = extract_main_name(item_name)
+                writer.writerow([item_name, main_name])
+                print(f"Processed: {item_name} -> {main_name}")
+
+        print(f"\nProcessing complete! Output saved to: {output_file}")
+
+    except Exception as e:
+        print(f"An error occurred: {e}")
+
+if __name__ == '__main__':
+    main()
